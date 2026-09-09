@@ -36,9 +36,7 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
                   className="w-12 h-12 object-contain group-hover:scale-105 transition-transform duration-300"
                 />
               )}
-              <span className="font-bold text-xl tracking-wider text-[#E65100] hidden sm:block group-hover:text-[#F8BBD0] transition-colors duration-300">
-                {settings.siteTitle}
-              </span>
+
             </Link>
           </div>
 
