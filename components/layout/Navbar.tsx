@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, Sparkles } from "lucide-react";
 import { GlobalSettings } from "@/lib/wordpress";
@@ -19,11 +19,28 @@ const NAV_LINKS = [
 export default function Navbar({ settings }: { settings: GlobalSettings }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [lang, setLang] = useState("EN");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    // Trigger initially in case page is loaded already scrolled
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleLanguage = () => setLang(lang === "EN" ? "KH" : "EN");
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-[#1B5E20] text-[#FAF7F2] shadow-md border-b border-[#2E7D32]">
+    <nav 
+      className={`fixed top-0 z-50 w-full text-[#FAF7F2] transition-all duration-500 ${
+        isScrolled 
+          ? "bg-[#1B5E20] shadow-lg border-b border-[#2E7D32] py-0" 
+          : "bg-transparent py-4 bg-gradient-to-b from-black/50 to-transparent"
+      }`}
+    >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
