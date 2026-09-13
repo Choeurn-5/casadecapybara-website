@@ -18,6 +18,7 @@ export interface GlobalSettings {
     instagramUrl?: string;
     tiktokUrl?: string;
     heroVideoId?: string;
+    bookingEngineUrl?: string;
 }
 
 export interface CapyRoom {
@@ -413,4 +414,276 @@ export async function getEncounterTickets(): Promise<EncounterTicket[]> {
     } catch {
         return defaultEncounterTickets;
     }
+}
+
+
+export interface FullCapyRoom {
+  id: string;
+  slug: string;
+  title: string;
+  sizeSqm: string;
+  occupancy: string;
+  priceFrom: string;
+  keyFeatures: string[];
+  inngeniusUrl: string;
+  thumbnailUrl: string;
+  description: string;
+  photoGallery?: string[];
+}
+
+const fallbackFullRooms: FullCapyRoom[] = [
+  {
+    id: "r1",
+    slug: "splash-pool-access",
+    title: "Splash Pool Access",
+    sizeSqm: "35 sqm",
+    occupancy: "2 Adults + 1 Child",
+    priceFrom: "$50",
+    keyFeatures: ["Direct pool access", "King bed", "Capybara themed decor"],
+    inngeniusUrl: "/book",
+    thumbnailUrl: "https://images.unsplash.com/photo-1596436889106-be35e843f6a6?q=80&w=800&auto=format&fit=crop",
+    description: "Step straight from your private terrace into our signature lagoon pool. This fun, capybara-themed room is perfect for couples or small families looking for instant water access.",
+    photoGallery: []
+  },
+  {
+    id: "r2",
+    slug: "dreamland",
+    title: "Dreamland",
+    sizeSqm: "40 sqm",
+    occupancy: "2 Adults + 2 Children",
+    priceFrom: "$65",
+    keyFeatures: ["Bunk beds", "Neon lighting", "Play area"],
+    inngeniusUrl: "/book",
+    thumbnailUrl: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop",
+    description: "Designed entirely around children's imagination. Featuring custom bunk beds, vibrant neon signs, and a dedicated play corner to keep the little ones entertained.",
+    photoGallery: []
+  },
+  {
+    id: "r3",
+    slug: "capy-deluxe",
+    title: "Capy Deluxe",
+    sizeSqm: "33 sqm",
+    occupancy: "2 Adults",
+    priceFrom: "$50",
+    keyFeatures: ["King bed", "Balcony", "Garden view"],
+    inngeniusUrl: "/book",
+    thumbnailUrl: "https://images.unsplash.com/photo-1582719478250-c89404bb8a0e?q=80&w=800&auto=format&fit=crop",
+    description: "Our signature deluxe room offering comfort and tranquility. Enjoy a private balcony overlooking the lush botanical gardens where our capybaras roam.",
+    photoGallery: []
+  },
+  {
+    id: "r4",
+    slug: "turtle-oasis",
+    title: "Turtle Oasis",
+    sizeSqm: "38 sqm",
+    occupancy: "2 Adults + 1 Child",
+    priceFrom: "$60",
+    keyFeatures: ["Ground floor", "Private patio", "Rain shower"],
+    inngeniusUrl: "/book",
+    thumbnailUrl: "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=800&auto=format&fit=crop",
+    description: "A serene, ground-floor retreat featuring a private enclosed patio. The spacious bathroom boasts a rain shower and signature capybara amenities.",
+    photoGallery: []
+  },
+  {
+    id: "r5",
+    slug: "la-familia",
+    title: "La Familia",
+    sizeSqm: "65 sqm",
+    occupancy: "4 Adults + 2 Children",
+    priceFrom: "$110",
+    keyFeatures: ["2 Bedrooms", "Living area", "2 Bathrooms"],
+    inngeniusUrl: "/book",
+    thumbnailUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=800&auto=format&fit=crop",
+    description: "The ultimate family suite. Two interconnecting bedrooms, a shared living space, and dual bathrooms ensure everyone has plenty of space to relax.",
+    photoGallery: []
+  },
+  {
+    id: "r6",
+    slug: "snuggle-nest",
+    title: "Snuggle Nest",
+    sizeSqm: "28 sqm",
+    occupancy: "2 Adults",
+    priceFrom: "$50",
+    keyFeatures: ["Queen bed", "Cozy atmosphere", "Smart TV"],
+    inngeniusUrl: "/book",
+    thumbnailUrl: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=800&auto=format&fit=crop",
+    description: "Intimate and cozy, perfect for couples. Features dimmable lighting, a large Smart TV for movie nights, and incredibly soft, premium bedding.",
+    photoGallery: []
+  },
+  {
+    id: "r7",
+    slug: "capy-cove",
+    title: "Capy Cove",
+    sizeSqm: "45 sqm",
+    occupancy: "3 Adults + 1 Child",
+    priceFrom: "$75",
+    keyFeatures: ["Corner room", "Extra windows", "Lounge sofa"],
+    inngeniusUrl: "/book",
+    thumbnailUrl: "https://images.unsplash.com/photo-1598928506311-c55dd5802c27?q=80&w=800&auto=format&fit=crop",
+    description: "A bright, airy corner room offering expansive views of the resort. Includes a comfortable lounge sofa and extra space for relaxing after a day exploring Angkor Wat.",
+    photoGallery: []
+  },
+  {
+    id: "r8",
+    slug: "three-amigos",
+    title: "Three Amigos",
+    sizeSqm: "42 sqm",
+    occupancy: "3 Adults",
+    priceFrom: "$70",
+    keyFeatures: ["3 Single beds", "Balcony", "Work desk"],
+    inngeniusUrl: "/book",
+    thumbnailUrl: "https://images.unsplash.com/photo-1595576508898-0ad5c879a061?q=80&w=800&auto=format&fit=crop",
+    description: "Ideal for friends traveling together. Three comfortable single beds, a dedicated workspace, and a private balcony for evening drinks.",
+    photoGallery: []
+  }
+];
+
+export async function getAllCapyRooms(): Promise<FullCapyRoom[]> {
+  const query = `
+    query GetAllCapyRooms {
+      capyRooms(first: 20) {
+        nodes {
+          id
+          slug
+          title
+          content
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          roomDetails {
+            capacity
+            roomSize
+            pricePerNight
+            roomIncludes
+            specialFeature
+            photoGallery {
+              nodes {
+                sourceUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  try {
+    const data = await fetchGraphQL<any>(query);
+    if (!data?.capyRooms?.nodes || data.capyRooms.nodes.length === 0) {
+      return fallbackFullRooms;
+    }
+
+    return data.capyRooms.nodes.map((node: any, index: number) => {
+      const fallback = fallbackFullRooms[index % fallbackFullRooms.length];
+      const cleanContent = node.content ? node.content.replace(/<[^>]+>/g, "").trim() : "";
+      
+      // Parse key features from string list (e.g. "- wifi\n- wc")
+      let features = fallback.keyFeatures;
+      if (node.roomDetails?.roomIncludes) {
+        features = node.roomDetails.roomIncludes
+          .split('\n')
+          .map((s: string) => s.replace(/^-/, '').trim())
+          .filter((s: string) => s.length > 0);
+      }
+      
+      // Parse gallery
+      const gallery = node.roomDetails?.photoGallery?.nodes?.map((n: any) => n.sourceUrl) || [];
+
+      return {
+        id: node.id,
+        slug: node.slug || fallback.slug,
+        title: node.title || fallback.title,
+        description: cleanContent || fallback.description,
+        sizeSqm: node.roomDetails?.roomSize ? `${node.roomDetails.roomSize} sqm` : fallback.sizeSqm,
+        occupancy: node.roomDetails?.capacity ? `${node.roomDetails.capacity} Guests` : fallback.occupancy,
+        priceFrom: node.roomDetails?.pricePerNight ? `$${node.roomDetails.pricePerNight.trim()}` : fallback.priceFrom,
+        keyFeatures: features.length > 0 ? features : fallback.keyFeatures,
+        inngeniusUrl: fallback.inngeniusUrl,
+        thumbnailUrl: node.featuredImage?.node?.sourceUrl || fallback.thumbnailUrl,
+        photoGallery: gallery
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching capy rooms:", error);
+    return fallbackFullRooms;
+  }
+}
+
+export async function getCapyRoomBySlug(slug: string): Promise<FullCapyRoom | null> {
+  const allRooms = await getAllCapyRooms();
+  return allRooms.find(room => room.slug === slug) || null;
+}
+
+
+export interface CafeMenuItem {
+    id: string;
+    title: string;
+    content: string;
+    thumbnailUrl: string;
+}
+
+export async function getFeaturedMenuItems(): Promise<CafeMenuItem[]> {
+  return [
+    { id: "1", title: "Capybara Croissant", content: "Flaky buttery pastry", thumbnailUrl: "https://images.unsplash.com/photo-1555507036-ab1e4006a8a0?q=80&w=800&auto=format&fit=crop" },
+    { id: "2", title: "Rainforest Iced Latte", content: "Refreshing organic coffee", thumbnailUrl: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=800&auto=format&fit=crop" },
+    { id: "3", title: "Sanctuary Salad Bowl", content: "Farm-to-table greens", thumbnailUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop" }
+  ];
+}
+
+export async function getFeaturedRooms(): Promise<FullCapyRoom[]> {
+  const allRooms = await getAllCapyRooms();
+  return allRooms.slice(0, 3);
+}
+
+export interface GuestReview {
+  id: string;
+  reviewerName: string;
+  reviewerTitle: string;
+  rating: number;
+  reviewContent: string;
+}
+
+export async function getGuestReviews(): Promise<GuestReview[]> {
+  return [
+    { id: "1", reviewerName: "Sarah J.", reviewerTitle: "Guest", rating: 5, reviewContent: "Absolutely magical! Meeting the capybaras was the highlight of our trip to Cambodia." },
+    { id: "2", reviewerName: "Michael & Emma", reviewerTitle: "Guest", rating: 5, reviewContent: "We stayed in the La Familia suite and it was perfect. Clean, modern, and just steps away from the animal enclosures." },
+    { id: "3", reviewerName: "David L.", reviewerTitle: "Guest", rating: 5, reviewContent: "The cafe food is top-notch. I highly recommend the Capybara Croissant. Will definitely be coming back!" }
+  ];
+}
+
+export async function getEncounterTicketsApiData(): Promise<any> {
+  return {
+    individualImage: { node: { sourceUrl: "https://images.unsplash.com/photo-1584347783935-430b805dff32?q=80&w=800&auto=format&fit=crop", altText: "Solo Capybara Experience" } },
+    individualPaxNote: "Max 4 per session",
+    individualPrice: "10",
+    individualInclusions: [
+      { inclusionText: "30-minute encounter" },
+      { inclusionText: "Complimentary capybara food" },
+      { inclusionText: "Guided orientation" }
+    ],
+    familyImage: { node: { sourceUrl: "https://images.unsplash.com/photo-1628155930542-3c7a64e2c848?q=80&w=800&auto=format&fit=crop", altText: "Family Capybara Experience" } },
+    familyPaxNote: "Up to 5 people",
+    familyPrice: "30",
+    familyInclusions: [
+      { inclusionText: "45-minute private encounter" },
+      { inclusionText: "Extra capybara food basket" },
+      { inclusionText: "Dedicated handler" }
+    ]
+  };
+}
+
+export interface CafeCategory {
+  title: string;
+  items: CafeMenuItem[];
+}
+
+export async function getAllCafeMenuItems(): Promise<any> {
+  const allItems = await getFeaturedMenuItems();
+  return [
+    {
+      title: "Signature Menu",
+      items: allItems
+    }
+  ];
 }

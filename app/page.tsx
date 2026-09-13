@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Hero from "@/components/home/Hero";
-import RoomsOverview from "@/components/home/RoomsOverview";
+import RoomTeaser from "@/components/home/RoomTeaser";
+import FamiliesAndSafetyTeaser from "@/components/home/FamiliesAndSafetyTeaser";
 import EncounterTicketsSummary from "@/components/home/EncounterTicketsSummary";
+import CafeTeaser from "@/components/home/CafeTeaser";
+import TestimonialSlider from "@/components/home/TestimonialSlider";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Casa de Capybara | Luxury Wildlife Sanctuary & Eco-Resort",
@@ -12,7 +16,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
-      {/* Hero Section */}
+      {/* Section 1: Hero Banner */}
       <Hero
         youtubeId="Kx3kZwcTJ3I"
         headline="Where Nature's Gentle Soul Meets Luxury Sanctuary"
@@ -23,11 +27,30 @@ export default function Home() {
         secondaryCtaLink="/stay"
       />
 
-      {/* Rooms & Accommodations Overview */}
-      <RoomsOverview />
+      {/* Section 2: Encounter Tickets (The Viral Draw) */}
+      <ScrollReveal delay={0.2}>
+        <EncounterTicketsSummary />
+      </ScrollReveal>
 
-      {/* Encounter Tickets & Passes Summary */}
-      <EncounterTicketsSummary />
+      {/* Section 3: The Stay / Rooms (The Upsell) */}
+      <ScrollReveal delay={0.2}>
+        <RoomTeaser />
+      </ScrollReveal>
+
+      {/* Section 4: The Destination Cafe (The Experience) */}
+      <ScrollReveal delay={0.2}>
+        <CafeTeaser />
+      </ScrollReveal>
+
+      {/* Section 5: Families & Safety (The Trust Builder) */}
+      <ScrollReveal delay={0.2}>
+        <FamiliesAndSafetyTeaser />
+      </ScrollReveal>
+
+      {/* Section 6: Guest Reviews (Social Proof) */}
+      <ScrollReveal delay={0.2}>
+        <TestimonialSlider />
+      </ScrollReveal>
     </main>
   );
 }

@@ -1,17 +1,369 @@
-import type { Metadata } from "next";
+import Image from 'next/image';
+import Link from 'next/link';
+import { 
+  SendHorizontal, 
+  MessageCircle, 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Clock, 
+  QrCode,
+  Users,
+  CheckCircle2,
+  CalendarDays,
+  Ticket
+} from 'lucide-react';
+import ContactForm from '@/components/contact/ContactForm';
+import { getGlobalSettings } from '@/lib/wordpress';
+import ScrollReveal from '@/components/ui/ScrollReveal';
 
-export const metadata: Metadata = {
-  title: "Contact Us | Casa de Capybara",
-  description: "Get in touch with the Casa de Capybara team for inquiries, reservations, or events.",
+export const metadata = {
+  title: "Contact Casa de Capybara Siem Reap | WhatsApp, Telegram & Online Booking",
+  description: "Book a room, reserve your capybara encounter or get in touch. WhatsApp +855 968 149 795 or Telegram @capybaracambodia. We reply fast — usually within the hour."
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getGlobalSettings();
+  const bookingUrl = settings.bookingEngineUrl || "https://app.inn-connect.com/book2/?p=Casa%20de%20Capybara";
+  
+  // Format WhatsApp link correctly (strip non-digits)
+  const whatsappNumber = settings.whatsappNumber || '+855 968 149 795';
+  const whatsappLink = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '') || '855968149795'}`;
+
   return (
-    <main className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold tracking-tight mb-4">Contact Us</h1>
-      <p className="text-lg text-gray-600">
-        Have questions or want to make a special booking? Reach out to our team.
-      </p>
+    <main className="min-h-screen flex flex-col bg-[#FBFDFB] text-[#1A1A1A]">
+      
+      {/* SECTION 1: Hero Header */}
+      <section className="pt-32 md:pt-48 pb-16 md:pb-24 px-4 bg-white relative overflow-hidden">
+        {/* Abstract Background Shapes */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#E8F5E9] rounded-full mix-blend-multiply filter blur-3xl opacity-50 translate-x-1/3 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#F8BBD0] rounded-full mix-blend-multiply filter blur-3xl opacity-30 -translate-x-1/2 translate-y-1/2"></div>
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <ScrollReveal direction="down">
+            <span className="inline-block py-1 px-3 rounded-full bg-[#1B5E20]/10 text-[#1B5E20] font-bold text-sm tracking-widest mb-6 border border-[#1B5E20]/20 uppercase">
+              Get in Touch with our Concierge
+            </span>
+            <h1 className="text-4xl md:text-6xl font-extrabold text-[#1B5E20] mb-6 leading-tight">
+              We Would Love to Hear From You
+            </h1>
+            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+              Book a room, plan your capybara encounter, arrange a group visit or simply say hello. Our English, Khmer and Hindi speaking team responds fast — usually within the hour.
+            </p>
+            <div className="inline-flex items-center gap-2 bg-[#E8F5E9] text-[#1B5E20] px-4 py-2 rounded-full font-bold text-sm border border-[#2E7D32]/20 shadow-sm">
+              <span>⚡</span> Average response time: under 60 minutes (7am–9pm daily)
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* SECTION 2: Contact Methods (MOST PROMINENT SECTION) */}
+      <section className="py-16 px-4 bg-[#FBFDFB] relative z-20 -mt-8">
+        <div className="max-w-5xl mx-auto">
+          <ScrollReveal direction="up" delay={0.1}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              
+              {/* Telegram Card */}
+              <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border-t-8 border-t-[#229ED9] flex flex-col items-center text-center hover:-translate-y-1 transition-transform duration-300">
+                <div className="bg-[#229ED9]/10 text-[#229ED9] px-4 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase mb-6">
+                  Recommended for Local & Regional Guests
+                </div>
+                
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">Telegram</h3>
+                <p className="text-xl font-medium text-[#229ED9] mb-8">@capybaracambodia</p>
+                
+                <div className="w-48 h-48 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-200 mb-8">
+                  <div className="text-center text-gray-400 flex flex-col items-center gap-2">
+                    <QrCode className="w-20 h-20 text-[#229ED9]/40" />
+                    <span className="text-xs font-medium">Scan to Chat</span>
+                  </div>
+                </div>
+                
+                <a 
+                  href="https://t.me/capybaracambodia" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full py-4 bg-[#229ED9] hover:bg-[#1C88BA] text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-md"
+                >
+                  <SendHorizontal className="w-5 h-5" /> Tap to Message on Telegram
+                </a>
+              </div>
+
+              {/* WhatsApp Card */}
+              <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border-t-8 border-t-[#25D366] flex flex-col items-center text-center hover:-translate-y-1 transition-transform duration-300">
+                <div className="bg-[#25D366]/10 text-[#25D366] px-4 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase mb-6">
+                  Recommended for International Travelers
+                </div>
+                
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">WhatsApp</h3>
+                <p className="text-xl font-medium text-[#25D366] mb-8">{whatsappNumber}</p>
+                
+                <div className="w-48 h-48 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-200 mb-8">
+                  <div className="text-center text-gray-400 flex flex-col items-center gap-2">
+                    <QrCode className="w-20 h-20 text-[#25D366]/40" />
+                    <span className="text-xs font-medium">Scan to Chat</span>
+                  </div>
+                </div>
+                
+                <a 
+                  href={whatsappLink}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full py-4 bg-[#25D366] hover:bg-[#1ebe57] text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-md"
+                >
+                  <MessageCircle className="w-5 h-5" /> Tap to Message on WhatsApp
+                </a>
+              </div>
+
+            </div>
+
+            {/* Secondary Direct Channels Bar */}
+            <div className="bg-[#1B5E20] text-white p-6 md:p-8 rounded-3xl shadow-lg flex flex-col lg:flex-row items-center justify-between gap-6">
+              <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 text-center sm:text-left">
+                <div className="flex flex-col sm:flex-row items-center gap-3">
+                  <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-[#B3E5FC]" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-white/70 uppercase tracking-wider mb-0.5">Email Us</p>
+                    <a href="mailto:info@casadecapybara.com" className="font-bold hover:text-[#B3E5FC] transition-colors">info@casadecapybara.com</a>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center gap-3">
+                  <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                    <Phone className="w-5 h-5 text-[#B3E5FC]" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-white/70 uppercase tracking-wider mb-0.5">Social Channels</p>
+                    <div className="flex gap-4 font-bold text-sm">
+                      <a href="#" className="hover:text-[#B3E5FC] transition-colors">Instagram</a>
+                      <a href="#" className="hover:text-[#B3E5FC] transition-colors">TikTok</a>
+                      <a href="#" className="hover:text-[#B3E5FC] transition-colors">Facebook</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white/10 px-4 py-3 rounded-xl border border-white/20 text-sm font-medium text-center lg:text-right max-w-sm">
+                We aim to respond to all messages within one hour — 7am to 9pm daily.
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* SECTION 3: Booking Options Grid (Dual Paths) */}
+      <section className="py-24 px-4 bg-[#E8F5E9]">
+        <div className="max-w-6xl mx-auto">
+          <ScrollReveal direction="down">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1B5E20] mb-4">How Can We Help You?</h2>
+              <div className="w-24 h-1 bg-[#E65100] mx-auto rounded-full"></div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal direction="up" delay={0.1}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              
+              {/* Option 1: Room Booking */}
+              <div className="bg-white p-8 md:p-10 rounded-3xl shadow-md border border-[#1B5E20]/10 flex flex-col h-full hover:shadow-lg hover:-translate-y-1 transition-transform">
+                <div className="w-16 h-16 bg-[#1B5E20]/10 rounded-2xl flex items-center justify-center mb-6">
+                  <CalendarDays className="w-8 h-8 text-[#1B5E20]" />
+                </div>
+                <h3 className="text-2xl font-bold text-[#1B5E20] mb-4">Reserve Your Boutique Room</h3>
+                <p className="text-gray-600 leading-relaxed mb-8 flex-grow">
+                  Use our Inngenius booking engine for real-time availability and direct booking. Book direct for best rates — from $50 per night.
+                </p>
+                <div className="space-y-4">
+                  <a 
+                    href={bookingUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-full py-4 bg-[#E65100] hover:bg-[#c94600] text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-md text-center"
+                  >
+                    Check Live Availability & Book Direct
+                  </a>
+                  <p className="text-center text-sm font-medium text-gray-500">
+                    Also available on Booking.com | Agoda | Trip.com
+                  </p>
+                </div>
+              </div>
+
+              {/* Option 2: Capybara Encounter */}
+              <div className="bg-white p-8 md:p-10 rounded-3xl shadow-md border border-[#1B5E20]/10 flex flex-col h-full hover:shadow-lg hover:-translate-y-1 transition-transform">
+                <div className="flex justify-between items-start mb-6">
+                  <div className="w-16 h-16 bg-[#E65100]/10 rounded-2xl flex items-center justify-center">
+                    <Ticket className="w-8 h-8 text-[#E65100]" />
+                  </div>
+                  <span className="bg-[#F8BBD0]/50 text-[#c2185b] font-bold text-xs px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    No Online Booking Required
+                  </span>
+                </div>
+                <h3 className="text-2xl font-bold text-[#1B5E20] mb-4">Capybara Encounter — Walk In Only</h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  No booking required. Open every day 7am to 9pm. Simply arrive, purchase your ticket at the counter and our team will guide you from there.
+                </p>
+                <div className="bg-[#FAF7F2] p-4 rounded-xl mb-8 flex-grow">
+                  <ul className="space-y-2 text-sm font-medium text-[#1B5E20]">
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#E65100]"/> $10 per person</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#E65100]"/> $30 family package (2 adults + 2 children)</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#E65100]"/> Children under 3 always free</li>
+                  </ul>
+                </div>
+                <Link 
+                  href="/plan-your-visit#location"
+                  className="w-full py-4 bg-[#1B5E20] hover:bg-[#2E7D32] text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-md text-center"
+                >
+                  Get Directions (Google Maps)
+                </Link>
+              </div>
+
+            </div>
+
+            <div className="bg-white/60 p-6 md:p-8 rounded-3xl border border-[#1B5E20]/10 text-center flex flex-col md:flex-row items-center justify-center gap-4">
+              <Users className="w-8 h-8 text-[#E65100] shrink-0" />
+              <p className="text-[#1B5E20] font-medium max-w-3xl text-left md:text-center">
+                <strong>School trips, corporate events, birthday parties, family reunions</strong> — we welcome groups of all sizes. Please contact us in advance on WhatsApp or Telegram.
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* SECTION 4: Comprehensive Booking & Inquiry Form */}
+      <section className="py-24 px-4 bg-white relative">
+        {/* Subtle dot pattern background */}
+        <div className="absolute inset-0 z-0" style={{ backgroundImage: 'radial-gradient(#1B5E20 1px, transparent 1px)', backgroundSize: '32px 32px', opacity: 0.05 }}></div>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <ScrollReveal direction="up">
+            <ContactForm />
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* SECTION 5: Location & Navigation */}
+      <section id="location" className="py-24 px-4 bg-[#FBFDFB] border-t border-gray-100">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal direction="down">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold text-[#1B5E20] mb-4">Find Us in Siem Reap</h2>
+              <div className="w-24 h-1 bg-[#E65100] mx-auto rounded-full"></div>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <ScrollReveal direction="left">
+              <div className="space-y-10">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-[#E8F5E9] rounded-xl flex items-center justify-center shrink-0">
+                    <MapPin className="w-6 h-6 text-[#2E7D32]" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-xl text-[#1B5E20] mb-2">Address</h4>
+                    <p className="text-gray-600 text-lg leading-relaxed">
+                      Street 598, Krong Siem Reap 171002, Cambodia <br/>
+                      Ring Road, just off National Highway 6.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-[#E8F5E9] rounded-xl flex items-center justify-center shrink-0">
+                    <Clock className="w-6 h-6 text-[#2E7D32]" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-xl text-[#1B5E20] mb-2">Operating Hours & Check-in</h4>
+                    <ul className="text-gray-600 text-lg leading-relaxed space-y-2">
+                      <li><strong>Cafe & Capybara:</strong> Open daily 7:00 AM to 9:00 PM</li>
+                      <li><strong>Hotel Reception:</strong> 24 hours</li>
+                      <li><strong>Check-in:</strong> 2:00 PM | <strong>Check-out:</strong> 12:00 Noon</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="bg-[#FAF7F2] p-6 rounded-2xl border border-gray-200">
+                  <p className="font-medium text-[#1B5E20] flex items-center gap-3 mb-3">
+                    <CheckCircle2 className="w-5 h-5 text-[#E65100]" /> Free parking on site
+                  </p>
+                  <p className="font-medium text-[#1B5E20] flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-[#E65100]" /> Airport transfers available
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a 
+                    href="https://maps.google.com/?q=Casa+de+Capybara+Siem+Reap" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex-1 py-4 bg-[#1B5E20] hover:bg-[#2E7D32] text-white font-bold rounded-xl transition-colors flex items-center justify-center shadow-md"
+                  >
+                    Open in Google Maps
+                  </a>
+                  <a 
+                    href="https://waze.com/ul?q=Casa+de+Capybara" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex-1 py-4 bg-white hover:bg-gray-50 border-2 border-[#1B5E20] text-[#1B5E20] font-bold rounded-xl transition-colors flex items-center justify-center shadow-sm"
+                  >
+                    Open in Waze
+                  </a>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="right">
+              <div className="h-[500px] rounded-3xl overflow-hidden shadow-2xl relative group">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15541.748729583482!2d103.8587!3d13.3644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31101700445d4725%3A0x6b8bc2385dc62e8!2sCasa%20de%20Capybara!5e0!3m2!1sen!2skh!4v1709210000000!5m2!1sen!2skh" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="absolute inset-0 w-full h-full pointer-events-none lg:pointer-events-auto"
+                ></iframe>
+                {/* Mobile overlay to prevent scroll trapping */}
+                <div className="absolute inset-0 bg-black/5 flex items-center justify-center pointer-events-none lg:hidden">
+                  <span className="px-4 py-2 bg-white/90 backdrop-blur-sm text-[#1B5E20] text-sm font-bold rounded-full shadow-lg pointer-events-auto opacity-0 group-active:opacity-100 transition-opacity">
+                    Tap to interact
+                  </span>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 6: Final Call to Action Banner */}
+      <section className="py-24 px-4 bg-[#1B5E20] relative overflow-hidden text-center">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2E7D32] rounded-full filter blur-[100px] translate-x-1/3 -translate-y-1/3"></div>
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#E65100] rounded-full filter blur-[100px] -translate-x-1/3 translate-y-1/3"></div>
+        </div>
+
+        <div className="max-w-4xl mx-auto relative z-10">
+          <ScrollReveal direction="up">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              Cambodia's Most Unique Experience Is Waiting For You
+            </h2>
+            <p className="text-xl text-gray-200 mb-10 max-w-2xl mx-auto">
+              Whether you are visiting for an afternoon or staying for a week — Casa de Capybara in Siem Reap will be the highlight of your trip to Cambodia. Molly and Alex cannot wait to meet you.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+              <Link href="/capybara-experience" className="px-8 py-4 bg-[#E65100] hover:bg-[#c94600] text-white font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg text-center">
+                Capybara Experience — From $10
+              </Link>
+              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg text-center">
+                Book Your Room — From $50
+              </a>
+              <a href="https://maps.google.com/?q=Casa+de+Capybara+Siem+Reap" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg text-center">
+                Get Directions
+              </a>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
     </main>
   );
 }

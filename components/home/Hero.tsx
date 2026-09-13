@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface HeroProps {
   youtubeId?: string;
@@ -14,7 +15,7 @@ interface HeroProps {
 }
 
 export default function Hero({
-  youtubeId = "Kx3kZwcTJ3I",
+  youtubeId = "3mTyoZkffn8",
   headline = "Where Nature's Gentle Soul Meets Luxury Sanctuary",
   subheadline = "Immerse yourself in tranquil eco-villas, organic garden dining, and unforgettable, heartwarming moments with our resident capybaras.",
   primaryCtaText = "Book an Encounter",
@@ -25,15 +26,51 @@ export default function Hero({
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+
   // YouTube embed URL with loop, mute, autoplay, and hidden controls
   const youtubeEmbedUrl = `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&mute=${
     isMuted ? "1" : "0"
   }&loop=1&playlist=${youtubeId}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1`;
 
+  // Animation variants for adorable staggared entrance
+  const containerVariants: any = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants: any = {
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    show: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: { 
+        type: "spring", 
+        stiffness: 70, 
+        damping: 15 
+      }
+    },
+  };
+
   return (
-    <section className="relative w-full min-h-[100svh] flex flex-col justify-between items-center overflow-hidden bg-[#0F1710] text-white">
+    <section ref={ref} className="relative w-full min-h-[100svh] flex flex-col justify-between items-center overflow-hidden bg-[#0F1710] text-white">
       {/* Background Video Layer */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <motion.div 
+        className="absolute inset-0 z-0 overflow-hidden pointer-events-none origin-top"
+        style={{ y: backgroundY }}
+      >
         {/* Fallback & Loading Poster Image */}
         <div
           className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
@@ -61,58 +98,53 @@ export default function Hero({
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/70" />
 
         {/* 2. Brand Color Washes: Forest Green + Twilight Warmth */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1B5E20]/50 via-transparent to-[#E65100]/30 mix-blend-color-dodge" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1B5E20]/40 via-transparent to-[#E65100]/30 mix-blend-color-dodge" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#0F1710]/40 to-[#0F1710]/90" />
-      </div>
+      </motion.div>
 
       {/* Top Spacer / Navigation buffer */}
       <div className="w-full pt-20 sm:pt-24" />
 
       {/* Hero Content Center */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center py-12 my-auto flex flex-col items-center">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center py-12 my-auto flex flex-col items-center"
+      >
         {/* Eyebrow / Sanctuary Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-[#F8BBD0]/30 text-[#F8BBD0] text-xs sm:text-sm font-medium tracking-wider uppercase mb-6 shadow-lg shadow-black/20 hover:border-[#F8BBD0]/60 transition-all duration-300">
+        <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-[#F8BBD0]/30 text-[#F8BBD0] text-xs sm:text-sm font-medium tracking-wider uppercase mb-6 shadow-lg shadow-black/20 hover:border-[#F8BBD0]/60 transition-all duration-300 cursor-default">
           <span className="inline-block w-2 h-2 rounded-full bg-[#E65100] animate-pulse" />
           <span>Cambodia&apos;s Premier Wildlife Eco-Resort</span>
           <span className="text-[#F8BBD0]/60">✦</span>
           <span className="text-white/90">Casa de Capybara</span>
-        </div>
+        </motion.div>
 
         {/* Main Headline */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.15] mb-6 text-white drop-shadow-md">
+        <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.15] mb-6 text-white drop-shadow-md">
           {headline.split("Gentle Soul")[0]}
-          <span className="bg-gradient-to-r from-[#F8BBD0] via-[#FFB300] to-[#E65100] bg-clip-text text-transparent drop-shadow-none">
+          <span className="bg-gradient-to-r from-[#F8BBD0] via-[#FFB300] to-[#E65100] bg-clip-text text-transparent drop-shadow-none px-2 relative inline-block">
             Gentle Soul
+            {/* Cute sparkle decoration */}
+            <span className="absolute -top-4 -right-6 text-[#FFB300] text-xl opacity-80 animate-bounce delay-100">✨</span>
           </span>
           {headline.split("Gentle Soul")[1] || ""}
-        </h1>
+        </motion.h1>
 
         {/* Subtitle */}
-        <p className="max-w-2xl sm:max-w-3xl text-base sm:text-lg md:text-xl text-gray-200/90 font-light leading-relaxed mb-10 drop-shadow">
+        <motion.p variants={itemVariants} className="max-w-2xl sm:max-w-3xl text-base sm:text-lg md:text-xl text-gray-200/90 font-light leading-relaxed mb-10 drop-shadow">
           {subheadline}
-        </p>
+        </motion.p>
 
         {/* Call to Actions (CTAs) */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 w-full max-w-md sm:max-w-none">
+        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 w-full max-w-md sm:max-w-none">
           {/* Primary CTA - Book an Encounter */}
           <Link
             href={primaryCtaLink}
-            className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white transition-all duration-300 rounded-full overflow-hidden shadow-xl shadow-[#E65100]/25 hover:shadow-2xl hover:shadow-[#E65100]/40 hover:-translate-y-0.5 active:translate-y-0 bg-gradient-to-r from-[#E65100] to-[#F57C00] hover:from-[#d84315] hover:to-[#e65100]"
+            className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white transition-all duration-300 rounded-full overflow-hidden shadow-xl shadow-[#E65100]/25 hover:shadow-2xl hover:shadow-[#E65100]/40 hover:-translate-y-1 active:translate-y-0 bg-gradient-to-r from-[#E65100] to-[#F57C00] hover:from-[#d84315] hover:to-[#e65100]"
           >
             <span className="flex items-center gap-2">
-              <svg
-                className="w-5 h-5 text-white group-hover:rotate-12 transition-transform duration-300"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
+              <span className="text-xl group-hover:scale-125 transition-transform duration-300 origin-bottom-right">🐾</span>
               {primaryCtaText}
             </span>
           </Link>
@@ -120,29 +152,17 @@ export default function Hero({
           {/* Secondary CTA - Explore Stays */}
           <Link
             href={secondaryCtaLink}
-            className="group inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white transition-all duration-300 rounded-full backdrop-blur-md bg-white/10 hover:bg-white/20 border border-white/30 hover:border-white/60 hover:-translate-y-0.5 active:translate-y-0 shadow-lg shadow-black/20"
+            className="group inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white transition-all duration-300 rounded-full backdrop-blur-md bg-white/10 hover:bg-white/20 border border-white/30 hover:border-[#F8BBD0]/60 hover:-translate-y-1 active:translate-y-0 shadow-lg shadow-black/20"
           >
             <span className="flex items-center gap-2">
               <span>{secondaryCtaText}</span>
-              <svg
-                className="w-4 h-4 text-[#F8BBD0] group-hover:translate-x-1 transition-transform duration-300"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
+              <span className="text-xl group-hover:-rotate-12 transition-transform duration-300">🛖</span>
             </span>
           </Link>
-        </div>
+        </motion.div>
 
         {/* Quick Highlights / Trust Pills */}
-        <div className="mt-12 pt-8 border-t border-white/15 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 w-full max-w-4xl text-left">
+        <motion.div variants={itemVariants} className="mt-12 pt-8 border-t border-white/15 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 w-full max-w-4xl text-left">
           <div className="flex items-center gap-3 p-2 rounded-xl bg-black/20 backdrop-blur-xs border border-white/5">
             <div className="p-2 rounded-lg bg-[#1B5E20]/60 text-[#F8BBD0]">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -190,8 +210,8 @@ export default function Hero({
               <p className="text-sm font-semibold text-white">Capybara Friends</p>
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Hero Bottom Bar: Audio Toggle & Scroll Down Cue */}
       <div className="relative z-10 w-full container mx-auto px-4 sm:px-6 lg:px-8 pb-8 flex items-center justify-between">

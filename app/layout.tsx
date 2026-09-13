@@ -3,8 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { getGlobalSettings } from "@/lib/wordpress";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import GlobalFooter from "@/components/layout/GlobalFooter";
 import FloatingContactBar from "@/components/layout/FloatingContactBar";
+
+import SmoothScrolling from "@/components/ui/SmoothScrolling";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,11 +39,13 @@ export default async function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
-        <Navbar settings={settings} />
-        <div className="flex-1 flex flex-col w-full">{children}</div>
-        <Footer settings={settings} />
-        <FloatingContactBar settings={settings} />
+      <body suppressHydrationWarning className="min-h-full flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
+        <SmoothScrolling>
+          <Navbar settings={settings} />
+          <div className="flex-1 flex flex-col w-full">{children}</div>
+          <GlobalFooter settings={settings} />
+          <FloatingContactBar settings={settings} />
+        </SmoothScrolling>
       </body>
     </html>
   );
