@@ -624,11 +624,31 @@ export interface CafeMenuItem {
 }
 
 export async function getFeaturedMenuItems(): Promise<CafeMenuItem[]> {
-  return [
-    { id: "1", title: "Capybara Croissant", content: "Flaky buttery pastry", thumbnailUrl: "https://images.unsplash.com/photo-1555507036-ab1e4006a8a0?q=80&w=800&auto=format&fit=crop" },
-    { id: "2", title: "Rainforest Iced Latte", content: "Refreshing organic coffee", thumbnailUrl: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=800&auto=format&fit=crop" },
-    { id: "3", title: "Sanctuary Salad Bowl", content: "Farm-to-table greens", thumbnailUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop" }
-  ];
+  const query = `
+    query {
+      cafeMenuItems(first: 100) {
+        nodes {
+          id
+          title
+          content
+          featuredImage { node { sourceUrl } }
+        }
+      }
+    }
+  `;
+  try {
+    const data = (await fetchGraphQL(query)) as any;
+    const nodes = data?.cafeMenuItems?.nodes || [];
+    return nodes.map((node: any) => ({
+      id: node.id,
+      title: node.title,
+      content: node.content || "",
+      thumbnailUrl: node.featuredImage?.node?.sourceUrl || "https://images.unsplash.com/photo-1555507036-ab1e4006a8a0?q=80&w=800&auto=format&fit=crop"
+    }));
+  } catch (err) {
+    console.error("Error fetching cafe menu items:", err);
+    return [];
+  }
 }
 
 export async function getFeaturedRooms(): Promise<FullCapyRoom[]> {
@@ -653,24 +673,29 @@ export async function getGuestReviews(): Promise<GuestReview[]> {
 }
 
 export async function getEncounterTicketsApiData(): Promise<any> {
-  return {
-    individualImage: { node: { sourceUrl: "https://images.unsplash.com/photo-1584347783935-430b805dff32?q=80&w=800&auto=format&fit=crop", altText: "Solo Capybara Experience" } },
-    individualPaxNote: "Max 4 per session",
-    individualPrice: "10",
-    individualInclusions: [
-      { inclusionText: "30-minute encounter" },
-      { inclusionText: "Complimentary capybara food" },
-      { inclusionText: "Guided orientation" }
-    ],
-    familyImage: { node: { sourceUrl: "https://images.unsplash.com/photo-1628155930542-3c7a64e2c848?q=80&w=800&auto=format&fit=crop", altText: "Family Capybara Experience" } },
-    familyPaxNote: "Up to 5 people",
-    familyPrice: "30",
-    familyInclusions: [
-      { inclusionText: "45-minute private encounter" },
-      { inclusionText: "Extra capybara food basket" },
-      { inclusionText: "Dedicated handler" }
-    ]
-  };
+  const query = `
+    query {
+      page(id: "65", idType: DATABASE_ID) {
+        encounterTickets {
+          familyImage { node { sourceUrl altText } }
+          familyInclusions { inclusionText }
+          familyPaxNote
+          familyPrice
+          individualImage { node { sourceUrl altText } }
+          individualInclusions { inclusionText }
+          individualPaxNote
+          individualPrice
+        }
+      }
+    }
+  `;
+  try {
+    const data = (await fetchGraphQL(query)) as any;
+    return data?.page?.encounterTickets || null;
+  } catch (err) {
+    console.error("Error fetching encounter tickets:", err);
+    return null;
+  }
 }
 
 export interface CafeCategory {
