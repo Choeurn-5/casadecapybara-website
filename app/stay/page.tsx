@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllCapyRooms } from "@/lib/wordpress";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { Check, Users, Maximize, BedDouble, Building, Sun, Sparkles, Wifi, Tv, Wind, Droplets, Clock, ShieldCheck, Ban } from "lucide-react";
+import { Check, Users, Maximize, BedDouble, Sparkles, Wifi, Tv, Wind, Droplets, Clock, ShieldCheck, Ban } from "lucide-react";
 import Hero from "@/components/home/Hero";
 import StayGallery from "@/components/stay/StayGallery";
 
@@ -105,12 +105,16 @@ export default async function StayPage() {
         <div className="flex flex-col gap-16 lg:gap-20">
           {rooms.map((room, index) => {
             const isReversed = index % 2 !== 0;
+            const cleanSize = room.sizeSqm?.replace(/\s*sqm\s*sqm/gi, ' sqm').replace(/m²\s*sqm/gi, ' m²');
 
             return (
               <ScrollReveal key={room.id}>
                 <div className={`flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} bg-white rounded-3xl overflow-hidden shadow-lg border border-[#E8F5E9] group hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500`}>
-                  {/* Image Side (50%) - Locked aspect ratio for crisp, clear photos */}
-                  <Link href={`/stay/${room.slug}`} className="relative w-full lg:w-1/2 min-h-[300px] sm:min-h-[360px] lg:min-h-[420px] overflow-hidden bg-gray-100 block shrink-0">
+                  {/* Image Side (50%) - Proportional & Cinematic */}
+                  <Link 
+                    href={`/stay/${room.slug}`} 
+                    className="relative w-full lg:w-1/2 min-h-[280px] sm:min-h-[340px] lg:min-h-[390px] overflow-hidden bg-gray-100 block shrink-0 group/img"
+                  >
                     <Image
                       src={room.thumbnailUrl}
                       alt={room.title}
@@ -119,17 +123,47 @@ export default async function StayPage() {
                       unoptimized
                       priority={index < 2}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30 opacity-75 group-hover:opacity-65 transition-opacity duration-300" />
 
-                    {/* Encounter Badge */}
-                    <div className="absolute top-5 left-5 bg-white/95 backdrop-blur-md text-[#1B5E20] px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-md border border-[#1B5E20]/15">
+                    {/* Encounter Badge (Top Left) */}
+                    <div className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md text-[#1B5E20] px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-md border border-[#1B5E20]/15 z-10">
                       <span className="text-xs">🐾</span>
                       <span className="text-[11px] font-extrabold uppercase tracking-wider">Free Encounter</span>
+                    </div>
+
+                    {/* Classy Floating Specs Bar at the Bottom of the Image */}
+                    <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5 z-10">
+                      <div className="inline-flex flex-wrap items-center gap-2.5 sm:gap-4 px-4 py-2.5 rounded-2xl bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-xl transition-all duration-300 group-hover:bg-black/75 group-hover:border-[#E65100]/40 group-hover:scale-[1.02]">
+                        {room.occupancy && (
+                          <div className="flex items-center gap-1.5">
+                            <Users className="w-3.5 h-3.5 text-[#E65100] shrink-0" />
+                            <span className="text-xs sm:text-sm font-bold tracking-wide">{room.occupancy}</span>
+                          </div>
+                        )}
+                        {cleanSize && (
+                          <>
+                            <span className="w-1 h-1 rounded-full bg-white/40 hidden sm:inline-block" />
+                            <div className="flex items-center gap-1.5">
+                              <Maximize className="w-3.5 h-3.5 text-[#E65100] shrink-0" />
+                              <span className="text-xs sm:text-sm font-bold tracking-wide">{cleanSize}</span>
+                            </div>
+                          </>
+                        )}
+                        {room.bedType && (
+                          <>
+                            <span className="w-1 h-1 rounded-full bg-white/40 hidden sm:inline-block" />
+                            <div className="flex items-center gap-1.5">
+                              <BedDouble className="w-3.5 h-3.5 text-[#E65100] shrink-0" />
+                              <span className="text-xs sm:text-sm font-bold tracking-wide">{room.bedType}</span>
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </Link>
 
                   {/* Content Side (50%) */}
-                  <div className="lg:w-1/2 p-6 sm:p-8 lg:p-10 xl:p-12 flex flex-col justify-center">
+                  <div className="lg:w-1/2 p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
                     <Link href={`/stay/${room.slug}`}>
                       <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1B5E20] mb-3 tracking-tight group-hover:text-[#E65100] transition-colors duration-300">
                         {room.title}
@@ -150,77 +184,10 @@ export default async function StayPage() {
                       </svg>
                     </Link>
 
-                    {/* Room Specs Grid (Core Physical Specs) */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
-                      {room.occupancy && (
-                        <div className="flex items-center gap-3 p-3.5 bg-[#FAF7F2] rounded-2xl border border-[#F0EBE1] hover:border-[#E8F5E9] transition-colors">
-                          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#E65100] shadow-xs shrink-0">
-                            <Users className="w-4 h-4" />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Capacity</p>
-                            <p className="text-xs sm:text-sm font-bold text-[#1A2E1C] truncate">{room.occupancy}</p>
-                          </div>
-                        </div>
-                      )}
-                      {room.sizeSqm && (
-                        <div className="flex items-center gap-3 p-3.5 bg-[#FAF7F2] rounded-2xl border border-[#F0EBE1] hover:border-[#E8F5E9] transition-colors">
-                          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#E65100] shadow-xs shrink-0">
-                            <Maximize className="w-4 h-4" />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Size</p>
-                            <p className="text-xs sm:text-sm font-bold text-[#1A2E1C] truncate">
-                              {room.sizeSqm.replace(/\s*sqm\s*sqm/gi, ' sqm').replace(/m²\s*sqm/gi, ' m²')}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                      {room.bedType && (
-                        <div className="flex items-center gap-3 p-3.5 bg-[#FAF7F2] rounded-2xl border border-[#F0EBE1] hover:border-[#E8F5E9] transition-colors">
-                          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#E65100] shadow-xs shrink-0">
-                            <BedDouble className="w-4 h-4" />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Bed</p>
-                            <p className="text-xs sm:text-sm font-bold text-[#1A2E1C] truncate">{room.bedType}</p>
-                          </div>
-                        </div>
-                      )}
-                      {room.floor && (
-                        <div className="flex items-center gap-3 p-3.5 bg-[#FAF7F2] rounded-2xl border border-[#F0EBE1] hover:border-[#E8F5E9] transition-colors">
-                          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#E65100] shadow-xs shrink-0">
-                            <Building className="w-4 h-4" />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Floor</p>
-                            <p className="text-xs sm:text-sm font-bold text-[#1A2E1C] truncate">
-                              {/^\d+$/.test(room.floor) 
-                                ? `${room.floor}${room.floor === '1' ? 'st' : room.floor === '2' ? 'nd' : room.floor === '3' ? 'rd' : 'th'} Floor`
-                                : room.floor}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                      {room.balcony && (
-                        <div className="flex items-center gap-3 p-3.5 bg-[#FAF7F2] rounded-2xl border border-[#F0EBE1] hover:border-[#E8F5E9] transition-colors">
-                          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#E65100] shadow-xs shrink-0">
-                            <Sun className="w-4 h-4" />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Outdoor</p>
-                            <p className="text-xs sm:text-sm font-bold text-[#1A2E1C] truncate">
-                              {room.balcony.toLowerCase() === 'private' ? 'Private Balcony' : room.balcony}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
                     {/* Room Highlights & Special Features (Rendered as Elegant Luxury Tags) */}
                     {room.specialFeature && (
-                      <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#F4F9F4] to-[#FAF7F2] border border-[#E8F5E9] shadow-xs">
-                        <div className="flex items-center gap-2 mb-3">
+                      <div className="mb-6 p-4 rounded-2xl bg-gradient-to-br from-[#F4F9F4] to-[#FAF7F2] border border-[#E8F5E9] shadow-xs">
+                        <div className="flex items-center gap-2 mb-2.5">
                           <div className="w-6 h-6 rounded-lg bg-[#E65100]/10 flex items-center justify-center text-[#E65100]">
                             <Sparkles className="w-3.5 h-3.5" />
                           </div>
@@ -247,12 +214,12 @@ export default async function StayPage() {
                     )}
 
                     {/* Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex flex-col sm:flex-row gap-3.5 mt-auto">
                       <a
                         href={BOOKING_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 py-4 bg-[#E65100] text-white font-bold rounded-2xl hover:bg-[#d84315] shadow-lg shadow-[#E65100]/25 transition-all duration-300 hover:-translate-y-0.5"
+                        className="flex-1 flex items-center justify-center gap-2 py-3.5 sm:py-4 bg-[#E65100] text-white font-bold rounded-2xl hover:bg-[#d84315] shadow-lg shadow-[#E65100]/25 transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
                       >
                         <span>Book Now</span>
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -261,7 +228,7 @@ export default async function StayPage() {
                       </a>
                       <Link
                         href={`/stay/${room.slug}`}
-                        className="flex-1 flex items-center justify-center py-4 bg-transparent border-2 border-[#1B5E20] text-[#1B5E20] hover:bg-[#1B5E20] hover:text-white font-bold rounded-2xl transition-all duration-300"
+                        className="flex-1 flex items-center justify-center py-3.5 sm:py-4 bg-transparent border-2 border-[#1B5E20] text-[#1B5E20] hover:bg-[#1B5E20] hover:text-white font-bold rounded-2xl transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
                       >
                         View Details
                       </Link>
