@@ -17,7 +17,7 @@ export default async function EncounterTicketsSummary() {
   const familyImgSrc = data.familyImage?.node?.sourceUrl || "https://images.unsplash.com/photo-1628155930542-3c7a64e2c848?q=80&w=800&auto=format&fit=crop";
   const familyImgAlt = data.familyImage?.node?.altText || "Family Capybara Experience";
   const globalSettings = await getGlobalSettings();
-  const telegramBaseUrl = globalSettings.telegramUrl || "https://t.me/casadecapybara";
+  const telegramBaseUrl = globalSettings.telegramUrl || "https://t.me/capybaracambodia";
 
   return (
     <section className="relative w-full py-16 sm:py-24 bg-[#F5EFE6]/60 text-[#1A2E1C] overflow-hidden border-t border-[#1B5E20]/10">
