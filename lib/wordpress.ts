@@ -706,3 +706,120 @@ export interface CafeCategory {
 export async function getAllCafeMenuItems(): Promise<CafeMenuItem[]> {
   return await getFeaturedMenuItems();
 }
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  date: string;
+  excerpt: string;
+  content?: string;
+  featuredImage?: {
+    node?: {
+      sourceUrl: string;
+      altText?: string;
+    }
+  };
+  categories: {
+    nodes: {
+      name: string;
+      slug: string;
+    }[];
+  };
+  tags?: {
+    nodes: {
+      name: string;
+      slug: string;
+    }[];
+  };
+  author?: {
+    node?: {
+      name: string;
+    }
+  };
+}
+
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  const query = `
+    query GetBlogArchive {
+      posts(first: 50, where: { status: PUBLISH, orderby: { field: DATE, order: DESC } }) {
+        nodes {
+          id
+          title
+          slug
+          date
+          excerpt
+          featuredImage {
+            node {
+              sourceUrl
+              altText
+            }
+          }
+          categories {
+            nodes {
+              name
+              slug
+            }
+          }
+          tags {
+            nodes {
+              name
+              slug
+            }
+          }
+          author {
+            node {
+              name
+            }
+          }
+        }
+      }
+    }
+  `;
+  try {
+    const data = (await fetchGraphQL(query)) as any;
+    return data?.posts?.nodes || [];
+  } catch (error) {
+    console.error("Error fetching blog posts:", error);
+    return [];
+  }
+}
+
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  const query = `
+    query GetSinglePost($slug: ID!) {
+      post(id: $slug, idType: SLUG) {
+        id
+        title
+        slug
+        date
+        content
+        excerpt
+        featuredImage {
+            node {
+              sourceUrl
+              altText
+            }
+        }
+        categories {
+          nodes {
+            name
+            slug
+          }
+        }
+        author {
+          node {
+            name
+          }
+        }
+      }
+    }
+  `;
+  try {
+    const data = (await fetchGraphQL(query, { slug })) as any;
+    return data?.post || null;
+  } catch (error) {
+    console.error("Error fetching single post:", error);
+    return null;
+  }
+}
