@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FullCapyRoom } from "@/lib/wordpress";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { Users, Maximize, BedDouble, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users, Maximize, BedDouble, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 
 const BOOKING_URL = "https://app.inn-connect.com/book2/?p=Casa%20de%20Capybara";
 
@@ -45,30 +45,30 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
   };
 
   return (
-    <section className="relative w-full py-20 sm:py-28 bg-[#0A110C] text-[#FAF7F2] overflow-hidden">
-      {/* Ambient glow */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#E65100]/30 to-transparent" />
-      <div className="absolute top-1/3 -right-64 w-[500px] h-[500px] bg-[#1B5E20]/15 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-48 w-[400px] h-[400px] bg-[#E65100]/8 rounded-full blur-[100px] pointer-events-none" />
+    <section className="relative w-full py-20 sm:py-28 bg-gradient-to-b from-[#F5EFE6]/70 via-[#FAF7F2] to-[#F5EFE6]/50 text-[#1A2E1C] overflow-hidden">
+      {/* Ambient decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#1B5E20]/20 to-transparent" />
+      <div className="absolute top-1/4 -right-48 w-96 h-96 bg-[#1B5E20]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-48 w-96 h-96 bg-[#E65100]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1400px]">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 sm:mb-16">
           <div className="max-w-2xl">
             <ScrollReveal direction="up" staggerIndex={0}>
-              <p className="text-[#E65100] text-sm font-medium tracking-[0.2em] uppercase mb-4 flex items-center gap-4">
-                <span className="w-12 h-px bg-[#E65100]/50" />
-                Sanctuary Stays
-              </p>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1B5E20]/10 border border-[#1B5E20]/20 text-[#1B5E20] text-xs font-bold uppercase tracking-wider mb-4">
+                <Sparkles className="w-3.5 h-3.5 text-[#E65100]" />
+                <span>Sanctuary Stays & Eco-Villas</span>
+              </div>
             </ScrollReveal>
             <ScrollReveal direction="up" staggerIndex={1}>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-white leading-[1.1] font-serif">
-                Sleep in <span className="italic text-[#F8BBD0]">Capybara Magic</span>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#1B5E20] leading-[1.1] font-serif">
+                Sleep in <span className="italic font-light text-[#E65100]">Capybara Magic</span>
               </h2>
             </ScrollReveal>
             <ScrollReveal direction="up" staggerIndex={2}>
-              <p className="mt-6 text-lg text-gray-400 font-light leading-relaxed max-w-lg">
-                Each room is a treasure hunt for children and a luxury retreat for parents. Capybara-themed everything — from bathroom tiles to slippers.
+              <p className="mt-4 text-base sm:text-lg text-gray-600 leading-relaxed max-w-xl">
+                Each room is a playful sanctuary for families and a peaceful botanical retreat for travelers. Every stay includes unlimited complimentary capybara encounters.
               </p>
             </ScrollReveal>
           </div>
@@ -78,7 +78,7 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
             <button
               onClick={() => scroll("left")}
               disabled={!canScrollLeft}
-              className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
+              className="w-12 h-12 rounded-full border border-[#1B5E20]/20 bg-white shadow-sm flex items-center justify-center text-[#1B5E20] hover:bg-[#1B5E20] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 active:scale-95"
               aria-label="Scroll left"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -86,7 +86,7 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
             <button
               onClick={() => scroll("right")}
               disabled={!canScrollRight}
-              className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
+              className="w-12 h-12 rounded-full border border-[#1B5E20]/20 bg-white shadow-sm flex items-center justify-center text-[#1B5E20] hover:bg-[#1B5E20] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 active:scale-95"
               aria-label="Scroll right"
             >
               <ChevronRight className="w-5 h-5" />
@@ -97,91 +97,95 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
         {/* Carousel */}
         <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 -mx-4 px-4 scrollbar-hide"
+          className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 -mx-4 px-4 scrollbar-hide"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {rooms.map((room) => (
-            <div
-              key={room.id}
-              data-room-card
-              className="flex-none w-[85vw] sm:w-[380px] lg:w-[400px] snap-start group"
-            >
-              <div className="relative h-full flex flex-col bg-[#131A15] border border-white/8 rounded-2xl overflow-hidden hover:border-[#E65100]/30 transition-all duration-500">
-                {/* Image */}
-                <div className="relative w-full aspect-[4/3] overflow-hidden">
-                  <Image
-                    src={room.thumbnailUrl}
-                    alt={room.title}
-                    fill
-                    unoptimized
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#131A15] via-transparent to-transparent" />
+          {rooms.map((room) => {
+            const cleanSize = room.sizeSqm?.replace(/\s*sqm\s*sqm/gi, ' sqm').replace(/m²\s*sqm/gi, ' m²');
 
-                  {/* Capybara Encounter Badge */}
-                  <div className="absolute top-4 left-4 bg-[#1B5E20]/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-2">
-                    <span className="text-sm">🐾</span>
-                    <span className="text-[10px] font-bold text-white uppercase tracking-wider">Free Encounter Included</span>
-                  </div>
-                </div>
+            return (
+              <div
+                key={room.id}
+                data-room-card
+                className="flex-none w-[85vw] sm:w-[380px] lg:w-[400px] snap-start group"
+              >
+                <div className="relative h-full flex flex-col bg-white border border-[#E8F5E9] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                  {/* Image */}
+                  <div className="relative w-full aspect-[16/10] overflow-hidden bg-gray-100">
+                    <Image
+                      src={room.thumbnailUrl}
+                      alt={room.title}
+                      fill
+                      unoptimized
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
 
-                {/* Content */}
-                <div className="flex flex-col flex-grow p-6 pt-2">
-                  <h3 className="text-2xl font-bold text-white mb-2 tracking-tight group-hover:text-[#F8BBD0] transition-colors duration-300">
-                    {room.title}
-                  </h3>
-
-                  <p className="text-sm text-gray-400 font-light line-clamp-2 mb-5 leading-relaxed">
-                    {room.description}
-                  </p>
-
-                  {/* Specs */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {room.occupancy && (
-                      <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg text-xs text-gray-300">
-                        <Users className="w-3.5 h-3.5 text-[#E65100]" />
-                        <span>{room.occupancy}</span>
-                      </div>
-                    )}
-                    {room.sizeSqm && (
-                      <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg text-xs text-gray-300">
-                        <Maximize className="w-3.5 h-3.5 text-[#E65100]" />
-                        <span>{room.sizeSqm}</span>
-                      </div>
-                    )}
-                    {room.bedType && (
-                      <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg text-xs text-gray-300">
-                        <BedDouble className="w-3.5 h-3.5 text-[#E65100]" />
-                        <span>{room.bedType}</span>
-                      </div>
-                    )}
+                    {/* Capybara Encounter Badge */}
+                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md text-[#1B5E20] px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-md border border-[#1B5E20]/15">
+                      <span className="text-xs">🐾</span>
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider">Free Encounter</span>
+                    </div>
                   </div>
 
-                  {/* Buttons */}
-                  <div className="mt-auto flex gap-3">
-                    <a
-                      href={BOOKING_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center py-3 bg-[#E65100] text-white text-sm font-bold rounded-xl hover:bg-[#d84315] transition-all duration-300 shadow-lg shadow-[#E65100]/20"
-                    >
-                      Book Now
-                    </a>
-                    <Link
-                      href={`/stay/${room.slug}`}
-                      className="flex-1 flex items-center justify-center py-3 border border-white/20 text-white text-sm font-bold rounded-xl hover:bg-white/10 transition-all duration-300"
-                    >
-                      Room Details
-                    </Link>
+                  {/* Content */}
+                  <div className="flex flex-col flex-grow p-6 pt-5">
+                    <h3 className="text-2xl font-bold text-[#1B5E20] mb-2 tracking-tight group-hover:text-[#E65100] transition-colors duration-300">
+                      {room.title}
+                    </h3>
+
+                    <p className="text-sm text-gray-600 line-clamp-2 mb-5 leading-relaxed">
+                      {room.description}
+                    </p>
+
+                    {/* Specs */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {room.occupancy && (
+                        <div className="flex items-center gap-1.5 bg-[#FAF7F2] border border-[#F0EBE1] px-3 py-1.5 rounded-xl text-xs font-semibold text-[#1A2E1C]">
+                          <Users className="w-3.5 h-3.5 text-[#E65100]" />
+                          <span>{room.occupancy}</span>
+                        </div>
+                      )}
+                      {cleanSize && (
+                        <div className="flex items-center gap-1.5 bg-[#FAF7F2] border border-[#F0EBE1] px-3 py-1.5 rounded-xl text-xs font-semibold text-[#1A2E1C]">
+                          <Maximize className="w-3.5 h-3.5 text-[#E65100]" />
+                          <span>{cleanSize}</span>
+                        </div>
+                      )}
+                      {room.bedType && (
+                        <div className="flex items-center gap-1.5 bg-[#FAF7F2] border border-[#F0EBE1] px-3 py-1.5 rounded-xl text-xs font-semibold text-[#1A2E1C]">
+                          <BedDouble className="w-3.5 h-3.5 text-[#E65100]" />
+                          <span>{room.bedType}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="mt-auto flex gap-3">
+                      <a
+                        href={BOOKING_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center py-3 bg-[#E65100] text-white text-sm font-bold rounded-xl hover:bg-[#d84315] transition-all duration-300 shadow-md shadow-[#E65100]/20 hover:-translate-y-0.5"
+                      >
+                        Book Now
+                      </a>
+                      <Link
+                        href={`/stay/${room.slug}`}
+                        className="flex-1 flex items-center justify-center py-3 border-2 border-[#1B5E20] text-[#1B5E20] text-sm font-bold rounded-xl hover:bg-[#1B5E20] hover:text-white transition-all duration-300"
+                      >
+                        Room Details
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Dot Indicators */}
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex justify-center gap-2 mt-4">
           {rooms.map((_, i) => (
             <button
               key={i}
@@ -192,8 +196,8 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
                 if (!card) return;
                 el.scrollTo({ left: i * (card.clientWidth + 24), behavior: "smooth" });
               }}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === activeIndex ? "w-8 bg-[#E65100]" : "w-2 bg-white/30 hover:bg-white/50"
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                i === activeIndex ? "w-8 bg-[#E65100]" : "w-2.5 bg-gray-300 hover:bg-gray-400"
               }`}
               aria-label={`Go to room ${i + 1}`}
             />
@@ -201,15 +205,14 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
         </div>
 
         {/* View All CTA */}
-        <ScrollReveal direction="up" delay={0.3}>
+        <ScrollReveal direction="up" delay={0.2}>
           <div className="text-center mt-12">
             <Link
               href="/stay"
-              className="group relative inline-flex items-center justify-center gap-4 py-4 px-10 border border-[#E65100]/50 text-[#E65100] text-sm uppercase tracking-widest hover:text-white transition-colors duration-500 overflow-hidden"
+              className="inline-flex items-center justify-center gap-3 py-4 px-10 bg-[#1B5E20] hover:bg-[#2E7D32] text-white font-bold rounded-2xl shadow-lg shadow-[#1B5E20]/20 transition-all duration-300 hover:-translate-y-1 group"
             >
-              <div className="absolute inset-0 bg-[#E65100] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
-              <span className="relative z-10">View All Rooms</span>
-              <svg className="w-4 h-4 relative z-10 group-hover:translate-x-2 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+              <span>Explore All Rooms</span>
+              <svg className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Link>

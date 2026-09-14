@@ -108,34 +108,47 @@ export default async function StayPage() {
 
             return (
               <ScrollReveal key={room.id}>
-                <div className={`flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100/60 group hover:shadow-2xl transition-shadow duration-500`}>
-                  {/* Image Side (50%) */}
-                  <div className="relative h-72 sm:h-80 lg:h-auto lg:w-1/2 overflow-hidden">
+                <div className={`flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} bg-white rounded-3xl overflow-hidden shadow-lg border border-[#E8F5E9] group hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500`}>
+                  {/* Image Side (50%) - Locked aspect ratio for crisp, clear photos */}
+                  <Link href={`/stay/${room.slug}`} className="relative w-full lg:w-1/2 min-h-[300px] sm:min-h-[360px] lg:min-h-[420px] overflow-hidden bg-gray-100 block shrink-0">
                     <Image
                       src={room.thumbnailUrl}
                       alt={room.title}
                       fill
-                      className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.04]"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       unoptimized
+                      priority={index < 2}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
 
                     {/* Encounter Badge */}
-                    <div className="absolute top-5 left-5 bg-[#1B5E20]/90 backdrop-blur-sm text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg">
-                      <span className="text-sm">🐾</span>
-                      <span className="text-[11px] font-bold uppercase tracking-wider">Free Encounter</span>
+                    <div className="absolute top-5 left-5 bg-white/95 backdrop-blur-md text-[#1B5E20] px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-md border border-[#1B5E20]/15">
+                      <span className="text-xs">🐾</span>
+                      <span className="text-[11px] font-extrabold uppercase tracking-wider">Free Encounter</span>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Content Side (50%) */}
-                  <div className="lg:w-1/2 p-8 sm:p-10 lg:p-12 xl:p-16 flex flex-col justify-center">
-                    <h3 className="text-3xl lg:text-4xl font-bold text-[#1B5E20] mb-4 tracking-tight">
-                      {room.title}
-                    </h3>
+                  <div className="lg:w-1/2 p-6 sm:p-8 lg:p-10 xl:p-12 flex flex-col justify-center">
+                    <Link href={`/stay/${room.slug}`}>
+                      <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1B5E20] mb-3 tracking-tight group-hover:text-[#E65100] transition-colors duration-300">
+                        {room.title}
+                      </h3>
+                    </Link>
 
-                    <p className="text-gray-600 text-base lg:text-lg leading-relaxed mb-8">
+                    {/* Short Description Teaser (Full text shown on View Details) */}
+                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-3 line-clamp-2">
                       {room.description}
                     </p>
+                    <Link
+                      href={`/stay/${room.slug}`}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1B5E20] hover:text-[#E65100] transition-colors mb-6 group/link w-fit"
+                    >
+                      <span>Read full room description & details</span>
+                      <svg className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
 
                     {/* Room Specs Grid (Core Physical Specs) */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
