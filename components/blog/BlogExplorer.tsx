@@ -13,14 +13,51 @@ interface BlogExplorerProps {
 const CATEGORIES = ["All Topics", "Travel Guides", "Family Travel", "Capybara Stories", "Cafes & Food"];
 const LANGUAGES = [
   { name: "All Languages", id: "all" },
-  { name: "🇬🇧 English (EN)", id: "english" },
-  { name: "🇰🇭 ភាសាខ្មែរ (KH)", id: "khmer" },
-  { name: "🇫🇷 Français (FR)", id: "french" },
-  { name: "🇩🇪 Deutsch (DE)", id: "deutsch" },
-  { name: "🇰🇷 한국어 (KR)", id: "korean" },
-  { name: "🇨🇳 中文 (CN)", id: "chinese" },
-  { name: "🇯🇵 日本語 (JP)", id: "japanese" },
+  { name: "🇬🇧 English (EN)", id: "en" },
+  { name: "🇰🇭 ភាសាខ្មែរ (KH)", id: "kh" },
+  { name: "🇫🇷 Français (FR)", id: "fr" },
+  { name: "🇩🇪 Deutsch (DE)", id: "de" },
+  { name: "🇰🇷 한국어 (KR)", id: "kr" },
+  { name: "🇨🇳 中文 (CN)", id: "cn" },
+  { name: "🇯🇵 日本語 (JP)", id: "jp" },
 ];
+
+export function getPostLanguage(post: any): string {
+  const slug = (post.slug || "").toLowerCase();
+  const title = post.title || "";
+
+  // 1. Detect by slug prefix or title suffix
+  if (slug.startsWith("fr-") || title.includes("(FR)")) return "fr";
+  if (slug.startsWith("de-") || title.includes("(DE)")) return "de";
+  if (slug.startsWith("kr-") || title.includes("(KR)")) return "kr";
+  if (slug.startsWith("cn-") || title.includes("(CN)")) return "cn";
+  if (slug.startsWith("jp-") || title.includes("(JP)")) return "jp";
+  if (slug.endsWith("-kh") || title.includes("(KH)")) return "kh";
+
+  // 2. Detect by Unicode characters in title
+  if (/[\u1780-\u17FF]/.test(title)) return "kh"; // Khmer
+  if (/[\uAC00-\uD7AF]/.test(title)) return "kr"; // Korean
+  if (/[\u3040-\u30FF]/.test(title)) return "jp"; // Japanese
+  if (/[\u4E00-\u9FFF]/.test(title)) return "cn"; // Chinese
+
+  // 3. Check ACF if set and not default 'en'
+  if (post.blogPostSettings?.postLanguage) {
+    const pl = String(post.blogPostSettings.postLanguage).toLowerCase();
+    if (pl !== "en" && pl !== "gb english") {
+      // Map known string values just in case
+      if (pl.includes("kh")) return "kh";
+      if (pl.includes("fr")) return "fr";
+      if (pl.includes("de")) return "de";
+      if (pl.includes("kr") || pl.includes("ko")) return "kr";
+      if (pl.includes("cn") || pl.includes("zh")) return "cn";
+      if (pl.includes("jp") || pl.includes("ja")) return "jp";
+      return pl;
+    }
+  }
+
+  // 4. Default to English
+  return "en";
+}
 
 export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,15 +78,8 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
         post.categories.nodes.some(c => c.name.toLowerCase() === selectedCategory.toLowerCase());
 
       // Language
-      let langMatch = true;
-      if (selectedLanguage !== "all") {
-        const langObj = LANGUAGES.find(l => l.id === selectedLanguage);
-        const langName = langObj?.name.replace(/[^a-zA-Z ]/g, "").trim().split(" ")[0].toLowerCase();
-        
-        langMatch = 
-          post.categories.nodes.some(c => c.name.toLowerCase().includes(langName || "")) ||
-          post.tags?.nodes.some(t => t.name.toLowerCase().includes(langName || "")) || false;
-      }
+      const lang = getPostLanguage(post);
+      const langMatch = selectedLanguage === "all" || lang === selectedLanguage;
 
       return searchMatch && catMatch && langMatch;
     });

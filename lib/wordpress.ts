@@ -737,6 +737,9 @@ export interface BlogPost {
       name: string;
     }
   };
+  blogPostSettings?: {
+    postLanguage?: string;
+  };
 }
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
@@ -771,6 +774,9 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
             node {
               name
             }
+          }
+          blogPostSettings {
+            postLanguage
           }
         }
       }
@@ -811,6 +817,9 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
           node {
             name
           }
+        }
+        blogPostSettings {
+          postLanguage
         }
       }
     }
