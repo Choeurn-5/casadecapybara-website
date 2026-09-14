@@ -99,6 +99,14 @@ export default async function KhmerPage() {
   const localSpend = data.khLocalDealSpend || "២០,០០០៛";
   const localCashback = data.khLocalDealCashback || "២០,០០០៛";
 
+  const getYoutubeId = (url: string) => {
+    if (!url) return "3mTyoZkffn8";
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : "3mTyoZkffn8";
+  };
+  const youtubeId = getYoutubeId(data.khHeroVideoUrl);
+
   return (
     <div className={`${notoKhmer.className} min-h-screen bg-[#FDFDFD] text-[#1A1A1A] antialiased selection:bg-[#F8BBD0] selection:text-[#1B5E20]`}>
 
@@ -121,8 +129,30 @@ export default async function KhmerPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30 z-10" />
         
         {/* Video or Image Background */}
-        <div className="absolute inset-0 z-0">
-          <div className="w-full h-full bg-[#1B5E20]/40 mix-blend-multiply" />
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          {/* Fallback & Loading Poster Image */}
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-90"
+            style={{
+              backgroundImage: `url('https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg')`,
+              backgroundColor: "#1B5E20",
+            }}
+          />
+
+          {/* YouTube Responsive Video Container */}
+          <div className="absolute inset-0 w-[150%] h-[150%] -top-[25%] -left-[25%]">
+            <iframe
+              className="w-full h-full object-cover border-0"
+              src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1`}
+              title="Casa de Capybara Sanctuary Experience"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            />
+          </div>
+
+          {/* Rich Multi-Layer Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1B5E20]/40 via-transparent to-[#E65100]/30 mix-blend-color-dodge" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#0F1710]/40 to-[#0F1710]/90" />
         </div>
 
         <div className="relative z-20 max-w-4xl mx-auto text-center text-white py-20">
