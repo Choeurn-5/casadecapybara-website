@@ -151,13 +151,13 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
               className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-[#E8F5E9] transition-shadow duration-300 group flex flex-col"
             >
               {/* Image Container */}
-              <div className="relative h-56 w-full overflow-hidden bg-[#E8F5E9]">
+              <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-[#FFF3E0] to-[#FFE0B2]">
                 {item.imageUrl ? (
                   <Image
                     src={item.imageUrl}
                     alt={item.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-contain p-6 drop-shadow-xl transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
                     unoptimized
                   />
                 ) : (

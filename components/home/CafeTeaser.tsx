@@ -4,7 +4,8 @@ import Image from "next/image";
 import { getFeaturedMenuItems } from "@/lib/wordpress";
 
 export default async function CafeTeaser() {
-  const menuItems = await getFeaturedMenuItems();
+  const allMenuItems = await getFeaturedMenuItems();
+  const menuItems = allMenuItems.slice(0, 3);
 
   return (
     <section className="relative w-full py-24 sm:py-36 bg-[#0A110C] text-[#FAF7F2] overflow-hidden">
@@ -55,20 +56,18 @@ export default async function CafeTeaser() {
                   }`}
                 >
                   {/* Image Container with aspect ratio and glass hover effect */}
-                  <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#131A15] mb-6">
+                  <div className="relative w-full aspect-[3/4] overflow-hidden bg-gradient-to-br from-[#FFF3E0] to-[#FFE0B2] mb-6 rounded-2xl">
                     <Image
                       src={item.thumbnailUrl}
                       alt={item.title}
                       fill
                       unoptimized
-                      className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-out"
+                      className="object-contain p-6 drop-shadow-2xl opacity-90 group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-700 ease-out"
                     />
-                    {/* Dark gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-500" />
                     
                     {/* Decorative Corner Lines */}
-                    <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-white/20 group-hover:border-[#E65100]/60 transition-colors duration-500" />
-                    <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-white/20 group-hover:border-[#E65100]/60 transition-colors duration-500" />
+                    <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-black/10 group-hover:border-[#E65100]/60 transition-colors duration-500" />
+                    <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-black/10 group-hover:border-[#E65100]/60 transition-colors duration-500" />
                   </div>
 
                   {/* Typography below image */}
@@ -87,15 +86,14 @@ export default async function CafeTeaser() {
             {/* Third item fallback for mobile (so it doesn't get totally hidden) */}
             {menuItems[2] && (
               <div className="sm:hidden w-full max-w-[280px] mx-auto mt-6 group cursor-pointer">
-                 <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#131A15] mb-6">
+                 <div className="relative w-full aspect-[3/4] overflow-hidden bg-gradient-to-br from-[#FFF3E0] to-[#FFE0B2] mb-6 rounded-2xl">
                     <Image
                       src={menuItems[2].thumbnailUrl}
                       alt={menuItems[2].title}
                       fill
                       unoptimized
-                      className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-out"
+                      className="object-contain p-6 drop-shadow-2xl opacity-90 group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-700 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-500" />
                   </div>
                   <div className="text-center">
                     <h3 className="text-xl font-medium text-white mb-2 font-serif group-hover:text-[#E65100] transition-colors duration-300">

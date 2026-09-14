@@ -703,12 +703,6 @@ export interface CafeCategory {
   items: CafeMenuItem[];
 }
 
-export async function getAllCafeMenuItems(): Promise<any> {
-  const allItems = await getFeaturedMenuItems();
-  return [
-    {
-      title: "Signature Menu",
-      items: allItems
-    }
-  ];
+export async function getAllCafeMenuItems(): Promise<CafeMenuItem[]> {
+  return await getFeaturedMenuItems();
 }

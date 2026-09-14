@@ -86,13 +86,13 @@ export default function CafeFeaturedMenu({ wpItems }: { wpItems: WPCafeMenuItem[
           <ScrollReveal key={item.id} delay={idx * 0.1} direction="up">
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-[#E8F5E9] transition-shadow duration-300 group flex flex-col h-full">
               {/* Image Container */}
-              <div className="relative h-56 w-full overflow-hidden bg-[#E8F5E9] shrink-0">
+              <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-[#FFF3E0] to-[#FFE0B2] shrink-0">
                 {item.imageUrl ? (
                   <Image
                     src={item.imageUrl}
                     alt={item.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-contain p-6 drop-shadow-xl transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
                     unoptimized
                   />
                 ) : (

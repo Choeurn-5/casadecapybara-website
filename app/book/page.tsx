@@ -12,7 +12,7 @@ export default function BookPage() {
         
         <div className="w-full min-h-[700px] bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E8F5E9]">
           <iframe
-            id="innconnectbookingengine"
+            id="innconnectbookingengine" 
             width="100%"
             height="100%"
             style={{ minHeight: "700px" }}
