@@ -32,34 +32,35 @@ export default function Hero({
     offset: ["start start", "end start"],
   });
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 0.5], [0, -40]);
+  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
   // YouTube embed URL with loop, mute, autoplay, and hidden controls
   const youtubeEmbedUrl = `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&mute=${
     isMuted ? "1" : "0"
   }&loop=1&playlist=${youtubeId}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1`;
 
-  // Animation variants for adorable staggared entrance
+  // Animation variants for cinematic staggered entrance
   const containerVariants: any = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
+        staggerChildren: 0.12,
+        delayChildren: 0.3,
       },
     },
   };
 
   const itemVariants: any = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    hidden: { opacity: 0, y: 30 },
     show: { 
       opacity: 1, 
       y: 0, 
-      scale: 1,
       transition: { 
-        type: "spring", 
-        stiffness: 70, 
-        damping: 15 
+        duration: 0.9,
+        ease: [0.16, 1, 0.3, 1],
       }
     },
   };
@@ -110,6 +111,7 @@ export default function Hero({
         variants={containerVariants}
         initial="hidden"
         animate="show"
+        style={{ opacity: contentOpacity, y: contentY }}
         className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center py-12 my-auto flex flex-col items-center"
       >
         {/* Eyebrow / Sanctuary Badge */}
@@ -240,12 +242,15 @@ export default function Hero({
         </button>
 
         {/* Scroll Cue */}
-        <div className="flex flex-col items-center gap-1.5 text-xs text-gray-400">
+        <motion.div
+          style={{ opacity: scrollIndicatorOpacity }}
+          className="flex flex-col items-center gap-1.5 text-xs text-gray-400"
+        >
           <span className="tracking-widest uppercase text-[10px]">Explore</span>
           <div className="w-5 h-8 rounded-full border-2 border-white/30 flex justify-center p-1">
             <div className="w-1 h-2 rounded-full bg-[#E65100] animate-bounce" />
           </div>
-        </div>
+        </motion.div>
 
         {/* Location pill */}
         <div className="hidden sm:flex items-center gap-2 text-xs text-gray-300">

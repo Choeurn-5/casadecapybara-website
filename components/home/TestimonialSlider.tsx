@@ -1,5 +1,6 @@
 import React from "react";
 import { getGuestReviews } from "@/lib/wordpress";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // A fallback array if the API doesn't return anything or if there's an error.
 const fallbackReviews = [
@@ -31,12 +32,16 @@ export default async function TestimonialSlider() {
     <section className="w-full py-20 bg-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1A2E1C] mb-4">
-            Hear From Our Guests
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover why families, couples, and animal lovers from around the world choose Casa de Capybara for their Siem Reap getaway.
-          </p>
+          <ScrollReveal direction="up" staggerIndex={0}>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1A2E1C] mb-4">
+              Hear From Our Guests
+            </h2>
+          </ScrollReveal>
+          <ScrollReveal direction="up" staggerIndex={1}>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Discover why families, couples, and animal lovers from around the world choose Casa de Capybara for their Siem Reap getaway.
+            </p>
+          </ScrollReveal>
         </div>
 
         {/* Testimonials Grid/Scroll Container */}

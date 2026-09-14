@@ -28,27 +28,27 @@ export default function Home() {
       />
 
       {/* Section 2: Encounter Tickets (The Viral Draw) */}
-      <ScrollReveal delay={0.2}>
+      <ScrollReveal delay={0.1} staggerIndex={0}>
         <EncounterTicketsSummary />
       </ScrollReveal>
 
       {/* Section 3: The Stay / Rooms (The Upsell) */}
-      <ScrollReveal delay={0.2}>
+      <ScrollReveal delay={0.1} staggerIndex={0}>
         <RoomTeaser />
       </ScrollReveal>
 
       {/* Section 4: The Destination Cafe (The Experience) */}
-      <ScrollReveal delay={0.2}>
+      <ScrollReveal delay={0.1} staggerIndex={0}>
         <CafeTeaser />
       </ScrollReveal>
 
       {/* Section 5: Families & Safety (The Trust Builder) */}
-      <ScrollReveal delay={0.2}>
+      <ScrollReveal delay={0.1} staggerIndex={0}>
         <FamiliesAndSafetyTeaser />
       </ScrollReveal>
 
       {/* Section 6: Guest Reviews (Social Proof) */}
-      <ScrollReveal delay={0.2}>
+      <ScrollReveal delay={0.1} staggerIndex={0}>
         <TestimonialSlider />
       </ScrollReveal>
     </main>

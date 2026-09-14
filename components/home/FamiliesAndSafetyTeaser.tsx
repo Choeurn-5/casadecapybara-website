@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const features = [
   {
@@ -87,24 +88,30 @@ export default function FamiliesAndSafetyTeaser() {
 
           {/* Right: Copy and 2x2 Grid */}
           <div className="w-full lg:w-1/2 flex flex-col">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1B5E20] leading-tight mb-6">
-              Safe, Family-Friendly <br /> Sanctuary Magic
-            </h2>
-            <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-              We prioritize safety and hygiene above all else. Bring your entire family for a worry-free day of connection and joy, knowing that our facilities are meticulously maintained.
-            </p>
+            <ScrollReveal direction="up" staggerIndex={0}>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1B5E20] leading-tight mb-6">
+                Safe, Family-Friendly <br /> Sanctuary Magic
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal direction="up" staggerIndex={1}>
+              <p className="text-lg text-gray-600 mb-10 leading-relaxed">
+                We prioritize safety and hygiene above all else. Bring your entire family for a worry-free day of connection and joy, knowing that our facilities are meticulously maintained.
+              </p>
+            </ScrollReveal>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {features.map((feature, index) => (
-                <div key={index} className="flex flex-col">
-                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-gray-100 mb-4 hover:-translate-y-1 transition-transform">
-                    {feature.icon}
+                <ScrollReveal key={index} direction="up" staggerIndex={index} delay={0.15}>
+                  <div className="flex flex-col">
+                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-gray-100 mb-4 hover:-translate-y-1 transition-transform">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-lg font-bold text-[#1A2E1C] mb-2">{feature.title}</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {feature.description}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-bold text-[#1A2E1C] mb-2">{feature.title}</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
+                </ScrollReveal>
               ))}
             </div>
           </div>
