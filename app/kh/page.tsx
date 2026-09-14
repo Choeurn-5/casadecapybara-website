@@ -3,19 +3,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getEncounterTicketsApiData } from '@/lib/wordpress';
 import { Noto_Sans_Khmer } from 'next/font/google';
-import { 
-  Send, 
-  MapPin, 
-  Clock, 
-  Car, 
-  ShieldCheck, 
-  Sparkles, 
-  Waves, 
-  Utensils, 
-  Baby, 
-  Users, 
-  CheckCircle2, 
-  ExternalLink 
+import {
+  Send,
+  MapPin,
+  Clock,
+  Car,
+  ShieldCheck,
+  Sparkles,
+  Waves,
+  Utensils,
+  Baby,
+  Users,
+  CheckCircle2,
+  ExternalLink
 } from 'lucide-react';
 
 const notoKhmer = Noto_Sans_Khmer({
@@ -117,24 +117,13 @@ export default async function KhmerPage() {
   return (
     <div className={`${notoKhmer.className} min-h-screen bg-[#FDFDFD] text-[#1A1A1A] antialiased selection:bg-[#F8BBD0] selection:text-[#1B5E20]`}>
 
-      {/* ✈️ PERSISTENT FLOATING TELEGRAM BUTTON */}
-      <div className="fixed bottom-6 right-6 z-50 animate-bounce">
-        <a 
-          href={telegramUrl} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 bg-[#1B5E20] hover:bg-[#2E7D32] text-white px-5 py-3.5 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 border-2 border-white/80"
-        >
-          <Send className="w-5 h-5 text-[#B3E5FC]" />
-          <span className="font-semibold text-sm">Telegram {telegramHandle}</span>
-        </a>
-      </div>
+
 
       {/* ផ្នែកទី១ — HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center bg-black overflow-hidden px-4">
         {/* Background Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30 z-10" />
-        
+
         {/* Video or Image Background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           {/* Fallback & Loading Poster Image */}
@@ -180,15 +169,15 @@ export default async function KhmerPage() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-4">
-            <a 
-              href="#capybara-experience" 
+            <a
+              href="#capybara-experience"
               className="bg-[#E65100] hover:bg-[#ff5d05] text-white px-8 py-3.5 rounded-xl font-bold shadow-lg transition-transform hover:scale-105"
             >
               ស្វែងយល់បន្ថែមអំពី Molly & Alex
             </a>
-            <a 
-              href={telegramUrl} 
-              target="_blank" 
+            <a
+              href={telegramUrl}
+              target="_blank"
               rel="noopener noreferrer"
               className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white border border-white/30 px-6 py-3.5 rounded-xl font-medium transition-colors"
             >
@@ -236,9 +225,9 @@ export default async function KhmerPage() {
                 <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ប្រើប្រាស់អាងហែលទឹក + ទីធ្លាលេងកម្សាន្ត + បន្ទប់លេងកម្សាន្តម៉ាស៊ីនត្រជាក់</li>
                 <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#E65100] shrink-0 mt-0.5 font-bold" /> កុមារអាយុក្រោម ៣ ឆ្នាំ មិនគិតថ្លៃសំបុត្រ</li>
               </ul>
-              <a 
-                href={telegramUrl} 
-                target="_blank" 
+              <a
+                href={telegramUrl}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-center bg-[#1B5E20] hover:bg-[#2E7D32] text-white py-3.5 rounded-xl font-bold transition-colors"
               >
@@ -267,9 +256,9 @@ export default async function KhmerPage() {
                 <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ការប្រើប្រាស់អាងហែលទឹក និងកន្លែងក្មេងលេង</li>
                 <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#E65100] shrink-0 mt-0.5 font-bold" /> កុមារអាយុក្រោម ៣ ឆ្នាំ មិនគិតថ្លៃសំបុត្រជាដាច់ខាត</li>
               </ul>
-              <a 
-                href={telegramUrl} 
-                target="_blank" 
+              <a
+                href={telegramUrl}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-center bg-[#E65100] hover:bg-[#ff5d05] text-white py-3.5 rounded-xl font-bold transition-colors"
               >
@@ -322,9 +311,9 @@ export default async function KhmerPage() {
           </div>
 
           <div className="text-center">
-            <a 
-              href={telegramUrl} 
-              target="_blank" 
+            <a
+              href={telegramUrl}
+              target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#1B5E20] hover:bg-[#2E7D32] text-white px-8 py-3.5 rounded-xl font-bold shadow-lg transition-transform hover:scale-105"
             >
@@ -352,22 +341,27 @@ export default async function KhmerPage() {
         {/* Room Table / Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {[
-            { name: "Splash Pool Access", size: "៣៣ ម²", guests: "មនុស្សធំ ២ + កុមារ ១", desc: "បន្ទប់ជាប់នឹងអាងហែលទឹក" },
-            { name: "Dreamland", size: "៤៣ ម²", guests: "មនុស្សធំ ៣ + កុមារ ២", desc: "ពិភពនៃក្តីស្រមៃដ៏ធំទូលាយបំផុត" },
-            { name: "Capy Deluxe", size: "៣៥ ម²", guests: "មនុស្សធំ ៣ + កុមារ ២", desc: "ភាពប្រណីតជាន់ទី១ និងទី២" },
-            { name: "Turtle Oasis", size: "២៦ ម²", guests: "មនុស្សធំ ២ + កុមារ ១", desc: "ជ្រកកោនដ៏កក់ក្តៅ និងស្ងប់ស្ងាត់" },
-            { name: "La Familia", size: "៤០ ម²", guests: "មនុស្សធំ ៣ + កុមារ ៣", desc: "បន្ទប់គ្រួសារ ស្នាក់នៅបានដល់ ៦ នាក់" },
-            { name: "Snuggle Nest", size: "៣៣ ម²", guests: "មនុស្សធំ ២ + កុមារ ១", desc: "សំបុកកក់ក្តៅ ពេញនិយមបំផុត" },
-            { name: "Capy Cove", size: "៤០ ម²", guests: "មនុស្សធំ ៤ + កុមារ ៣", desc: "ជាន់ទី២ ផាសុកភាព" },
-            { name: "Three Amigos/Amigas", size: "៣៣ ម²", guests: "មនុស្សធំ ៣ + កុមារ ១", desc: "បន្ទប់មិត្តភាពគ្រែ ៣" },
+            { name: "Splash Pool Access", size: "៣៣ ម²", guests: "មនុស្សធំ ២ + កុមារ ១", desc: "បន្ទប់ជាប់នឹងអាងហែលទឹក", img: "/gallery/stay/splash-pool-access-room.jpg" },
+            { name: "Dreamland", size: "៤៣ ម²", guests: "មនុស្សធំ ៣ + កុមារ ២", desc: "ពិភពនៃក្តីស្រមៃដ៏ធំទូលាយបំផុត", img: "/gallery/stay/dreamland-suite.jpg" },
+            { name: "Capy Deluxe", size: "៣៥ ម²", guests: "មនុស្សធំ ៣ + កុមារ ២", desc: "ភាពប្រណីតជាន់ទី១ និងទី២", img: "/gallery/stay/capy-deluxe-room.jpg" },
+            { name: "Turtle Oasis", size: "២៦ ម²", guests: "មនុស្សធំ ២ + កុមារ ១", desc: "ជ្រកកោនដ៏កក់ក្តៅ និងស្ងប់ស្ងាត់", img: "/gallery/stay/turtle-oasis.jpg" },
+            { name: "La Familia", size: "៤០ ម²", guests: "មនុស្សធំ ៣ + កុមារ ៣", desc: "បន្ទប់គ្រួសារ ស្នាក់នៅបានដល់ ៦ នាក់", img: "/gallery/stay/la-familia-room.jpg" },
+            { name: "Snuggle Nest", size: "៣៣ ម²", guests: "មនុស្សធំ ២ + កុមារ ១", desc: "សំបុកកក់ក្តៅ ពេញនិយមបំផុត", img: "/gallery/stay/snuggle-nest.jpg" },
+            { name: "Capy Cove", size: "៤០ ម²", guests: "មនុស្សធំ ៤ + កុមារ ៣", desc: "ជាន់ទី២ ផាសុកភាព", img: "/gallery/stay/capy-cove-room.jpg" },
+            { name: "Three Amigos/Amigas", size: "៣៣ ម²", guests: "មនុស្សធំ ៣ + កុមារ ១", desc: "បន្ទប់មិត្តភាពគ្រែ ៣", img: "/gallery/stay/capybara-theming.jpg" },
           ].map((room, idx) => (
-            <div key={idx} className="bg-white border border-neutral-200 hover:border-[#1B5E20] rounded-2xl p-5 shadow-sm transition-all hover:shadow-md">
-              <h3 className="font-bold text-[#1B5E20] text-lg mb-1">{room.name}</h3>
-              <div className="text-xs text-neutral-500 mb-3 flex gap-2 font-medium">
-                <span className="bg-neutral-100 px-2 py-0.5 rounded">{room.size}</span>
-                <span className="bg-[#E8F5E9] text-[#1B5E20] px-2 py-0.5 rounded">{room.guests}</span>
+            <div key={idx} className="bg-white border border-neutral-200 hover:border-[#1B5E20] rounded-2xl shadow-sm transition-all hover:shadow-md flex flex-col overflow-hidden group">
+              <div className="relative h-48 w-full overflow-hidden bg-neutral-100 shrink-0">
+                <Image src={room.img} alt={room.name} fill className="object-cover group-hover:scale-105 transition-transform duration-700" unoptimized />
               </div>
-              <p className="text-sm text-neutral-600 leading-relaxed">{room.desc}</p>
+              <div className="p-5 flex-grow flex flex-col">
+                <h3 className="font-bold text-[#1B5E20] text-lg mb-1">{room.name}</h3>
+                <div className="text-xs text-neutral-500 mb-3 flex flex-wrap gap-2 font-medium">
+                  <span className="bg-neutral-100 px-2 py-0.5 rounded">{room.size}</span>
+                  <span className="bg-[#E8F5E9] text-[#1B5E20] px-2 py-0.5 rounded">{room.guests}</span>
+                </div>
+                <p className="text-sm text-neutral-600 leading-relaxed mt-auto">{room.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -376,7 +370,7 @@ export default async function KhmerPage() {
           <div className="text-sm text-neutral-700">
             <strong>ពេលវេលា៖</strong> ចូលស្នាក់នៅ (Check-in) {data.khCheckinTime || "ម៉ោង ១៤:០០"} | ចាកចេញ (Check-out) {data.khCheckoutTime || "ម៉ោង ១២:០០ ថ្ងៃត្រង់"}
           </div>
-          <a 
+          <a
             href={telegramUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -536,9 +530,9 @@ export default async function KhmerPage() {
             <p className="text-sm text-neutral-600 mb-6 max-w-xs">
               ងាយស្រួលស្វែងរកនៅលើផែនទី Google Maps និង Waze
             </p>
-            <a 
-              href="https://maps.google.com/?q=Casa+de+Capybara+Siem+Reap" 
-              target="_blank" 
+            <a
+              href="https://maps.google.com/?q=Casa+de+Capybara+Siem+Reap"
+              target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#1B5E20] hover:bg-[#2E7D32] text-white px-6 py-3 rounded-xl font-bold transition-transform hover:scale-105"
             >
@@ -564,11 +558,11 @@ export default async function KhmerPage() {
           <div className="bg-white text-neutral-900 p-8 rounded-3xl max-w-md mx-auto shadow-2xl mb-8">
             <div className="w-48 h-48 mx-auto bg-neutral-100 border-2 border-dashed border-[#1B5E20] rounded-2xl flex flex-col items-center justify-center p-4 mb-6">
               {data.khTelegramQr?.node?.sourceUrl ? (
-                <Image 
-                  src={data.khTelegramQr.node.sourceUrl} 
-                  alt="Telegram QR Code" 
-                  width={180} 
-                  height={180} 
+                <Image
+                  src={data.khTelegramQr.node.sourceUrl}
+                  alt="Telegram QR Code"
+                  width={180}
+                  height={180}
                   className="rounded-xl object-contain"
                 />
               ) : (
@@ -582,9 +576,9 @@ export default async function KhmerPage() {
             <div className="font-bold text-xl text-[#1B5E20] mb-1">{telegramHandle}</div>
             <div className="text-sm text-neutral-600 mb-6">{telegramPhone}</div>
 
-            <a 
-              href={telegramUrl} 
-              target="_blank" 
+            <a
+              href={telegramUrl}
+              target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full bg-[#E65100] hover:bg-[#ff5d05] text-white py-3.5 rounded-xl font-bold text-base shadow-lg transition-transform hover:scale-105"
             >
