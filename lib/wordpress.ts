@@ -423,6 +423,10 @@ export interface FullCapyRoom {
   title: string;
   sizeSqm: string;
   occupancy: string;
+  bedType: string;
+  floor: string;
+  balcony: string;
+  specialFeature: string;
   priceFrom: string;
   keyFeatures: string[];
   inngeniusUrl: string;
@@ -438,6 +442,10 @@ const fallbackFullRooms: FullCapyRoom[] = [
     title: "Splash Pool Access",
     sizeSqm: "35 sqm",
     occupancy: "2 Adults + 1 Child",
+    bedType: "King Bed",
+    floor: "Ground Floor",
+    balcony: "Private Terrace",
+    specialFeature: "Direct pool access",
     priceFrom: "$50",
     keyFeatures: ["Direct pool access", "King bed", "Capybara themed decor"],
     inngeniusUrl: "/book",
@@ -451,6 +459,10 @@ const fallbackFullRooms: FullCapyRoom[] = [
     title: "Dreamland",
     sizeSqm: "40 sqm",
     occupancy: "2 Adults + 2 Children",
+    bedType: "Bunk Beds",
+    floor: "1st Floor",
+    balcony: "Private Balcony",
+    specialFeature: "Neon lighting & play area",
     priceFrom: "$65",
     keyFeatures: ["Bunk beds", "Neon lighting", "Play area"],
     inngeniusUrl: "/book",
@@ -464,6 +476,10 @@ const fallbackFullRooms: FullCapyRoom[] = [
     title: "Capy Deluxe",
     sizeSqm: "33 sqm",
     occupancy: "2 Adults",
+    bedType: "King Bed",
+    floor: "2nd Floor",
+    balcony: "Private Balcony",
+    specialFeature: "Garden view",
     priceFrom: "$50",
     keyFeatures: ["King bed", "Balcony", "Garden view"],
     inngeniusUrl: "/book",
@@ -477,6 +493,10 @@ const fallbackFullRooms: FullCapyRoom[] = [
     title: "Turtle Oasis",
     sizeSqm: "38 sqm",
     occupancy: "2 Adults + 1 Child",
+    bedType: "Queen Bed",
+    floor: "Ground Floor",
+    balcony: "Private Patio",
+    specialFeature: "Rain shower",
     priceFrom: "$60",
     keyFeatures: ["Ground floor", "Private patio", "Rain shower"],
     inngeniusUrl: "/book",
@@ -490,6 +510,10 @@ const fallbackFullRooms: FullCapyRoom[] = [
     title: "La Familia",
     sizeSqm: "65 sqm",
     occupancy: "4 Adults + 2 Children",
+    bedType: "2 King Beds",
+    floor: "1st Floor",
+    balcony: "Large Balcony",
+    specialFeature: "2 bedrooms & living area",
     priceFrom: "$110",
     keyFeatures: ["2 Bedrooms", "Living area", "2 Bathrooms"],
     inngeniusUrl: "/book",
@@ -503,6 +527,10 @@ const fallbackFullRooms: FullCapyRoom[] = [
     title: "Snuggle Nest",
     sizeSqm: "28 sqm",
     occupancy: "2 Adults",
+    bedType: "Queen Bed",
+    floor: "2nd Floor",
+    balcony: "Juliet Balcony",
+    specialFeature: "Cozy atmosphere",
     priceFrom: "$50",
     keyFeatures: ["Queen bed", "Cozy atmosphere", "Smart TV"],
     inngeniusUrl: "/book",
@@ -516,6 +544,10 @@ const fallbackFullRooms: FullCapyRoom[] = [
     title: "Capy Cove",
     sizeSqm: "45 sqm",
     occupancy: "3 Adults + 1 Child",
+    bedType: "King + Single",
+    floor: "Corner Room",
+    balcony: "Wrap-around Balcony",
+    specialFeature: "Extra windows & lounge sofa",
     priceFrom: "$75",
     keyFeatures: ["Corner room", "Extra windows", "Lounge sofa"],
     inngeniusUrl: "/book",
@@ -529,6 +561,10 @@ const fallbackFullRooms: FullCapyRoom[] = [
     title: "Three Amigos",
     sizeSqm: "42 sqm",
     occupancy: "3 Adults",
+    bedType: "3 Single Beds",
+    floor: "2nd Floor",
+    balcony: "Private Balcony",
+    specialFeature: "Work desk & social layout",
     priceFrom: "$70",
     keyFeatures: ["3 Single beds", "Balcony", "Work desk"],
     inngeniusUrl: "/book",
@@ -555,6 +591,9 @@ export async function getAllCapyRooms(): Promise<FullCapyRoom[]> {
           roomDetails {
             capacity
             roomSize
+            bedType
+            floor
+            balcony
             pricePerNight
             roomIncludes
             specialFeature
@@ -595,8 +634,37 @@ export async function getAllCapyRooms(): Promise<FullCapyRoom[]> {
         slug: node.slug || fallback.slug,
         title: node.title || fallback.title,
         description: cleanContent || fallback.description,
-        sizeSqm: node.roomDetails?.roomSize ? `${node.roomDetails.roomSize} sqm` : fallback.sizeSqm,
-        occupancy: node.roomDetails?.capacity ? `${node.roomDetails.capacity} Guests` : fallback.occupancy,
+        sizeSqm: (() => {
+          const raw = node.roomDetails?.roomSize?.trim();
+          if (!raw) return fallback.sizeSqm;
+          if (/m²|sqm|sq\.m|m2/i.test(raw)) return raw;
+          return `${raw} m²`;
+        })(),
+        occupancy: (() => {
+          const raw = node.roomDetails?.capacity?.trim();
+          if (!raw) return fallback.occupancy;
+          if (/guests?|adults?|people|persons?/i.test(raw)) return raw;
+          return `${raw} Guests`;
+        })(),
+        bedType: node.roomDetails?.bedType || fallback.bedType || '',
+        floor: (() => {
+          const raw = node.roomDetails?.floor?.trim();
+          if (!raw) return fallback.floor || '';
+          if (/floor|level|ground/i.test(raw)) return raw;
+          if (/^\d+$/.test(raw)) {
+            const num = parseInt(raw, 10);
+            const suffix = num === 1 ? 'st' : num === 2 ? 'nd' : num === 3 ? 'rd' : 'th';
+            return `${num}${suffix} Floor`;
+          }
+          return `Floor ${raw}`;
+        })(),
+        balcony: (() => {
+          const raw = node.roomDetails?.balcony?.trim();
+          if (!raw) return fallback.balcony || '';
+          if (raw.toLowerCase() === 'private') return 'Private Balcony / Terrace';
+          return raw;
+        })(),
+        specialFeature: node.roomDetails?.specialFeature || fallback.specialFeature || '',
         priceFrom: node.roomDetails?.pricePerNight ? `$${node.roomDetails.pricePerNight.trim()}` : fallback.priceFrom,
         keyFeatures: features.length > 0 ? features : fallback.keyFeatures,
         inngeniusUrl: fallback.inngeniusUrl,

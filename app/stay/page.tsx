@@ -3,13 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllCapyRooms } from "@/lib/wordpress";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { Check, Users, Maximize, Wifi, Tv, Wind, Droplets, Clock, ShieldCheck, Ban } from "lucide-react";
+import { Check, Users, Maximize, BedDouble, Building, Sun, Sparkles, Wifi, Tv, Wind, Droplets, Clock, ShieldCheck, Ban } from "lucide-react";
 import Hero from "@/components/home/Hero";
 import StayGallery from "@/components/stay/StayGallery";
 
+const BOOKING_URL = "https://app.inn-connect.com/book2/?p=Casa%20de%20Capybara";
+
 export const metadata: Metadata = {
-  title: "Boutique Hotel Siem Reap | Capybara Themed Rooms from $50 | Near Angkor Wat",
-  description: "Stay in Cambodia's most unique boutique hotel. 23 capybara-themed rooms with private balconies sleeping 1 to 6 guests. Pool, spa, gym & family facilities. Book direct from $50/night.",
+  title: "Boutique Hotel Siem Reap | Capybara Themed Rooms | Near Angkor Wat",
+  description: "Stay in Cambodia's most unique boutique hotel. Capybara-themed rooms with private balconies. Pool, spa, gym & family facilities. Book direct for best rates.",
 };
 
 export default async function StayPage() {
@@ -33,16 +35,13 @@ export default async function StayPage() {
       <section className="py-20 px-4 md:px-8 max-w-5xl mx-auto text-center">
         <ScrollReveal>
           <h2 className="text-4xl font-bold text-[#1B5E20] mb-6">Every Room is an Adventure</h2>
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-8">
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-10">
             Designed as a treasure hunt for children (capybara-themed bathroom tiles, neon lighting, custom capybara toothbrushes, slippers, cups, towels, pillows, and toys). For parents: dimmable lighting, silent AC & ceiling fan, large smart TV, spacious wardrobes, and private balconies overlooking lush botanical gardens.
           </p>
-          <div className="inline-block px-6 py-3 bg-[#E8F5E9] rounded-full text-[#1B5E20] font-bold text-lg mb-8 border border-[#2E7D32]/20">
-            Dynamic Pricing: From $50/Night
-          </div>
           <div>
-            <Link href="/book" className="inline-block px-8 py-4 bg-[#E65100] hover:bg-[#F57C00] text-white font-bold rounded-full transition-all shadow-md hover:-translate-y-1">
-              Check Availability — From $50/Night
-            </Link>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 bg-[#E65100] hover:bg-[#F57C00] text-white font-bold rounded-full transition-all shadow-md hover:-translate-y-1">
+              Check Availability
+            </a>
           </div>
         </ScrollReveal>
       </section>
@@ -85,75 +84,180 @@ export default async function StayPage() {
         </div>
       </section>
 
-      {/* SECTION 4: Dynamic Room Collection Grid */}
+      {/* SECTION 4: Luxury Room Collection — Alternating 50/50 Cards */}
       <section id="room-collection" className="py-24 px-4 md:px-8 max-w-7xl mx-auto">
         <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1B5E20] mb-4">Our Room Collection</h2>
-            <p className="text-lg text-gray-600">Find the perfect capybara-themed sanctuary for your family or friends.</p>
+          <div className="text-center mb-20">
+            <p className="text-[#E65100] text-sm font-medium tracking-[0.2em] uppercase mb-4 flex items-center justify-center gap-4">
+              <span className="w-12 h-px bg-[#E65100]/40" />
+              Our Collection
+              <span className="w-12 h-px bg-[#E65100]/40" />
+            </p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#1B5E20] mb-4 font-serif">
+              Choose Your <span className="italic">Sanctuary</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Find the perfect capybara-themed retreat for your family, friends, or romantic getaway.
+            </p>
           </div>
         </ScrollReveal>
 
-        <div className="flex flex-col gap-10">
-          {rooms.map((room) => (
-            <ScrollReveal key={room.id}>
-              <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-[#1B5E20]/10 flex flex-col md:flex-row hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
-                {/* Image */}
-                <div className="relative h-64 md:h-auto md:w-[45%] lg:w-2/5 overflow-hidden shrink-0 min-h-[300px]">
-                  <Image
-                    src={room.thumbnailUrl}
-                    alt={room.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    unoptimized
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
-                  <div className="absolute top-5 left-5 bg-white/95 backdrop-blur-sm text-[#1B5E20] px-4 py-1.5 rounded-full font-black shadow-lg text-sm tracking-wide">
-                    {room.priceFrom} <span className="font-medium text-xs opacity-80">/ Night</span>
-                  </div>
-                </div>
+        <div className="flex flex-col gap-16 lg:gap-20">
+          {rooms.map((room, index) => {
+            const isReversed = index % 2 !== 0;
 
-                {/* Content */}
-                <div className="p-8 md:p-10 flex flex-col flex-grow md:w-[55%] lg:w-3/5">
-                  <h3 className="text-3xl font-extrabold text-[#1B5E20] mb-4 tracking-tight">{room.title}</h3>
+            return (
+              <ScrollReveal key={room.id}>
+                <div className={`flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100/60 group hover:shadow-2xl transition-shadow duration-500`}>
+                  {/* Image Side (50%) */}
+                  <div className="relative h-72 sm:h-80 lg:h-auto lg:w-1/2 overflow-hidden">
+                    <Image
+                      src={room.thumbnailUrl}
+                      alt={room.title}
+                      fill
+                      className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.04]"
+                      unoptimized
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-transparent" />
 
-                  {/* Badges */}
-                  <div className="flex flex-wrap gap-3 mb-6">
-                    <div className="flex items-center gap-1.5 bg-[#1B5E20]/5 text-[#1B5E20] px-3 py-1.5 rounded-lg font-bold text-sm border border-[#1B5E20]/10">
-                      <Maximize className="w-4 h-4 text-[#E65100]" /> {room.sizeSqm}
-                    </div>
-                    <div className="flex items-center gap-1.5 bg-[#1B5E20]/5 text-[#1B5E20] px-3 py-1.5 rounded-lg font-bold text-sm border border-[#1B5E20]/10">
-                      <Users className="w-4 h-4 text-[#E65100]" /> {room.occupancy}
+                    {/* Encounter Badge */}
+                    <div className="absolute top-5 left-5 bg-[#1B5E20]/90 backdrop-blur-sm text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg">
+                      <span className="text-sm">🐾</span>
+                      <span className="text-[11px] font-bold uppercase tracking-wider">Free Encounter</span>
                     </div>
                   </div>
 
-                  <p className="text-gray-600 text-base leading-relaxed mb-8 flex-grow">
-                    {room.description}
-                  </p>
+                  {/* Content Side (50%) */}
+                  <div className="lg:w-1/2 p-8 sm:p-10 lg:p-12 xl:p-16 flex flex-col justify-center">
+                    <h3 className="text-3xl lg:text-4xl font-bold text-[#1B5E20] mb-4 tracking-tight">
+                      {room.title}
+                    </h3>
 
-                  <div className="mt-auto flex flex-col sm:flex-row gap-4 pt-2">
-                    <Link
-                      href={`/stay/${room.slug}`}
-                      className="flex-1 flex items-center justify-center py-4 bg-transparent border-2 border-[#1B5E20] text-[#1B5E20] hover:bg-[#1B5E20] hover:text-white font-bold rounded-2xl transition-all duration-300"
-                    >
-                      View Room Details
-                    </Link>
-                    <a
-                      href={room.inngeniusUrl || "https://app.inn-connect.com/book2/?p=Casa%20de%20Capybara"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 py-4 bg-[#E65100] text-white font-bold rounded-2xl hover:bg-[#d84315] shadow-lg shadow-[#E65100]/25 transition-all duration-300 hover:-translate-y-0.5"
-                    >
-                      <span>Direct Booking</span>
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </a>
+                    <p className="text-gray-600 text-base lg:text-lg leading-relaxed mb-8">
+                      {room.description}
+                    </p>
+
+                    {/* Room Specs Grid (Core Physical Specs) */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+                      {room.occupancy && (
+                        <div className="flex items-center gap-3 p-3.5 bg-[#FAF7F2] rounded-2xl border border-[#F0EBE1] hover:border-[#E8F5E9] transition-colors">
+                          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#E65100] shadow-xs shrink-0">
+                            <Users className="w-4 h-4" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Capacity</p>
+                            <p className="text-xs sm:text-sm font-bold text-[#1A2E1C] truncate">{room.occupancy}</p>
+                          </div>
+                        </div>
+                      )}
+                      {room.sizeSqm && (
+                        <div className="flex items-center gap-3 p-3.5 bg-[#FAF7F2] rounded-2xl border border-[#F0EBE1] hover:border-[#E8F5E9] transition-colors">
+                          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#E65100] shadow-xs shrink-0">
+                            <Maximize className="w-4 h-4" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Size</p>
+                            <p className="text-xs sm:text-sm font-bold text-[#1A2E1C] truncate">
+                              {room.sizeSqm.replace(/\s*sqm\s*sqm/gi, ' sqm').replace(/m²\s*sqm/gi, ' m²')}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      {room.bedType && (
+                        <div className="flex items-center gap-3 p-3.5 bg-[#FAF7F2] rounded-2xl border border-[#F0EBE1] hover:border-[#E8F5E9] transition-colors">
+                          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#E65100] shadow-xs shrink-0">
+                            <BedDouble className="w-4 h-4" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Bed</p>
+                            <p className="text-xs sm:text-sm font-bold text-[#1A2E1C] truncate">{room.bedType}</p>
+                          </div>
+                        </div>
+                      )}
+                      {room.floor && (
+                        <div className="flex items-center gap-3 p-3.5 bg-[#FAF7F2] rounded-2xl border border-[#F0EBE1] hover:border-[#E8F5E9] transition-colors">
+                          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#E65100] shadow-xs shrink-0">
+                            <Building className="w-4 h-4" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Floor</p>
+                            <p className="text-xs sm:text-sm font-bold text-[#1A2E1C] truncate">
+                              {/^\d+$/.test(room.floor) 
+                                ? `${room.floor}${room.floor === '1' ? 'st' : room.floor === '2' ? 'nd' : room.floor === '3' ? 'rd' : 'th'} Floor`
+                                : room.floor}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      {room.balcony && (
+                        <div className="flex items-center gap-3 p-3.5 bg-[#FAF7F2] rounded-2xl border border-[#F0EBE1] hover:border-[#E8F5E9] transition-colors">
+                          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#E65100] shadow-xs shrink-0">
+                            <Sun className="w-4 h-4" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Outdoor</p>
+                            <p className="text-xs sm:text-sm font-bold text-[#1A2E1C] truncate">
+                              {room.balcony.toLowerCase() === 'private' ? 'Private Balcony' : room.balcony}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Room Highlights & Special Features (Rendered as Elegant Luxury Tags) */}
+                    {room.specialFeature && (
+                      <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#F4F9F4] to-[#FAF7F2] border border-[#E8F5E9] shadow-xs">
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="w-6 h-6 rounded-lg bg-[#E65100]/10 flex items-center justify-center text-[#E65100]">
+                            <Sparkles className="w-3.5 h-3.5" />
+                          </div>
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#1B5E20]">
+                            Room Highlights & Amenities
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {room.specialFeature
+                            .split(/[,•\n]+/)
+                            .map((s: string) => s.trim())
+                            .filter(Boolean)
+                            .map((feature: string, fIdx: number) => (
+                              <span
+                                key={fIdx}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white text-xs font-medium text-[#1A2E1C] rounded-full shadow-xs border border-[#E8F5E9] hover:border-[#1B5E20]/40 transition-colors"
+                              >
+                                <Check className="w-3.5 h-3.5 text-[#2E7D32]" />
+                                <span>{feature}</span>
+                              </span>
+                            ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <a
+                        href={BOOKING_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-4 bg-[#E65100] text-white font-bold rounded-2xl hover:bg-[#d84315] shadow-lg shadow-[#E65100]/25 transition-all duration-300 hover:-translate-y-0.5"
+                      >
+                        <span>Book Now</span>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </a>
+                      <Link
+                        href={`/stay/${room.slug}`}
+                        className="flex-1 flex items-center justify-center py-4 bg-transparent border-2 border-[#1B5E20] text-[#1B5E20] hover:bg-[#1B5E20] hover:text-white font-bold rounded-2xl transition-all duration-300"
+                      >
+                        View Details
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </ScrollReveal>
-          ))}
+              </ScrollReveal>
+            );
+          })}
         </div>
       </section>
 
@@ -225,8 +329,6 @@ export default async function StayPage() {
         </div>
       </section>
 
-
-
       {/* SECTION 7: Essential Stay Info & Safety */}
       <section className="bg-white py-16 px-4">
         <div className="max-w-4xl mx-auto">
@@ -279,21 +381,21 @@ export default async function StayPage() {
           <div className="max-w-3xl mx-auto space-y-8">
             <h2 className="text-4xl md:text-5xl font-bold text-white">Always Best to Book Direct</h2>
             <p className="text-xl text-gray-200">
-              Booking directly through casadecapybara.com guarantees you the best available rate. Dynamic pricing from $50 to $150 per night.
+              Booking directly through casadecapybara.com guarantees you the best available rate.
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-              <Link href="/book" className="px-10 py-5 bg-[#E65100] hover:bg-[#F57C00] text-white font-bold rounded-full transition-all text-lg shadow-xl hover:-translate-y-1 w-full sm:w-auto">
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="px-10 py-5 bg-[#E65100] hover:bg-[#F57C00] text-white font-bold rounded-full transition-all text-lg shadow-xl hover:-translate-y-1 w-full sm:w-auto">
                 Check Availability
-              </Link>
+              </a>
             </div>
             <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-6 text-white/80">
               <a href="https://wa.me/855968149795" className="flex items-center gap-2 hover:text-white transition-colors">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 WhatsApp (+855 968 149 795)
               </a>
               <span className="hidden sm:inline">|</span>
               <a href="https://t.me/capybaracambodia" className="flex items-center gap-2 hover:text-white transition-colors">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm5.894-15.65c.297-1.428-.485-2.028-1.4-1.688l-13.35 5.15c-1.385.556-1.378 1.33-.255 1.674l3.418 1.066 7.915-4.992c.375-.23.717-.107.433.146l-6.416 5.794-.251 3.753c.367 0 .526-.168.73-.367l1.753-1.704 3.648 2.695c.671.37 1.155.18 1.32-.61l2.39-11.267z" /></svg>
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm5.894-15.65c.297-1.428-.485-2.028-1.4-1.688l-13.35 5.15c-1.385.556-1.378 1.33-.255 1.674l3.418 1.066 7.915-4.992c.375-.23.717-.107.433.146l-6.416 5.794-.251 3.753c.367 0 .526-.168.73-.367l1.753-1.704 3.648 2.695c.671.37 1.155.18 1.32-.61l2.39-11.267z"/></svg>
                 Telegram (@capybaracambodia)
               </a>
             </div>

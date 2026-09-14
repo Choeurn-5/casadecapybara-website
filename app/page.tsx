@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Hero from "@/components/home/Hero";
-import RoomTeaser from "@/components/home/RoomTeaser";
+import RoomCarousel from "@/components/home/RoomTeaser";
 import FamiliesAndSafetyTeaser from "@/components/home/FamiliesAndSafetyTeaser";
 import EncounterTicketsSummary from "@/components/home/EncounterTicketsSummary";
 import CafeTeaser from "@/components/home/CafeTeaser";
 import TestimonialSlider from "@/components/home/TestimonialSlider";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import { getFeaturedRooms } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
   title: "Casa de Capybara | Luxury Wildlife Sanctuary & Eco-Resort",
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
     "Experience Cambodia's premier capybara sanctuary, boutique eco-villas, tranquil botanical gardens, and farm-to-table dining at Casa de Capybara.",
 };
 
-export default function Home() {
+export default async function Home() {
+  const rooms = await getFeaturedRooms();
+
   return (
     <main className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
       {/* Section 1: Hero Banner */}
@@ -32,10 +35,8 @@ export default function Home() {
         <EncounterTicketsSummary />
       </ScrollReveal>
 
-      {/* Section 3: The Stay / Rooms (The Upsell) */}
-      <ScrollReveal delay={0.1} staggerIndex={0}>
-        <RoomTeaser />
-      </ScrollReveal>
+      {/* Section 3: The Stay / Rooms (Carousel) */}
+      <RoomCarousel rooms={rooms} />
 
       {/* Section 4: The Destination Cafe (The Experience) */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
