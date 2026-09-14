@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getEncounterTicketsApiData } from '@/lib/wordpress';
 import { Noto_Sans_Khmer } from 'next/font/google';
 import { 
   Send, 
@@ -88,7 +89,10 @@ export const metadata = {
 };
 
 export default async function KhmerPage() {
-  const data = await getKhmerData();
+  const [data, encounterData] = await Promise.all([
+    getKhmerData(),
+    getEncounterTicketsApiData()
+  ]);
 
   // Fallback defaults from the official document
   const telegramHandle = data.khTelegramHandle || "@capybaracambodia";
@@ -98,6 +102,9 @@ export default async function KhmerPage() {
   const familyPrice = data.khFamilyTicketPrice || "១២០,០០០ រៀល";
   const localSpend = data.khLocalDealSpend || "២០,០០០៛";
   const localCashback = data.khLocalDealCashback || "២០,០០០៛";
+
+  const individualImgSrc = encounterData?.individualImage?.node?.sourceUrl || "/gallery/experience/individual.jpg";
+  const familyImgSrc = encounterData?.familyImage?.node?.sourceUrl || "/gallery/experience/family.jpg";
 
   const getYoutubeId = (url: string) => {
     if (!url) return "3mTyoZkffn8";
@@ -208,57 +215,67 @@ export default async function KhmerPage() {
         {/* 2 Clean Side-by-Side Pricing Cards with Green Borders */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           {/* Single Ticket */}
-          <div className="bg-white border-2 border-[#1B5E20] rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-[#1B5E20] text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl">
-              ពេញនិយម
+          <div className="bg-white border-2 border-[#1B5E20] rounded-3xl p-0 shadow-sm hover:shadow-xl transition-all relative overflow-hidden flex flex-col group">
+            <div className="relative h-64 overflow-hidden w-full">
+              <Image src={individualImgSrc} alt="Individual Capybara Encounter" fill className="object-cover group-hover:scale-105 transition-transform duration-700" unoptimized />
+              <div className="absolute top-4 right-4 bg-white/95 text-[#1B5E20] text-sm font-bold px-4 py-1.5 rounded-full shadow-lg">
+                ពេញនិយម
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-[#1B5E20] mb-2">🐾 ប្រភេទសំបុត្រឯកជន</h3>
-            <div className="text-3xl font-extrabold text-[#E65100] mb-6">
-              {singlePrice}
+            <div className="p-8 flex flex-col flex-grow">
+              <h3 className="text-xl font-bold text-[#1B5E20] mb-2">🐾 ប្រភេទសំបុត្រឯកជន</h3>
+              <div className="text-3xl font-extrabold text-[#E65100] mb-6">
+                {singlePrice}
+              </div>
+              <ul className="space-y-3.5 text-neutral-700 text-sm md:text-base mb-8 flex-grow">
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ការជួបឯកជនជាមួយ Molly & Alex</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ជំនួយក្នុងការថតរូបដោយបុគ្គលិកជំនាញ</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ការផ្តល់ចំណីដោយមានការណែនាំត្រឹមត្រូវ</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ទទួលបានព័ត៌មាន និងចំណេះដឹងអំពីសត្វកាពីបារ៉ា</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ទទួលបានវត្ថុអនុស្សាវរីយ៍ពិសេសដោយឥតគិតថ្លៃ</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ប្រើប្រាស់អាងហែលទឹក + ទីធ្លាលេងកម្សាន្ត + បន្ទប់លេងកម្សាន្តម៉ាស៊ីនត្រជាក់</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#E65100] shrink-0 mt-0.5 font-bold" /> កុមារអាយុក្រោម ៣ ឆ្នាំ មិនគិតថ្លៃសំបុត្រ</li>
+              </ul>
+              <a 
+                href={telegramUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block w-full text-center bg-[#1B5E20] hover:bg-[#2E7D32] text-white py-3.5 rounded-xl font-bold transition-colors"
+              >
+                សាកសួរ ឬកក់តាម Telegram
+              </a>
             </div>
-            <ul className="space-y-3.5 text-neutral-700 text-sm md:text-base mb-8">
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ការជួបឯកជនជាមួយ Molly & Alex</li>
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ជំនួយក្នុងការថតរូបដោយបុគ្គលិកជំនាញ</li>
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ការផ្តល់ចំណីដោយមានការណែនាំត្រឹមត្រូវ</li>
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ទទួលបានព័ត៌មាន និងចំណេះដឹងអំពីសត្វកាពីបារ៉ា</li>
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ទទួលបានវត្ថុអនុស្សាវរីយ៍ពិសេសដោយឥតគិតថ្លៃ</li>
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ប្រើប្រាស់អាងហែលទឹក + ទីធ្លាលេងកម្សាន្ត + បន្ទប់លេងកម្សាន្តម៉ាស៊ីនត្រជាក់</li>
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#E65100] shrink-0 mt-0.5 font-bold" /> កុមារអាយុក្រោម ៣ ឆ្នាំ មិនគិតថ្លៃសំបុត្រ</li>
-            </ul>
-            <a 
-              href={telegramUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="block w-full text-center bg-[#1B5E20] hover:bg-[#2E7D32] text-white py-3.5 rounded-xl font-bold transition-colors"
-            >
-              សាកសួរ ឬកក់តាម Telegram
-            </a>
           </div>
 
           {/* Family Package */}
-          <div className="bg-white border-2 border-[#1B5E20] rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-[#E65100] text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl">
-              កញ្ចប់សន្សំសំចៃ
+          <div className="bg-white border-2 border-[#1B5E20] rounded-3xl p-0 shadow-sm hover:shadow-xl transition-all relative overflow-hidden flex flex-col group">
+            <div className="relative h-64 overflow-hidden w-full">
+              <Image src={familyImgSrc} alt="Family Capybara Experience" fill className="object-cover group-hover:scale-105 transition-transform duration-700" unoptimized />
+              <div className="absolute top-4 right-4 bg-[#E65100] text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg">
+                កញ្ចប់សន្សំសំចៃ
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-[#1B5E20] mb-2">🐾🐾🐾🐾 កញ្ចប់គ្រួសារ</h3>
-            <div className="text-3xl font-extrabold text-[#E65100] mb-6">
-              {familyPrice}
+            <div className="p-8 flex flex-col flex-grow">
+              <h3 className="text-xl font-bold text-[#1B5E20] mb-2">🐾🐾🐾🐾 កញ្ចប់គ្រួសារ</h3>
+              <div className="text-3xl font-extrabold text-[#E65100] mb-6">
+                {familyPrice}
+              </div>
+              <ul className="space-y-3.5 text-neutral-700 text-sm md:text-base mb-8 flex-grow">
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5 font-semibold" /> សម្រាប់មនុស្សពេញវ័យ ២ នាក់ + កុមារ ២ នាក់</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> រួមបញ្ចូលការជួបឯកជន ការថតរូប និងការផ្តល់អាហារផ្ទាល់ជាមួយសត្វ</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ទទួលបានវត្ថុអនុស្សាវរីយ៍ឥតគិតថ្លៃ</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ការប្រើប្រាស់អាងហែលទឹក និងកន្លែងក្មេងលេង</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#E65100] shrink-0 mt-0.5 font-bold" /> កុមារអាយុក្រោម ៣ ឆ្នាំ មិនគិតថ្លៃសំបុត្រជាដាច់ខាត</li>
+              </ul>
+              <a 
+                href={telegramUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block w-full text-center bg-[#E65100] hover:bg-[#ff5d05] text-white py-3.5 rounded-xl font-bold transition-colors"
+              >
+                សាកសួរកញ្ចប់គ្រួសារតាម Telegram
+              </a>
             </div>
-            <ul className="space-y-3.5 text-neutral-700 text-sm md:text-base mb-8">
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5 font-semibold" /> សម្រាប់មនុស្សពេញវ័យ ២ នាក់ + កុមារ ២ នាក់</li>
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> រួមបញ្ចូលការជួបឯកជន ការថតរូប និងការផ្តល់អាហារផ្ទាល់ជាមួយសត្វ</li>
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ទទួលបានវត្ថុអនុស្សាវរីយ៍ឥតគិតថ្លៃ</li>
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> ការប្រើប្រាស់អាងហែលទឹក និងកន្លែងក្មេងលេង</li>
-              <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-[#E65100] shrink-0 mt-0.5 font-bold" /> កុមារអាយុក្រោម ៣ ឆ្នាំ មិនគិតថ្លៃសំបុត្រជាដាច់ខាត</li>
-            </ul>
-            <a 
-              href={telegramUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="block w-full text-center bg-[#E65100] hover:bg-[#ff5d05] text-white py-3.5 rounded-xl font-bold transition-colors"
-            >
-              សាកសួរកញ្ចប់គ្រួសារតាម Telegram
-            </a>
           </div>
         </div>
 
