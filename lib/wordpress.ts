@@ -900,3 +900,136 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     return null;
   }
 }
+
+export interface CapyGalleryImageNode {
+  id: string;
+  databaseId?: number;
+  sourceUrl: string;
+  altText?: string;
+  title?: string;
+}
+
+export interface CapyGalleryItem {
+  capyGalleryCaption?: string;
+  capyGalleryCategory?: string[];
+  capyGalleryImage?: {
+    nodes?: CapyGalleryImageNode[];
+  };
+}
+
+export interface FlatGalleryImage {
+  id: string;
+  sourceUrl: string;
+  altText: string;
+  title: string;
+  category: string;
+  caption: string;
+}
+
+export interface CapyGalleryData {
+  title: string;
+  slug: string;
+  content?: string;
+  featuredImageUrl?: string;
+  items: CapyGalleryItem[];
+  allImages: FlatGalleryImage[];
+}
+
+export async function getCapyGallery(): Promise<CapyGalleryData> {
+  const query = `
+    query GetCapyGalleryPage {
+      page(id: "76", idType: DATABASE_ID) {
+        id
+        databaseId
+        title
+        slug
+        uri
+        content
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+        capyGallery {
+          capyGalleryItems {
+            capyGalleryCaption
+            capyGalleryCategory
+            capyGalleryImage {
+              nodes {
+                id
+                databaseId
+                sourceUrl
+                altText
+                title
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const data = await fetchGraphQL<{
+      page?: {
+        id: string;
+        databaseId: number;
+        title: string;
+        slug: string;
+        content?: string;
+        featuredImage?: {
+          node?: {
+            sourceUrl?: string;
+            altText?: string;
+          };
+        };
+        capyGallery?: {
+          capyGalleryItems?: CapyGalleryItem[];
+        };
+      };
+    }>(query, {}, 60);
+
+    const page = data?.page;
+    const items = page?.capyGallery?.capyGalleryItems || [];
+
+    const allImages: FlatGalleryImage[] = [];
+
+    items.forEach((item, itemIdx) => {
+      const category = item.capyGalleryCategory?.[0] || "General";
+      const caption = item.capyGalleryCaption || category;
+      const nodes = item.capyGalleryImage?.nodes || [];
+
+      nodes.forEach((img, imgIdx) => {
+        if (img.sourceUrl) {
+          allImages.push({
+            id: img.id || `img-${itemIdx}-${imgIdx}`,
+            sourceUrl: img.sourceUrl,
+            altText: img.altText || img.title || `${category} - Casa de Capybara`,
+            title: img.title || caption,
+            category,
+            caption,
+          });
+        }
+      });
+    });
+
+    return {
+      title: page?.title || "Gallery",
+      slug: page?.slug || "gallery",
+      content: page?.content || undefined,
+      featuredImageUrl: page?.featuredImage?.node?.sourceUrl || undefined,
+      items,
+      allImages,
+    };
+  } catch (error) {
+    console.error("Error fetching Capy Gallery:", error);
+    return {
+      title: "Gallery",
+      slug: "gallery",
+      items: [],
+      allImages: [],
+    };
+  }
+}
+
