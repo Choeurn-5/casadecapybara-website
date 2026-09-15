@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { format, parseISO } from "date-fns";
-import { ChevronRight, Clock, Share2, Link as LinkIcon, MessageCircle, Phone as PhoneIcon, Send } from "lucide-react";
+import { ChevronRight, Clock } from "lucide-react";
 import { getPostBySlug, getBlogPosts } from "@/lib/wordpress";
 import type { Metadata, ResolvingMetadata } from "next";
+import SocialShareButtons from "@/components/blog/SocialShareButtons";
 
 // Define the params interface
 interface PageProps {
@@ -139,24 +140,8 @@ export default async function SingleBlogPost({ params }: PageProps) {
             </div>
           </div>
           
-          {/* Social Share Bar (Simple Anchors for demo purposes) */}
-          <div className="flex items-center gap-3 sm:ml-auto">
-            <a href="#" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#1B5E20] hover:border-[#1B5E20] transition-colors shadow-sm">
-              <Share2 className="w-4 h-4" />
-            </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#1B5E20] hover:border-[#1B5E20] transition-colors shadow-sm">
-              <MessageCircle className="w-4 h-4" />
-            </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#1B5E20] hover:border-[#1B5E20] transition-colors shadow-sm">
-              <PhoneIcon className="w-4 h-4" /> {/* WhatsApp icon stand-in */}
-            </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#1B5E20] hover:border-[#1B5E20] transition-colors shadow-sm">
-              <Send className="w-4 h-4" /> {/* Telegram icon stand-in */}
-            </a>
-            <button className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#1B5E20] hover:border-[#1B5E20] transition-colors shadow-sm">
-              <LinkIcon className="w-4 h-4" />
-            </button>
-          </div>
+          {/* Interactive Social Share Bar */}
+          <SocialShareButtons title={post.title} slug={post.slug} />
         </div>
       </div>
 
