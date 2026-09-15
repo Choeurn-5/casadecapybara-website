@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Search, ChevronRight, BookOpen, Clock } from "lucide-react";
+import { Search, ChevronRight, BookOpen, Clock, Globe, ChevronDown, Check } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import type { BlogPost } from "@/lib/wordpress";
 
@@ -12,14 +12,14 @@ interface BlogExplorerProps {
 
 const CATEGORIES = ["All Topics", "Travel Guides", "Family Travel", "Capybara Stories", "Cafes & Food"];
 const LANGUAGES = [
-  { name: "All Languages", id: "all" },
-  { name: "🇬🇧 English (EN)", id: "en" },
-  { name: "🇰🇭 ភាសាខ្មែរ (KH)", id: "kh" },
-  { name: "🇫🇷 Français (FR)", id: "fr" },
-  { name: "🇩🇪 Deutsch (DE)", id: "de" },
-  { name: "🇰🇷 한국어 (KR)", id: "kr" },
-  { name: "🇨🇳 中文 (CN)", id: "cn" },
-  { name: "🇯🇵 日本語 (JP)", id: "jp" },
+  { name: "All", id: "all", flag: "🌐" },
+  { name: "English (EN)", id: "en", flag: "🇬🇧" },
+  { name: "ភាសាខ្មែរ (KH)", id: "kh", flag: "🇰🇭" },
+  { name: "Français (FR)", id: "fr", flag: "🇫🇷" },
+  { name: "Deutsch (DE)", id: "de", flag: "🇩🇪" },
+  { name: "한국어 (KR)", id: "kr", flag: "🇰🇷" },
+  { name: "中文 (CN)", id: "cn", flag: "🇨🇳" },
+  { name: "日本語 (JP)", id: "jp", flag: "🇯🇵" },
 ];
 
 export function getPostLanguage(post: any): string {
@@ -63,6 +63,22 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Topics");
   const [selectedLanguage, setSelectedLanguage] = useState("all");
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target as Node)) {
+        setIsLangOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const currentLang = LANGUAGES.find((l) => l.id === selectedLanguage) || LANGUAGES[0];
 
   const filteredPosts = useMemo(() => {
     return initialPosts.filter((post) => {
@@ -91,29 +107,85 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Controls */}
-      <div className="mb-16 space-y-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          {/* Search */}
-          <div className="relative w-full md:max-w-md">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-gray-400" />
+      <div className="mb-12 space-y-6">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          {/* Left: Search Bar & Language Dropdown */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:max-w-2xl">
+            {/* Search */}
+            <div className="relative flex-1">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                className="block w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent transition-all shadow-xs text-sm"
+                placeholder="Search stories, tips, and guides..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
-            <input
-              type="text"
-              className="block w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent transition-shadow shadow-sm"
-              placeholder="Search stories, tips, and guides..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+
+            {/* Language Dropdown */}
+            <div className="relative shrink-0" ref={langDropdownRef}>
+              <button
+                type="button"
+                onClick={() => setIsLangOpen(!isLangOpen)}
+                className="flex items-center justify-between gap-3 w-full sm:w-auto px-4 py-3 bg-white border border-gray-200 hover:border-[#1B5E20]/40 rounded-2xl text-gray-800 text-sm font-semibold shadow-xs transition-all duration-200 hover:bg-[#FAF7F2]"
+                aria-haspopup="listbox"
+                aria-expanded={isLangOpen}
+              >
+                <div className="flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-[#1B5E20]" />
+                  <span>
+                    {selectedLanguage === "all" ? "Select Language" : currentLang.name}
+                  </span>
+                </div>
+                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isLangOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {isLangOpen && (
+                <div className="absolute left-0 sm:right-0 sm:left-auto mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="px-3.5 py-1.5 text-[10px] uppercase tracking-wider font-bold text-gray-400 border-b border-gray-100 mb-1">
+                    Select Language
+                  </div>
+                  {LANGUAGES.map((lang) => {
+                    const isSelected = selectedLanguage === lang.id;
+                    return (
+                      <button
+                        key={lang.id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedLanguage(lang.id);
+                          setIsLangOpen(false);
+                        }}
+                        className={`flex items-center justify-between w-full px-4 py-2.5 text-sm text-left transition-colors ${
+                          isSelected
+                            ? "bg-[#E8F5E9] text-[#1B5E20] font-bold"
+                            : "text-gray-700 hover:bg-[#FAF7F2] hover:text-[#1B5E20] font-medium"
+                        }`}
+                      >
+                        <span className="flex items-center gap-2.5">
+                          <span className="text-base">{lang.flag}</span>
+                          <span>{lang.name}</span>
+                        </span>
+                        {isSelected && <Check className="w-4 h-4 text-[#1B5E20]" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Categories */}
-          <div className="flex overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 md:pb-0 hide-scrollbar gap-2">
+          {/* Right: Categories */}
+          <div className="flex overflow-x-auto pb-2 -mx-4 px-4 lg:mx-0 lg:px-0 lg:pb-0 hide-scrollbar gap-2 shrink-0">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
+                type="button"
                 onClick={() => setSelectedCategory(cat)}
-                className={`whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-medium transition-colors ${
+                className={`whitespace-nowrap px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all ${
                   selectedCategory === cat
                     ? "bg-[#1B5E20] text-white shadow-md"
                     : "bg-white text-gray-700 hover:bg-[#E8F5E9] hover:text-[#1B5E20] border border-gray-200"
@@ -123,23 +195,6 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
               </button>
             ))}
           </div>
-        </div>
-
-        {/* Languages Tabs */}
-        <div className="flex overflow-x-auto border-b border-gray-200 hide-scrollbar gap-6">
-          {LANGUAGES.map((lang) => (
-            <button
-              key={lang.id}
-              onClick={() => setSelectedLanguage(lang.id)}
-              className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                selectedLanguage === lang.id
-                  ? "border-[#E65100] text-[#E65100]"
-                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-              }`}
-            >
-              {lang.name}
-            </button>
-          ))}
         </div>
       </div>
 
