@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sparkles, MapPin, Sun } from "lucide-react";
+import { Menu, X, Calendar, MapPin, Sun } from "lucide-react";
 import { GlobalSettings } from "@/lib/wordpress";
 
 const NAV_LINKS = [
@@ -122,7 +122,7 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
                   href="/capybara-experience#book"
                   className="bg-gradient-to-r from-[#E65100] via-[#F57C00] to-[#E65100] bg-[length:200%_auto] hover:bg-right text-white text-xs uppercase tracking-wider font-bold px-5 py-2 rounded-full shadow-[0_2px_12px_rgba(230,81,0,0.35)] hover:shadow-[0_4px_18px_rgba(230,81,0,0.5)] hover:-translate-y-0.5 active:scale-95 transition-all duration-300 border border-[#FFA726]/30 flex items-center gap-1.5 group"
                 >
-                  <Sparkles size={14} className="group-hover:rotate-12 transition-transform duration-300 text-[#FFE0B2]" />
+                  <Calendar size={14} className="group-hover:scale-110 transition-transform duration-300 text-[#FFE0B2]" />
                   <span>Book Now</span>
                 </Link>
               </div>
@@ -131,9 +131,10 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
               <div className="xl:hidden flex items-center gap-2.5">
                 <Link
                   href="/capybara-experience#book"
-                  className="bg-gradient-to-r from-[#E65100] to-[#F57C00] text-white px-3.5 py-1.5 text-xs uppercase tracking-wider rounded-full font-bold shadow-md hover:shadow-lg transition-all border border-[#FF9800]/30 active:scale-95"
+                  className="bg-gradient-to-r from-[#E65100] to-[#F57C00] text-white px-3.5 py-1.5 text-xs uppercase tracking-wider rounded-full font-bold shadow-md hover:shadow-lg transition-all border border-[#FF9800]/30 active:scale-95 flex items-center gap-1.5"
                 >
-                  Book
+                  <Calendar size={12} className="text-[#FFE0B2]" />
+                  <span>Book</span>
                 </Link>
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -223,7 +224,7 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
               onClick={() => setIsMobileMenuOpen(false)}
               className="flex w-full justify-center items-center gap-2 bg-gradient-to-r from-[#E65100] to-[#F57C00] text-white px-5 py-3 rounded-xl font-bold uppercase tracking-wider text-xs shadow-lg hover:shadow-xl transition-all active:scale-[0.98]"
             >
-              <Sparkles size={16} className="text-[#FFE0B2]" />
+              <Calendar size={16} className="text-[#FFE0B2]" />
               <span>Book Your Experience</span>
             </Link>
           </div>

@@ -25,6 +25,15 @@ export const metadata: Metadata = {
   },
   description:
     "Experience Cambodia's premier capybara sanctuary, boutique eco-villas, tranquil botanical gardens, and farm-to-table dining at Casa de Capybara.",
+  icons: {
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+    ],
+    shortcut: ["/logo.png"],
+    apple: [
+      { url: "/logo.png" },
+    ],
+  },
 };
 
 export default async function RootLayout({
