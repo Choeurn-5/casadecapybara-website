@@ -14,7 +14,8 @@ import {
   Users, 
   ArrowRight, 
   Sparkles,
-  ExternalLink
+  ExternalLink,
+  Shuffle
 } from "lucide-react";
 import type { FullCapyRoom } from "@/lib/wordpress";
 
@@ -99,10 +100,37 @@ const DEFAULT_ROOMS_DATA = [
 
 const PAGE_SIZE = 8;
 
+// Seeded deterministic shuffle to ensure SSR & client match without hydration warnings,
+// then client mount randomizes further
+function seededShuffle<T>(array: T[], seed: number = 20260916): T[] {
+  const arr = [...array];
+  let m = arr.length, t, i;
+  let s = seed;
+  while (m) {
+    s = (s * 9301 + 49297) % 233280;
+    i = Math.floor((s / 233280) * m--);
+    t = arr[m];
+    arr[m] = arr[i];
+    arr[i] = t;
+  }
+  return arr;
+}
+
 export default function StayGallery({ rooms }: StayGalleryProps) {
   const [activeSlug, setActiveSlug] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [randomSeed, setRandomSeed] = useState<number>(20260916);
+
+  // Set fresh random order on client mount
+  useEffect(() => {
+    setRandomSeed(Math.floor(Math.random() * 1000000) + 1);
+  }, []);
+
+  const handleReshuffle = () => {
+    setRandomSeed((prev) => prev + Math.floor(Math.random() * 9999) + 1);
+    setCurrentPage(1);
+  };
 
   // Tab change handler (resets pagination to page 1)
   const handleTabChange = (slug: string) => {
@@ -154,25 +182,29 @@ export default function StayGallery({ rooms }: StayGalleryProps) {
     }));
   }, [rooms]);
 
-  // Build the complete flattened image list with metadata
+  // Build the complete flattened image list with metadata, randomized across room types
   const allImages: GalleryImageItem[] = useMemo(() => {
     const list: GalleryImageItem[] = [];
-    roomData.forEach((room) => {
-      room.images.forEach((imgSrc, idx) => {
-        list.push({
-          id: `${room.slug}-${idx}`,
-          src: imgSrc,
-          alt: `${room.title} - Photo ${idx + 1}`,
-          roomTitle: room.title,
-          roomSlug: room.slug,
-          priceFrom: room.priceFrom,
-          occupancy: room.occupancy,
-          bedType: room.bedType,
-        });
+    const maxImgs = Math.max(...roomData.map((r) => r.images.length), 0);
+    // Round-robin insertion to distribute rooms evenly before shuffling
+    for (let i = 0; i < maxImgs; i++) {
+      roomData.forEach((room) => {
+        if (room.images[i]) {
+          list.push({
+            id: `${room.slug}-${i}`,
+            src: room.images[i],
+            alt: `${room.title} - Photo ${i + 1}`,
+            roomTitle: room.title,
+            roomSlug: room.slug,
+            priceFrom: room.priceFrom,
+            occupancy: room.occupancy,
+            bedType: room.bedType,
+          });
+        }
       });
-    });
-    return list;
-  }, [roomData]);
+    }
+    return seededShuffle(list, randomSeed);
+  }, [roomData, randomSeed]);
 
   // Filtered images based on current tab (full list for that tab)
   const filteredImages = useMemo(() => {
@@ -434,18 +466,28 @@ export default function StayGallery({ rooms }: StayGalleryProps) {
         {/* Pagination Bar (Displayed ONLY for "All Rooms" tab when multiple pages exist) */}
         {activeSlug === "all" && totalPages > 1 && (
           <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-100">
-            {/* Range info */}
-            <p className="text-xs sm:text-sm text-gray-500 font-medium order-2 sm:order-1">
-              Showing{" "}
-              <span className="font-bold text-[#1B5E20]">
-                {(currentPage - 1) * PAGE_SIZE + 1}
-              </span>
-              –
-              <span className="font-bold text-[#1B5E20]">
-                {Math.min(currentPage * PAGE_SIZE, filteredImages.length)}
-              </span>{" "}
-              of <span className="font-bold text-[#1B5E20]">{filteredImages.length}</span> photos
-            </p>
+            {/* Range info & Shuffle button */}
+            <div className="flex items-center gap-3 order-2 sm:order-1">
+              <p className="text-xs sm:text-sm text-gray-500 font-medium">
+                Showing{" "}
+                <span className="font-bold text-[#1B5E20]">
+                  {(currentPage - 1) * PAGE_SIZE + 1}
+                </span>
+                –
+                <span className="font-bold text-[#1B5E20]">
+                  {Math.min(currentPage * PAGE_SIZE, filteredImages.length)}
+                </span>{" "}
+                of <span className="font-bold text-[#1B5E20]">{filteredImages.length}</span> photos
+              </p>
+              <button
+                onClick={handleReshuffle}
+                title="Randomize / Shuffle photos"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#FAF7F2] hover:bg-[#F0EBE1] text-[#1B5E20] border border-[#E8F5E9] text-xs font-semibold transition-all cursor-pointer hover:scale-105 active:scale-95"
+              >
+                <Shuffle className="w-3.5 h-3.5 text-[#E65100]" />
+                <span className="hidden sm:inline">Shuffle</span>
+              </button>
+            </div>
 
             {/* Pagination Controls */}
             <div className="flex items-center gap-1.5 sm:gap-2 order-1 sm:order-2">
