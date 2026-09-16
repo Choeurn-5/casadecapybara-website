@@ -5,9 +5,11 @@ import EncounterTicketsSummary from "@/components/home/EncounterTicketsSummary";
 import RoomCarousel from "@/components/home/RoomTeaser";
 import CafeTeaser from "@/components/home/CafeTeaser";
 import TestimonialSlider from "@/components/home/TestimonialSlider";
+import LocationTransitSection from "@/components/home/LocationTransitSection";
 import FamiliesAndSafetyTeaser from "@/components/home/FamiliesAndSafetyTeaser";
+import FinalConversionBanner from "@/components/home/FinalConversionBanner";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { getFeaturedRooms } from "@/lib/wordpress";
+import { getFeaturedRooms, getGlobalSettings } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
   title: "Casa de Capybara | Luxury Wildlife Sanctuary & Eco-Resort",
@@ -16,7 +18,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const rooms = await getFeaturedRooms();
+  const [rooms, globalSettings] = await Promise.all([
+    getFeaturedRooms(),
+    getGlobalSettings(),
+  ]);
 
   return (
     <main className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
@@ -54,9 +59,22 @@ export default async function Home() {
         <TestimonialSlider />
       </ScrollReveal>
 
-      {/* Section 7: Families & Safety (The Trust Finale) */}
+      {/* Section 7: Location & Transit Grid (Right Next to Angkor Wat) */}
+      <ScrollReveal delay={0.1} staggerIndex={0}>
+        <LocationTransitSection />
+      </ScrollReveal>
+
+      {/* Section 8: Families & Safety Sanctuary Magic */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
         <FamiliesAndSafetyTeaser />
+      </ScrollReveal>
+
+      {/* Section 9: Final Conversion Banner */}
+      <ScrollReveal delay={0.1} staggerIndex={0}>
+        <FinalConversionBanner
+          bookingUrl={globalSettings.bookingEngineUrl}
+          telegramUrl={globalSettings.telegramUrl}
+        />
       </ScrollReveal>
     </main>
   );
