@@ -130,33 +130,87 @@ export default async function ContactPage() {
             </div>
 
             {/* Secondary Direct Channels Bar */}
-            <div className="bg-[#1B5E20] text-white p-6 md:p-8 rounded-3xl shadow-lg flex flex-col lg:flex-row items-center justify-between gap-6">
-              <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 text-center sm:text-left">
-                <div className="flex flex-col sm:flex-row items-center gap-3">
-                  <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                    <Mail className="w-5 h-5 text-[#B3E5FC]" />
+            <div className="bg-[#0F2D15] text-white p-6 md:p-8 rounded-3xl shadow-xl border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-6">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 w-full lg:w-auto">
+                {/* Email Item */}
+                <div className="flex items-center gap-3.5">
+                  <div className="w-11 h-11 bg-white/10 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 text-[#81C784]">
+                    <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-xs text-white/70 uppercase tracking-wider mb-0.5">Email Us</p>
-                    <a href="mailto:info@casadecapybara.com" className="font-bold hover:text-[#B3E5FC] transition-colors">info@casadecapybara.com</a>
+                    <p className="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-0.5">Email Inquiries</p>
+                    <a 
+                      href="mailto:info@casadecapybara.com" 
+                      className="font-bold text-sm sm:text-base text-white hover:text-[#81C784] transition-colors"
+                    >
+                      info@casadecapybara.com
+                    </a>
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row items-center gap-3">
-                  <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                    <Phone className="w-5 h-5 text-[#B3E5FC]" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/70 uppercase tracking-wider mb-0.5">Social Channels</p>
-                    <div className="flex gap-4 font-bold text-sm">
-                      <a href="#" className="hover:text-[#B3E5FC] transition-colors">Instagram</a>
-                      <a href="#" className="hover:text-[#B3E5FC] transition-colors">TikTok</a>
-                      <a href="#" className="hover:text-[#B3E5FC] transition-colors">Facebook</a>
-                    </div>
+
+                {/* Vertical Divider on Desktop */}
+                <div className="hidden md:block w-px h-12 bg-white/10" />
+
+                {/* Social Channels Item */}
+                <div className="flex flex-col items-center md:items-start">
+                  <p className="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-2.5">
+                    Official Social Channels
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                    {/* Instagram */}
+                    <a
+                      href="https://www.instagram.com/casadecapybaracambodia/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#E1306C] text-white text-xs font-semibold border border-white/15 transition-all duration-300 hover:scale-105 shadow-sm"
+                    >
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                      </svg>
+                      <span>Instagram</span>
+                    </a>
+
+                    {/* TikTok */}
+                    <a
+                      href="https://www.tiktok.com/@casadecapybara"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-black text-white text-xs font-semibold border border-white/15 transition-all duration-300 hover:scale-105 shadow-sm"
+                    >
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 15.68a6.34 6.34 0 0 0 6.27 6.36 6.37 6.37 0 0 0 6.33-6.19V10.5a8.4 8.4 0 0 0 4.19 1.13V8.19a4.81 4.81 0 0 1-2.2-.5z"/>
+                      </svg>
+                      <span>TikTok</span>
+                    </a>
+
+                    {/* Facebook */}
+                    <a
+                      href="https://web.facebook.com/casadecapybara/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#1877F2] text-white text-xs font-semibold border border-white/15 transition-all duration-300 hover:scale-105 shadow-sm"
+                    >
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                      </svg>
+                      <span>Facebook</span>
+                    </a>
                   </div>
                 </div>
               </div>
-              <div className="bg-white/10 px-4 py-3 rounded-xl border border-white/20 text-sm font-medium text-center lg:text-right max-w-sm">
-                We aim to respond to all messages within one hour — 7am to 9pm daily.
+
+              {/* Concierge Response Badge */}
+              <div className="bg-white/5 border border-white/10 px-5 py-3.5 rounded-2xl flex items-center gap-3 w-full lg:w-auto shrink-0 justify-center lg:justify-start">
+                <span className="relative flex h-2.5 w-2.5 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+                </span>
+                <div className="text-left">
+                  <p className="text-xs font-bold text-white tracking-wide">Concierge Active Daily</p>
+                  <p className="text-[11px] text-gray-300">Fast response: 7:00 AM – 9:00 PM</p>
+                </div>
               </div>
             </div>
           </ScrollReveal>
