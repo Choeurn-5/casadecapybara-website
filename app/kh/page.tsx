@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getEncounterTicketsApiData } from '@/lib/wordpress';
-import { Noto_Sans_Khmer } from 'next/font/google';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import {
   Send,
@@ -18,13 +17,6 @@ import {
   CheckCircle2,
   ExternalLink
 } from 'lucide-react';
-
-const notoKhmer = Noto_Sans_Khmer({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['khmer'],
-  display: 'swap',
-  variable: '--font-noto-khmer',
-});
 
 // Dynamic GraphQL Data Fetcher
 async function getKhmerData() {
@@ -116,7 +108,7 @@ export default async function KhmerPage() {
   const youtubeId = getYoutubeId(data.khHeroVideoUrl);
 
   return (
-    <div className={`${notoKhmer.className} min-h-screen bg-[#FDFDFD] text-[#1A1A1A] antialiased selection:bg-[#F8BBD0] selection:text-[#1B5E20]`}>
+    <div lang="km" style={{ fontFamily: "'Battambang', system-ui, sans-serif" }} className="font-battambang min-h-screen bg-[#FDFDFD] text-[#1A1A1A] antialiased selection:bg-[#F8BBD0] selection:text-[#1B5E20]">
 
 
 

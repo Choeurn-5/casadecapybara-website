@@ -2,6 +2,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
+  --font-battambang: 'Battambang', system-ui, sans-serif;
   --color-capy-forest: #1B5E20;
   --color-capy-green: #2E7D32;
   --color-capy-lightgreen: #4CAF50;
@@ -16,12 +17,30 @@
 :root {
   --background: #FAF7F2;
   --foreground: #1A2E1C;
+  --font-battambang: 'Battambang', system-ui, sans-serif;
+}
+
+/* Ensure Battambang is applied to all Khmer characters across the entire site */
+@font-face {
+  font-family: 'BattambangKhmer';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: local('Battambang'),
+       url('https://fonts.gstatic.com/s/battambang/v26/uk-mEGe7raEw-HjkzZabPtyP.ttf') format('truetype');
+  unicode-range: U+1780-17FF, U+19E0-19FF, U+200C, U+25CC;
 }
 
 body {
+  font-family: var(--font-geist-sans), 'Battambang', BattambangKhmer, system-ui, -apple-system, sans-serif;
   background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
+}
+
+/* Explicit Khmer language selector and class */
+[lang="km"], [lang="kh"], :lang(km), :lang(kh), .font-battambang, .font-khmer {
+  font-family: 'Battambang', var(--font-geist-sans), system-ui, sans-serif !important;
 }
 
 .prose a[href^="http"]:not([href*="casadecapybara.com"]):not([href*="localhost"])::after {

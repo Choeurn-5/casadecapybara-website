@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Calendar, MapPin, Sun } from "lucide-react";
+import { Menu, X, Calendar, MapPin, Sun, CloudSun, CloudRain, Cloud, CloudLightning, CloudFog } from "lucide-react";
 import { GlobalSettings } from "@/lib/wordpress";
 
 const NAV_LINKS = [
@@ -17,9 +17,57 @@ const NAV_LINKS = [
   { name: "Galleries", href: "/gallery" },
 ];
 
+function getWeatherDetails(code: number) {
+  if (code === 0) {
+    return {
+      icon: <Sun size={12} className="text-[#FF9800]" />,
+      text: "Sunny & Clear",
+    };
+  }
+  if (code <= 2) {
+    return {
+      icon: <CloudSun size={12} className="text-[#FFB74D]" />,
+      text: "Partly Cloudy",
+    };
+  }
+  if (code === 3) {
+    return {
+      icon: <Cloud size={12} className="text-[#CFD8DC]" />,
+      text: "Overcast",
+    };
+  }
+  if (code === 45 || code === 48) {
+    return {
+      icon: <CloudFog size={12} className="text-[#B0BEC5]" />,
+      text: "Misty",
+    };
+  }
+  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) {
+    return {
+      icon: <CloudRain size={12} className="text-[#4FC3F7]" />,
+      text: "Rain Showers",
+    };
+  }
+  if (code >= 95) {
+    return {
+      icon: <CloudLightning size={12} className="text-[#FFD54F]" />,
+      text: "Thunderstorm",
+    };
+  }
+  return {
+    icon: <Sun size={12} className="text-[#FF9800]" />,
+    text: "Tropical Warmth",
+  };
+}
+
 export default function Navbar({ settings }: { settings: GlobalSettings }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [weather, setWeather] = useState<{ c: number; f: number; code: number }>({
+    c: 29,
+    f: 84,
+    code: 0,
+  });
   const pathname = usePathname();
 
   useEffect(() => {
@@ -30,6 +78,66 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Fetch dynamic live weather for Casa de Capybara (Siem Reap: 13.3633° N, 103.8564° E)
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchLiveWeather() {
+      try {
+        const cacheKey = "casa_weather_siem_reap";
+        if (typeof window !== "undefined") {
+          const cached = sessionStorage.getItem(cacheKey);
+          if (cached) {
+            try {
+              const parsed = JSON.parse(cached);
+              // 15-minute cache freshness
+              if (Date.now() - parsed.timestamp < 15 * 60 * 1000 && parsed.data) {
+                if (isMounted) setWeather(parsed.data);
+                return;
+              }
+            } catch {
+              // ignore json parse error
+            }
+          }
+        }
+
+        const res = await fetch(
+          "https://api.open-meteo.com/v1/forecast?latitude=13.3633&longitude=103.8564&current=temperature_2m,weather_code"
+        );
+        if (!res.ok) return;
+
+        const data = await res.json();
+        if (data?.current?.temperature_2m !== undefined) {
+          const c = Math.round(data.current.temperature_2m);
+          const f = Math.round((c * 9) / 5 + 32);
+          const code = Number(data.current.weather_code ?? 0);
+          const nextWeather = { c, f, code };
+
+          if (isMounted) {
+            setWeather(nextWeather);
+            if (typeof window !== "undefined") {
+              sessionStorage.setItem(
+                cacheKey,
+                JSON.stringify({ data: nextWeather, timestamp: Date.now() })
+              );
+            }
+          }
+        }
+      } catch (err) {
+        // Silently keep default fallback on network error
+      }
+    }
+
+    fetchLiveWeather();
+    const timer = setInterval(fetchLiveWeather, 15 * 60 * 1000);
+    return () => {
+      isMounted = false;
+      clearInterval(timer);
+    };
+  }, []);
+
+  const weatherDetails = getWeatherDetails(weather.code);
 
   return (
     <>
@@ -48,9 +156,12 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
                 <MapPin size={12} className="text-[#FF9800]" />
                 <span className="hidden xs:inline">Ring Road,</span> Siem Reap
               </a>
-              <span className="flex items-center gap-1.5">
-                <Sun size={12} className="text-[#FF9800]" />
-                28°C / 82°F
+              <span
+                className="flex items-center gap-1.5 hover:text-white transition-colors cursor-default"
+                title={`Live weather in Siem Reap: ${weatherDetails.text} (${weather.c}°C / ${weather.f}°F)`}
+              >
+                {weatherDetails.icon}
+                <span>{weather.c}°C / {weather.f}°F</span>
               </span>
             </div>
             <div className="flex items-center">
