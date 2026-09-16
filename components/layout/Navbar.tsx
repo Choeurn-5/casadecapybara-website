@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Calendar, MapPin, Sun, CloudSun, CloudRain, Cloud, CloudLightning, CloudFog } from "lucide-react";
+import { Menu, X, Calendar, MapPin } from "lucide-react";
 import { GlobalSettings } from "@/lib/wordpress";
 
 const NAV_LINKS = [
@@ -20,42 +20,75 @@ const NAV_LINKS = [
 function getWeatherDetails(code: number) {
   if (code === 0) {
     return {
-      icon: <Sun size={12} className="text-[#FF9800]" />,
+      icon: (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#FF9800]">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+        </svg>
+      ),
       text: "Sunny & Clear",
     };
   }
   if (code <= 2) {
     return {
-      icon: <CloudSun size={12} className="text-[#FFB74D]" />,
+      icon: (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#FFB74D]">
+          <path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41M15.5 12a3.5 3.5 0 0 0-3.5-3.5c-.4 0-.78.07-1.13.2" />
+          <path d="M17.5 19H9a5 5 0 0 1-.72-9.95A6 6 0 0 1 19 12a4 4 0 0 1-1.5 7Z" />
+        </svg>
+      ),
       text: "Partly Cloudy",
     };
   }
   if (code === 3) {
     return {
-      icon: <Cloud size={12} className="text-[#CFD8DC]" />,
+      icon: (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#CFD8DC]">
+          <path d="M17.5 19H9a5 5 0 0 1-.72-9.95A6 6 0 0 1 19 12a4 4 0 0 1-1.5 7Z" />
+        </svg>
+      ),
       text: "Overcast",
     };
   }
   if (code === 45 || code === 48) {
     return {
-      icon: <CloudFog size={12} className="text-[#B0BEC5]" />,
+      icon: (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#B0BEC5]">
+          <path d="M5 10h14M3 14h18M7 18h10" />
+        </svg>
+      ),
       text: "Misty",
     };
   }
   if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) {
     return {
-      icon: <CloudRain size={12} className="text-[#4FC3F7]" />,
+      icon: (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#4FC3F7]">
+          <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+          <path d="M16 14v6M8 14v6M12 16v6" />
+        </svg>
+      ),
       text: "Rain Showers",
     };
   }
   if (code >= 95) {
     return {
-      icon: <CloudLightning size={12} className="text-[#FFD54F]" />,
+      icon: (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#FFD54F]">
+          <path d="M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973" />
+          <path d="m13 12-3 5h4l-3 5" />
+        </svg>
+      ),
       text: "Thunderstorm",
     };
   }
   return {
-    icon: <Sun size={12} className="text-[#FF9800]" />,
+    icon: (
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#FF9800]">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+      </svg>
+    ),
     text: "Tropical Warmth",
   };
 }
