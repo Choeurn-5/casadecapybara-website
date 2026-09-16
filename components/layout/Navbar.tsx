@@ -63,6 +63,7 @@ function getWeatherDetails(code: number) {
 export default function Navbar({ settings }: { settings: GlobalSettings }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const bookingUrl = settings.bookingEngineUrl || "https://app.inn-connect.com/book2/?p=Casa%20de%20Capybara";
   const [weather, setWeather] = useState<{ c: number; f: number; code: number }>({
     c: 29,
     f: 84,
@@ -235,24 +236,28 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
 
               {/* Right Side Action: Compact Luxury Book Button */}
               <div className="hidden xl:flex items-center ml-4">
-                <Link
-                  href="/capybara-experience#book"
+                <a
+                  href={bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-gradient-to-r from-[#E65100] via-[#F57C00] to-[#E65100] bg-[length:200%_auto] hover:bg-right text-white text-xs uppercase tracking-wider font-bold px-5 py-2 rounded-full shadow-[0_2px_12px_rgba(230,81,0,0.35)] hover:shadow-[0_4px_18px_rgba(230,81,0,0.5)] hover:-translate-y-0.5 active:scale-95 transition-all duration-300 border border-[#FFA726]/30 flex items-center gap-1.5 group"
                 >
                   <Calendar size={14} className="group-hover:scale-110 transition-transform duration-300 text-[#FFE0B2]" />
                   <span>Book Now</span>
-                </Link>
+                </a>
               </div>
 
               {/* Mobile Actions */}
               <div className="xl:hidden flex items-center gap-2.5">
-                <Link
-                  href="/capybara-experience#book"
+                <a
+                  href={bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-gradient-to-r from-[#E65100] to-[#F57C00] text-white px-3.5 py-1.5 text-xs uppercase tracking-wider rounded-full font-bold shadow-md hover:shadow-lg transition-all border border-[#FF9800]/30 active:scale-95 flex items-center gap-1.5"
                 >
                   <Calendar size={12} className="text-[#FFE0B2]" />
                   <span>Book</span>
-                </Link>
+                </a>
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   className="text-[#FAF7F2] p-2 rounded-full hover:bg-white/10 focus:outline-none transition-colors border border-transparent hover:border-white/20 active:scale-95"
@@ -336,14 +341,16 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
 
           {/* Drawer Footer */}
           <div className="p-5 border-t border-white/10 bg-black/20">
-            <Link
-              href="/capybara-experience#book"
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setIsMobileMenuOpen(false)}
               className="flex w-full justify-center items-center gap-2 bg-gradient-to-r from-[#E65100] to-[#F57C00] text-white px-5 py-3 rounded-xl font-bold uppercase tracking-wider text-xs shadow-lg hover:shadow-xl transition-all active:scale-[0.98]"
             >
               <Calendar size={16} className="text-[#FFE0B2]" />
-              <span>Book Your Experience</span>
-            </Link>
+              <span>Book Online (Booking Engine)</span>
+            </a>
           </div>
         </div>
       </div>

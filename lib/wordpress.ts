@@ -67,6 +67,7 @@ export const defaultGlobalSettings: GlobalSettings = {
     instagramUrl: "https://instagram.com/casadecapybara",
     tiktokUrl: "https://tiktok.com/@casadecapybara",
     heroVideoId: "Kx3kZwcTJ3I",
+    bookingEngineUrl: "https://app.inn-connect.com/book2/?p=Casa%20de%20Capybara",
     googleMapsUrl: GOOGLE_MAPS_URL,
 };
 
