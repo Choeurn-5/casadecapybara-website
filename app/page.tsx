@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Hero from "@/components/home/Hero";
-import RoomCarousel from "@/components/home/RoomTeaser";
-import FamiliesAndSafetyTeaser from "@/components/home/FamiliesAndSafetyTeaser";
+import AboutSection from "@/components/home/AboutSection";
 import EncounterTicketsSummary from "@/components/home/EncounterTicketsSummary";
+import RoomCarousel from "@/components/home/RoomTeaser";
 import CafeTeaser from "@/components/home/CafeTeaser";
 import TestimonialSlider from "@/components/home/TestimonialSlider";
+import FamiliesAndSafetyTeaser from "@/components/home/FamiliesAndSafetyTeaser";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { getFeaturedRooms } from "@/lib/wordpress";
 
@@ -30,9 +31,9 @@ export default async function Home() {
         secondaryCtaLink="/stay"
       />
 
-      {/* Section 2: Families & Safety (Directly Under Hero) */}
+      {/* Section 2: About / Editorial Welcome & Proof (Directly after Hero) */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
-        <FamiliesAndSafetyTeaser />
+        <AboutSection />
       </ScrollReveal>
 
       {/* Section 3: Encounter Tickets (The Viral Draw) */}
@@ -52,6 +53,12 @@ export default async function Home() {
       <ScrollReveal delay={0.1} staggerIndex={0}>
         <TestimonialSlider />
       </ScrollReveal>
+
+      {/* Section 7: Families & Safety (The Trust Finale) */}
+      <ScrollReveal delay={0.1} staggerIndex={0}>
+        <FamiliesAndSafetyTeaser />
+      </ScrollReveal>
     </main>
   );
 }
+
