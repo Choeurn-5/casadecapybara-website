@@ -90,7 +90,7 @@ export default async function CapybaraExperiencePage() {
           
           <ScrollReveal delay={0.4} className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
             <a href="#pricing" className="px-8 py-4 bg-gradient-to-r from-[#E65100] to-[#FF9800] hover:from-[#d84c00] hover:to-[#e68900] text-white font-bold rounded-full transition-all text-lg shadow-xl shadow-[#E65100]/20 hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center border border-white/10">
-              Get Your Ticket — From $10
+              Get Your Ticket — From ${encounterData?.individualPrice ?? 10}
             </a>
             <VideoModal youtubeId="-ebdWZmMo2Q" />
           </ScrollReveal>
@@ -196,22 +196,40 @@ export default async function CapybaraExperiencePage() {
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Card 1 */}
+            {/* Card 1: Individual Package */}
             <ScrollReveal>
               <div className="bg-white rounded-3xl overflow-hidden shadow-xl border border-[#E8F5E9] h-full flex flex-col group hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
                 <div className="relative h-64 overflow-hidden">
                   <Image src={individualImgSrc} alt="Individual Capybara Encounter" fill className="object-cover group-hover:scale-105 transition-transform duration-700" unoptimized />
-                  <div className="absolute top-4 right-4 bg-white/95 text-[#1B5E20] px-4 py-1.5 rounded-full font-bold shadow-lg">$10 / person</div>
+                  <div className="absolute top-4 right-4 bg-white/95 text-[#1B5E20] px-4 py-1.5 rounded-full font-bold shadow-lg">
+                    ${encounterData?.individualPrice ?? 10} / person
+                  </div>
                 </div>
                 <div className="p-8 md:p-10 flex flex-col flex-grow">
-                  <h3 className="text-2xl font-bold text-[#1B5E20] mb-6 border-b border-gray-100 pb-4">Individual Sanctuary Ticket</h3>
+                  <h3 className="text-2xl font-bold text-[#1B5E20] mb-2">Individual Sanctuary Ticket</h3>
+                  {encounterData?.individualPaxNote && (
+                    <p className="text-sm font-medium text-[#2E7D32] mb-6 border-b border-gray-100 pb-4">
+                      {encounterData.individualPaxNote}
+                    </p>
+                  )}
                   <ul className="space-y-4 mb-8 flex-grow">
-                    <li className="flex items-start gap-3"><Check className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700">Private guided encounter with Molly & Alex</span></li>
-                    <li className="flex items-start gap-3"><Camera className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700">Staff-assisted professional photography</span></li>
-                    <li className="flex items-start gap-3"><Leaf className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700">Supervised feeding session with fresh botanical greens</span></li>
-                    <li className="flex items-start gap-3"><Heart className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700">Complimentary keepsake souvenir to take home</span></li>
-                    <li className="flex items-start gap-3"><Droplets className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700">Full day access to the swimming pool with water slide</span></li>
-                    <li className="flex items-start gap-3"><Baby className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700 font-medium">Children under 3: Always Complimentary</span></li>
+                    {encounterData?.individualInclusions && encounterData.individualInclusions.length > 0 ? (
+                      encounterData.individualInclusions.map((item: any, idx: number) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <Check className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" />
+                          <span className="text-gray-700">{item.inclusionText}</span>
+                        </li>
+                      ))
+                    ) : (
+                      <>
+                        <li className="flex items-start gap-3"><Check className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700">Private guided encounter with Molly & Alex</span></li>
+                        <li className="flex items-start gap-3"><Camera className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700">Staff-assisted professional photography</span></li>
+                        <li className="flex items-start gap-3"><Leaf className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700">Supervised feeding session with fresh botanical greens</span></li>
+                        <li className="flex items-start gap-3"><Heart className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700">Complimentary keepsake souvenir to take home</span></li>
+                        <li className="flex items-start gap-3"><Droplets className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700">Full day access to the swimming pool with water slide</span></li>
+                        <li className="flex items-start gap-3"><Baby className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" /> <span className="text-gray-700 font-medium">Children under 3: Always Complimentary</span></li>
+                      </>
+                    )}
                   </ul>
                   <a href={telegramBaseUrl} target="_blank" rel="noopener noreferrer" className="block text-center py-4 bg-[#E65100] hover:bg-[#F57C00] text-white font-bold rounded-xl transition-all shadow-md">
                     Message Us on Telegram
@@ -220,24 +238,39 @@ export default async function CapybaraExperiencePage() {
               </div>
             </ScrollReveal>
 
-            {/* Card 2 */}
+            {/* Card 2: Family Package */}
             <ScrollReveal delay={0.1}>
               <div className="bg-gradient-to-b from-[#1B5E20] to-[#2E7D32] rounded-3xl overflow-hidden shadow-2xl h-full flex flex-col relative group hover:-translate-y-1 transition-all duration-300">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl" />
                 <div className="relative h-64 overflow-hidden">
                   <Image src={familyImgSrc} alt="Family Capybara Experience" fill className="object-cover group-hover:scale-105 transition-transform duration-700" unoptimized />
                   <div className="absolute top-4 left-4 bg-[#D48806] text-white px-4 py-1.5 rounded-full font-bold shadow-lg text-sm tracking-wide uppercase">Best Value</div>
-                  <div className="absolute top-4 right-4 bg-white/95 text-[#1B5E20] px-4 py-1.5 rounded-full font-bold shadow-lg">$30 / family</div>
+                  <div className="absolute top-4 right-4 bg-white/95 text-[#1B5E20] px-4 py-1.5 rounded-full font-bold shadow-lg">
+                    ${encounterData?.familyPrice ?? 30} / family
+                  </div>
                 </div>
                 <div className="p-8 md:p-10 flex flex-col flex-grow text-white relative z-10">
                   <h3 className="text-2xl font-bold mb-2">Family Sanctuary Package</h3>
-                  <p className="text-[#B3E5FC] mb-6 pb-4 border-b border-white/20">Valid for 2 Adults + 2 Children</p>
+                  <p className="text-[#B3E5FC] mb-6 pb-4 border-b border-white/20">
+                    {encounterData?.familyPaxNote || "Valid for up to 4 Pax"}
+                  </p>
                   
                   <ul className="space-y-4 mb-8 flex-grow">
-                    <li className="flex items-start gap-3"><Users className="w-5 h-5 text-[#D48806] shrink-0 mt-0.5" /> <span className="text-gray-100">All individual inclusions for up to 4 guests</span></li>
-                    <li className="flex items-start gap-3"><Check className="w-5 h-5 text-[#D48806] shrink-0 mt-0.5" /> <span className="text-gray-100">Dedicated family handler assistance</span></li>
-                    <li className="flex items-start gap-3"><Clock className="w-5 h-5 text-[#D48806] shrink-0 mt-0.5" /> <span className="text-gray-100">Extended feeding time</span></li>
-                    <li className="flex items-start gap-3"><Baby className="w-5 h-5 text-[#D48806] shrink-0 mt-0.5" /> <span className="text-gray-100 font-medium">Children under 3 always free</span></li>
+                    {encounterData?.familyInclusions && encounterData.familyInclusions.length > 0 ? (
+                      encounterData.familyInclusions.map((item: any, idx: number) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <Check className="w-5 h-5 text-[#D48806] shrink-0 mt-0.5" />
+                          <span className="text-gray-100">{item.inclusionText}</span>
+                        </li>
+                      ))
+                    ) : (
+                      <>
+                        <li className="flex items-start gap-3"><Users className="w-5 h-5 text-[#D48806] shrink-0 mt-0.5" /> <span className="text-gray-100">All individual inclusions for up to 4 guests</span></li>
+                        <li className="flex items-start gap-3"><Check className="w-5 h-5 text-[#D48806] shrink-0 mt-0.5" /> <span className="text-gray-100">Dedicated family handler assistance</span></li>
+                        <li className="flex items-start gap-3"><Clock className="w-5 h-5 text-[#D48806] shrink-0 mt-0.5" /> <span className="text-gray-100">Extended feeding time</span></li>
+                        <li className="flex items-start gap-3"><Baby className="w-5 h-5 text-[#D48806] shrink-0 mt-0.5" /> <span className="text-gray-100 font-medium">Children under 3 always free</span></li>
+                      </>
+                    )}
                   </ul>
                   <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="block text-center py-4 bg-white text-[#1B5E20] hover:bg-gray-100 font-bold rounded-xl transition-all shadow-md mt-auto">
                     Message Us on WhatsApp

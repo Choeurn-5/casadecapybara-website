@@ -405,15 +405,42 @@ export async function getCapyRooms(): Promise<CapyRoom[]> {
 }
 
 /**
- * Fetches encounter ticket packages from WordPress (Page ID 65 or custom schema) with fallback
+ * Fetches encounter ticket packages from WordPress (Page ID 65) with fallback
  */
 export async function getEncounterTickets(): Promise<EncounterTicket[]> {
     try {
-        // Attempt to fetch page 65 to see if tickets metadata or content is provided
-        const pageData = await getPage("65", "DATABASE_ID");
-        if (pageData && pageData.content) {
-            // If structured data is in page content or custom fields, it can be parsed here
-            return defaultEncounterTickets;
+        const data = await getEncounterTicketsApiData();
+        if (data) {
+            return [
+                {
+                    id: "ticket-individual",
+                    name: "Individual Sanctuary Ticket",
+                    subtitle: data.individualPaxNote || "Capybara Experience Only",
+                    price: data.individualPrice ? `$${data.individualPrice}` : "$10",
+                    period: "per person",
+                    duration: "45-60 min",
+                    badge: "Most Popular",
+                    isFeatured: false,
+                    inclusions: data.individualInclusions && data.individualInclusions.length > 0
+                        ? data.individualInclusions.map((i: any) => i.inclusionText)
+                        : defaultEncounterTickets[0].inclusions,
+                    bookingUrl: "/capybara-experience#pricing",
+                },
+                {
+                    id: "ticket-family",
+                    name: "Family Sanctuary Package",
+                    subtitle: data.familyPaxNote || "Valid for up to 4 Pax",
+                    price: data.familyPrice ? `$${data.familyPrice}` : "$30",
+                    period: "per family",
+                    duration: "60-75 min",
+                    badge: "Best Value",
+                    isFeatured: true,
+                    inclusions: data.familyInclusions && data.familyInclusions.length > 0
+                        ? data.familyInclusions.map((i: any) => i.inclusionText)
+                        : defaultEncounterTickets[1].inclusions,
+                    bookingUrl: "/capybara-experience#pricing",
+                },
+            ];
         }
         return defaultEncounterTickets;
     } catch {
