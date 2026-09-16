@@ -224,11 +224,16 @@ export default async function CafePage() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.2} direction="up">
-              <div className="bg-[#FAF7F2] p-8 rounded-3xl text-center h-full hover:shadow-md transition-shadow">
-                <MapPin className="w-10 h-10 text-[#E65100] mx-auto mb-4" />
+              <a
+                href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#FAF7F2] p-8 rounded-3xl text-center h-full hover:shadow-md transition-all block group cursor-pointer"
+              >
+                <MapPin className="w-10 h-10 text-[#E65100] mx-auto mb-4 group-hover:scale-110 transition-transform" />
                 <h4 className="font-bold text-[#1B5E20] text-lg mb-2">Location</h4>
                 <p className="text-gray-600">Street 598, Ring Road off NH6<br/>Siem Reap</p>
-              </div>
+              </a>
             </ScrollReveal>
 
             <ScrollReveal delay={0.3} direction="up">
@@ -250,7 +255,7 @@ export default async function CafePage() {
 
           <ScrollReveal delay={0.5}>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#1B5E20] hover:bg-[#124216] text-white font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto text-center shadow-lg">
+              <a href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#1B5E20] hover:bg-[#124216] text-white font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto text-center shadow-lg">
                 Get Directions (Google Maps)
               </a>
               <a href="https://wa.me/855968149795" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#25D366] hover:bg-[#1ebe57] text-white font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto text-center shadow-lg">

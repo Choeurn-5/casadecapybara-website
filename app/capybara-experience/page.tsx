@@ -189,7 +189,7 @@ export default async function CapybaraExperiencePage() {
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-[#1B5E20] mb-6">Choose Your Experience</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">No reservations required for day visits. Simply arrive, check in at the reception, and enter the sanctuary.</p>
-              <a href="https://maps.app.goo.gl/kXz4sD4hWj2k9Lw39" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[#E65100] font-bold hover:underline">
+              <a href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[#E65100] font-bold hover:underline">
                 <MapPin className="w-5 h-5" /> Get Directions
               </a>
             </div>
@@ -384,7 +384,7 @@ export default async function CapybaraExperiencePage() {
             <p className="text-xl text-[#E8F5E9]">Our handlers and gentle capybaras are ready to welcome you today.</p>
             
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-8">
-              <a href="https://maps.app.goo.gl/kXz4sD4hWj2k9Lw39" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#D48806] hover:bg-[#b57303] text-white font-bold rounded-xl transition-all shadow-xl hover:-translate-y-1 flex items-center gap-2 w-full sm:w-auto justify-center">
+              <a href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#D48806] hover:bg-[#b57303] text-white font-bold rounded-xl transition-all shadow-xl hover:-translate-y-1 flex items-center gap-2 w-full sm:w-auto justify-center">
                 <MapPin className="w-5 h-5" /> Get Directions
               </a>
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white hover:bg-gray-100 text-[#1B5E20] font-bold rounded-xl transition-all shadow-xl hover:-translate-y-1 flex items-center gap-2 w-full sm:w-auto justify-center border border-white">

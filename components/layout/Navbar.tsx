@@ -38,10 +38,16 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
         <div className="h-7 sm:h-8 bg-[#0B2510] text-[#FAF7F2]/75 text-[11px] sm:text-xs font-medium tracking-wider flex items-center w-full border-b border-white/5">
           <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center w-full">
             <div className="flex items-center gap-4 sm:gap-6">
-              <span className="flex items-center gap-1.5 hover:text-white transition-colors">
+              <a
+                href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 hover:text-white transition-colors"
+                title="View Casa de Capybara on Google Maps"
+              >
                 <MapPin size={12} className="text-[#FF9800]" />
                 <span className="hidden xs:inline">Ring Road,</span> Siem Reap
-              </span>
+              </a>
               <span className="flex items-center gap-1.5">
                 <Sun size={12} className="text-[#FF9800]" />
                 28°C / 82°F

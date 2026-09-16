@@ -33,13 +33,13 @@ export default function GlobalFooter({ settings }: { settings: GlobalSettings })
 
             <div className="space-y-3 pt-4">
               <h3 className="font-bold text-sm">Leave a Review</h3>
-              <a href="https://www.tripadvisor.com/UserReviewEdit-g297390-d34246657-Casa_de_Capybara-Siem_Reap_Siem_Reap_Province.html" className="flex items-center gap-3 bg-[#0A7A3E] hover:bg-[#0B8B46] transition-colors py-2 px-4 rounded-md text-sm font-medium border border-[#118A4A]">
+              <a href="https://www.tripadvisor.com/UserReviewEdit-g297390-d34246657-Casa_de_Capybara-Siem_Reap_Siem_Reap_Province.html" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 bg-[#0A7A3E] hover:bg-[#0B8B46] transition-colors py-2 px-4 rounded-md text-sm font-medium border border-[#118A4A]">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-2-9.5c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5zm4 0c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z" /></svg>
                 Tripadvisor - Hotel
               </a>
-              <a href="https://www.google.com/maps/place/Casa+De+Capybara+Cambodia/@13.4099938,103.8751743,17z/data=!4m8!3m7!1s0x311017f43157ef55:0x770c57cd97a928fa!8m2!3d13.4099938!4d103.8751743!9m1!1b1!1m0?entry=ttu" className="flex items-center gap-3 bg-[#0A7A3E] hover:bg-[#0B8B46] transition-colors py-2 px-4 rounded-md text-sm font-medium border border-[#118A4A]">
+              <a href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 bg-[#0A7A3E] hover:bg-[#0B8B46] transition-colors py-2 px-4 rounded-md text-sm font-medium border border-[#118A4A]">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z" /></svg>
-                Google - Cafe
+                Google - Cafe & Sanctuary
               </a>
             </div>
           </div>
@@ -53,9 +53,9 @@ export default function GlobalFooter({ settings }: { settings: GlobalSettings })
                 { name: 'Capybara Experience', path: '/capybara-experience' },
                 { name: 'Stay With Us', path: '/stay' },
                 { name: 'Café & Dining', path: '/cafe' },
-                { name: 'Families & Safety', path: '/#families' },
+                { name: 'Families & Safety', path: '/families' },
                 { name: 'Gallery', path: '/gallery' },
-                { name: 'Plan Your Visit', path: '/visit' },
+                { name: 'Plan Your Visit', path: '/plan-your-visit' },
                 { name: 'Contact & Book', path: '/contact' },
                 { name: 'Blog', path: '/blog' },
               ].map((link, idx) => (
@@ -73,10 +73,15 @@ export default function GlobalFooter({ settings }: { settings: GlobalSettings })
             <h3 className="text-xs font-bold tracking-widest uppercase text-white">Contact Us</h3>
             <div className="space-y-5 text-sm font-medium text-gray-200">
               {settings.address && (
-                <div className="flex items-start gap-4">
-                  <MapPin className="w-5 h-5 shrink-0 text-white mt-0.5" />
+                <a
+                  href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-4 hover:text-[#FFB74D] transition-colors group"
+                >
+                  <MapPin className="w-5 h-5 shrink-0 text-white group-hover:text-[#FFB74D] mt-0.5" />
                   <span className="leading-relaxed">{settings.address}</span>
-                </div>
+                </a>
               )}
 
               {settings.operatingHours && (
@@ -138,7 +143,12 @@ export default function GlobalFooter({ settings }: { settings: GlobalSettings })
             </div>
 
             <div className="pt-2">
-              <a href="#" className="flex items-center justify-center gap-2 bg-transparent border border-[#2E8F59] hover:bg-[#0A7A3E] transition-colors py-2.5 px-4 rounded-md text-sm font-bold w-full max-w-[200px]">
+              <a
+                href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-transparent border border-[#2E8F59] hover:bg-[#0A7A3E] transition-colors py-2.5 px-4 rounded-md text-sm font-bold w-full max-w-[200px]"
+              >
                 <MapPin className="w-4 h-4" /> View on Google Maps
               </a>
             </div>
@@ -176,9 +186,9 @@ export default function GlobalFooter({ settings }: { settings: GlobalSettings })
             © {currentYear} Casa de Capybara · casadecapybara.com · All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-gray-200">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
-            <a href="#" className="hover:text-white transition-colors">Sitemap</a>
+            <Link href="/plan-your-visit" className="hover:text-white transition-colors">Plan Your Visit</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">Contact & Directions</Link>
+            <Link href="/gallery" className="hover:text-white transition-colors">Gallery</Link>
           </div>
         </div>
 

@@ -209,12 +209,14 @@ export default async function ContactPage() {
                     <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#E65100]"/> Children under 3 always free</li>
                   </ul>
                 </div>
-                <Link 
-                  href="/plan-your-visit#location"
+                <a 
+                  href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full py-4 bg-[#1B5E20] hover:bg-[#2E7D32] text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-md text-center"
                 >
                   Get Directions (Google Maps)
-                </Link>
+                </a>
               </div>
 
             </div>
@@ -291,7 +293,7 @@ export default async function ContactPage() {
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a 
-                    href="https://maps.google.com/?q=Casa+de+Capybara+Siem+Reap" 
+                    href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex-1 py-4 bg-[#1B5E20] hover:bg-[#2E7D32] text-white font-bold rounded-xl transition-colors flex items-center justify-center shadow-md"
@@ -356,7 +358,7 @@ export default async function ContactPage() {
               <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg text-center">
                 Book Your Room — From $50
               </a>
-              <a href="https://maps.google.com/?q=Casa+de+Capybara+Siem+Reap" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg text-center">
+              <a href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg text-center">
                 Get Directions
               </a>
             </div>

@@ -155,7 +155,7 @@ export default async function PlanYourVisitPage() {
               </div>
 
               <div className="flex gap-4 mt-10">
-                <a href="https://maps.app.goo.gl/9ZQK9q9vDq8sVwQJ8" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[#E65100] text-white text-sm font-bold rounded-full hover:bg-[#c94600] transition-colors shadow-md">
+                <a href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[#E65100] text-white text-sm font-bold rounded-full hover:bg-[#c94600] transition-colors shadow-md">
                   Open in Google Maps
                 </a>
               </div>

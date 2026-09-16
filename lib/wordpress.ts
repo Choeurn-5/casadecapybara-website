@@ -2,6 +2,8 @@ const WORDPRESS_API_URL =
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL ||
     "https://cms.casadecapybara.com/graphql";
 
+export const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA";
+
 export interface GlobalSettings {
     siteTitle: string;
     siteDescription: string;
@@ -19,6 +21,7 @@ export interface GlobalSettings {
     tiktokUrl?: string;
     heroVideoId?: string;
     bookingEngineUrl?: string;
+    googleMapsUrl?: string;
 }
 
 export interface CapyRoom {
@@ -64,6 +67,7 @@ export const defaultGlobalSettings: GlobalSettings = {
     instagramUrl: "https://instagram.com/casadecapybara",
     tiktokUrl: "https://tiktok.com/@casadecapybara",
     heroVideoId: "Kx3kZwcTJ3I",
+    googleMapsUrl: GOOGLE_MAPS_URL,
 };
 
 export const defaultRooms: CapyRoom[] = [

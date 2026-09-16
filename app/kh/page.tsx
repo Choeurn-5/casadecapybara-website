@@ -567,7 +567,7 @@ export default async function KhmerPage() {
                 ងាយស្រួលស្វែងរកនៅលើផែនទី Google Maps និង Waze
               </p>
               <a
-                href="https://maps.google.com/?q=Casa+de+Capybara+Siem+Reap"
+                href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#1B5E20] hover:bg-[#2E7D32] text-white px-6 py-3 rounded-xl font-bold transition-transform hover:scale-105"

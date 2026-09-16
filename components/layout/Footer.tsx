@@ -59,7 +59,7 @@ export default function Footer({ settings }: { settings: GlobalSettings }) {
               <li><Link href="/capybara-experience" className="text-sm opacity-80 hover:opacity-100 hover:text-[#E65100] transition-colors">Capybara Experience</Link></li>
               <li><Link href="/cafe" className="text-sm opacity-80 hover:opacity-100 hover:text-[#E65100] transition-colors">Café & Dining</Link></li>
               <li><Link href="/gallery" className="text-sm opacity-80 hover:opacity-100 hover:text-[#E65100] transition-colors">Gallery</Link></li>
-              <li><Link href="/faq" className="text-sm opacity-80 hover:opacity-100 hover:text-[#E65100] transition-colors">FAQ</Link></li>
+              <li><Link href="/plan-your-visit" className="text-sm opacity-80 hover:opacity-100 hover:text-[#E65100] transition-colors">Plan Your Visit & FAQ</Link></li>
             </ul>
           </div>
 
@@ -68,8 +68,15 @@ export default function Footer({ settings }: { settings: GlobalSettings }) {
             <h3 className="text-lg font-semibold text-[#F8BBD0] mb-4">Contact Us</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin size={20} className="text-[#E65100] shrink-0 mt-0.5" />
-                <span className="text-sm opacity-80 leading-relaxed">{settings.address}</span>
+                <a
+                  href="https://maps.app.goo.gl/f4JgMDUz7BNEAhjWA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-3 opacity-80 hover:opacity-100 hover:text-[#E65100] transition-colors"
+                >
+                  <MapPin size={20} className="text-[#E65100] shrink-0 mt-0.5" />
+                  <span className="text-sm leading-relaxed">{settings.address}</span>
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={20} className="text-[#E65100] shrink-0" />
@@ -100,8 +107,8 @@ export default function Footer({ settings }: { settings: GlobalSettings }) {
             &copy; {currentYear} {settings.siteTitle}. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs opacity-60">
-            <Link href="/privacy" className="hover:text-[#F8BBD0] transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-[#F8BBD0] transition-colors">Terms of Service</Link>
+            <Link href="/plan-your-visit" className="hover:text-[#F8BBD0] transition-colors">Plan Your Visit</Link>
+            <Link href="/contact" className="hover:text-[#F8BBD0] transition-colors">Contact & Directions</Link>
           </div>
         </div>
       </div>
