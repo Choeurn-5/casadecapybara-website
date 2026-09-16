@@ -62,6 +62,16 @@ function enrichMenuItem(wpItem: WPCafeMenuItem): MenuItem {
   };
 }
 
+function getFoodImageScale(title: string) {
+  const lower = title.toLowerCase();
+  if (lower.includes("pizza")) return "scale-[1.45] group-hover:scale-[1.58]";
+  if (lower.includes("skewer")) return "scale-[1.18] group-hover:scale-[1.28]";
+  if (lower.includes("coffee") || lower.includes("latte") || lower.includes("drink") || lower.includes("tea")) {
+    return "scale-[1.22] group-hover:scale-[1.34]";
+  }
+  return "scale-[1.15] group-hover:scale-[1.25]";
+}
+
 export default function CafeFeaturedMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
   const menuItems = useMemo(() => wpItems.map(enrichMenuItem), [wpItems]);
   
@@ -84,24 +94,27 @@ export default function CafeFeaturedMenu({ wpItems }: { wpItems: WPCafeMenuItem[
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
         {featuredItems.map((item, idx) => (
           <ScrollReveal key={item.id} delay={idx * 0.1} direction="up">
-            <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-[#E8F5E9] transition-shadow duration-300 group flex flex-col h-full">
-              {/* Image Container */}
-              <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-[#FFF3E0] to-[#FFE0B2] shrink-0">
+            <div className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl border border-[#E8F5E9] transition-all duration-500 group flex flex-col h-full hover:-translate-y-1">
+              {/* Image Container with Ambient Pedestal */}
+              <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-[#FFF9EE] via-[#FFF3E0] to-[#FFE0B2] shrink-0 flex items-center justify-center">
+                <div className="absolute inset-4 rounded-full bg-white/60 blur-md pointer-events-none" />
                 {item.imageUrl ? (
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.title}
-                    fill
-                    className="object-contain p-6 drop-shadow-xl transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
-                    unoptimized
-                  />
+                  <div className="relative w-full h-full flex items-center justify-center p-3">
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.title}
+                      fill
+                      className={`object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.18)] transition-transform duration-700 ease-out ${getFoodImageScale(item.title)}`}
+                      unoptimized
+                    />
+                  </div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-[#2E7D32]/30">
                     <span className="text-4xl">🍽️</span>
                   </div>
                 )}
                 {/* Price Badge */}
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm text-[#E65100] font-bold text-sm">
+                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-md text-[#E65100] font-bold text-sm border border-amber-100">
                   ${item.price}
                 </div>
               </div>

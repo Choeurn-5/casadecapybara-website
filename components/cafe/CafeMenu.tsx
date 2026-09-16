@@ -71,12 +71,30 @@ function enrichMenuItem(wpItem: WPCafeMenuItem): MenuItem {
   };
 }
 
+function getFoodImageScale(title: string) {
+  const lower = title.toLowerCase();
+  if (lower.includes("pizza")) return "scale-[1.45] group-hover:scale-[1.58]";
+  if (lower.includes("skewer")) return "scale-[1.18] group-hover:scale-[1.28]";
+  if (lower.includes("coffee") || lower.includes("latte") || lower.includes("drink") || lower.includes("tea")) {
+    return "scale-[1.22] group-hover:scale-[1.34]";
+  }
+  return "scale-[1.15] group-hover:scale-[1.25]";
+}
+
 export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState<string>("All");
   const [activeDietary, setActiveDietary] = useState<string | null>(null);
 
+  // Transform WP items using enricher
   const menuItems = useMemo(() => wpItems.map(enrichMenuItem), [wpItems]);
 
+  // Extract unique categories
+  const categories = useMemo(() => {
+    const cats = new Set(menuItems.map(item => item.category));
+    return ["All", ...Array.from(cats)];
+  }, [menuItems]);
+
+  // Filter items based on active category and dietary
   const filteredItems = useMemo(() => {
     return menuItems.filter(item => {
       const matchCategory = activeCategory === "All" || item.category === activeCategory;
@@ -86,7 +104,7 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
   }, [menuItems, activeCategory, activeDietary]);
 
   return (
-    <div className="w-full max-w-7xl mx-auto" id="menu">
+    <div className="w-full max-w-7xl mx-auto px-4 py-8" id="menu">
       <div className="text-center mb-12">
         <h2 className="text-4xl md:text-5xl font-bold text-[#1B5E20] mb-4">Our Culinary Experience</h2>
         <div className="w-24 h-1 bg-[#E65100] mx-auto rounded-full mb-8"></div>
@@ -98,15 +116,15 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
       {/* Filters */}
       <div className="flex flex-col items-center gap-6 mb-12">
         {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2">
-          {CATEGORIES.map(cat => (
+        <div className="flex flex-wrap justify-center gap-2 max-w-4xl">
+          {categories.map(cat => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
                 activeCategory === cat 
                   ? "bg-[#1B5E20] text-white shadow-md shadow-[#1B5E20]/20 scale-105" 
-                  : "bg-white text-gray-600 border border-gray-200 hover:border-[#1B5E20]/30 hover:bg-[#E8F5E9]"
+                  : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
               }`}
             >
               {cat}
@@ -148,25 +166,28 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-[#E8F5E9] transition-shadow duration-300 group flex flex-col"
+              className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl border border-[#E8F5E9] transition-all duration-500 group flex flex-col hover:-translate-y-1"
             >
-              {/* Image Container */}
-              <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-[#FFF3E0] to-[#FFE0B2]">
+              {/* Image Container with Ambient Pedestal */}
+              <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-[#FFF9EE] via-[#FFF3E0] to-[#FFE0B2] shrink-0 flex items-center justify-center">
+                <div className="absolute inset-4 rounded-full bg-white/60 blur-md pointer-events-none" />
                 {item.imageUrl ? (
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.title}
-                    fill
-                    className="object-contain p-6 drop-shadow-xl transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
-                    unoptimized
-                  />
+                  <div className="relative w-full h-full flex items-center justify-center p-3">
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.title}
+                      fill
+                      className={`object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.18)] transition-transform duration-700 ease-out ${getFoodImageScale(item.title)}`}
+                      unoptimized
+                    />
+                  </div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-[#2E7D32]/30">
                     <span className="text-4xl">🍽️</span>
                   </div>
                 )}
                 {/* Price Badge */}
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm text-[#E65100] font-bold text-sm">
+                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-md text-[#E65100] font-bold text-sm border border-amber-100">
                   ${item.price}
                 </div>
               </div>
