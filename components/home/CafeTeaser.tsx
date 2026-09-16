@@ -6,32 +6,28 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const DISH_ENRICHMENT: Record<
   string,
-  { badge: string; price: string; description: string; scaleClass: string; tag: string }
+  { badge: string; description: string; scaleClass: string; tag: string }
 > = {
   "mediterranean skewers": {
     badge: "Chef's Signature",
-    price: "$9.50",
     description: "Tender flame-grilled skewers with garden herbs, crisp local greens & balsamic reduction.",
     scaleClass: "scale-[0.98] sm:scale-[1.05] group-hover:scale-[1.04] sm:group-hover:scale-[1.12]",
     tag: "Wood-Smoked",
   },
   "garden pizza": {
     badge: "Stone-Baked",
-    price: "$11.00",
     description: "Artisan crispy crust with sun-ripened organic vegetables, fresh basil & melted mozzarella.",
     scaleClass: "scale-[1.12] sm:scale-[1.22] group-hover:scale-[1.18] sm:group-hover:scale-[1.28]",
     tag: "Wood-Fired Oven",
   },
   "cinnamon coffee": {
     badge: "Specialty Brew",
-    price: "$4.50",
     description: "Rich espresso infused with wild Ceylon cinnamon, velvety steamed coconut milk & raw honey.",
     scaleClass: "scale-[1.08] sm:scale-[1.18] group-hover:scale-[1.14] sm:group-hover:scale-[1.24]",
     tag: "Artisan Roasted",
   },
   "beetroot latte": {
     badge: "Superfood Elixir",
-    price: "$4.75",
     description: "Cold-pressed organic beetroot, gentle ginger spice & silky warm barista oat milk.",
     scaleClass: "scale-[1.08] sm:scale-[1.18] group-hover:scale-[1.14] sm:group-hover:scale-[1.24]",
     tag: "Plant-Based",
@@ -48,7 +44,6 @@ function getDishDetails(title: string) {
   if (lower.includes("pizza")) {
     return {
       badge: "Stone-Baked",
-      price: "$11.00",
       description: "Artisan crispy crust with garden vegetables, aromatic herbs & rich melted cheese.",
       scaleClass: "scale-[1.12] sm:scale-[1.22] group-hover:scale-[1.18] sm:group-hover:scale-[1.28]",
       tag: "Wood-Fired Oven",
@@ -56,7 +51,6 @@ function getDishDetails(title: string) {
   }
   return {
     badge: "Sanctuary Recipe",
-    price: "$8.50",
     description: "Crafted fresh daily with 100% organic ingredients sourced from local Siem Reap growers.",
     scaleClass: "scale-[1.02] sm:scale-[1.10] group-hover:scale-[1.08] sm:group-hover:scale-[1.16]",
     tag: "100% Organic",
@@ -126,13 +120,10 @@ export default async function CafeTeaser() {
                         index === 1 ? "sm:translate-y-6" : index === 2 ? "sm:translate-y-12" : ""
                       }`}
                     >
-                      {/* Top Info Bar */}
+                      {/* Top Info Bar: Badge (No Price) */}
                       <div className="flex items-center justify-between gap-2 mb-2 z-10">
                         <span className="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#E65100]/20 text-[#FF9800] border border-[#E65100]/30 shadow-xs">
                           {meta.badge}
-                        </span>
-                        <span className="font-serif text-sm font-bold text-white/95">
-                          {meta.price}
                         </span>
                       </div>
 
