@@ -723,6 +723,33 @@ export interface CafeMenuItem {
     thumbnailUrl: string;
 }
 
+export const fallbackCafeMenuItems: CafeMenuItem[] = [
+  {
+    id: "fallback-1",
+    title: "Mediterranean Skewers",
+    content: "Tender flame-grilled skewers with garden herbs, crisp local greens & balsamic reduction.",
+    thumbnailUrl: "https://cms.casadecapybara.com/wp-content/uploads/2026/09/b3bf66b3.webp"
+  },
+  {
+    id: "fallback-2",
+    title: "Garden Pizza",
+    content: "Artisan crispy crust with sun-ripened organic vegetables, fresh basil & melted mozzarella.",
+    thumbnailUrl: "https://cms.casadecapybara.com/wp-content/uploads/2026/09/b801a610.webp"
+  },
+  {
+    id: "fallback-3",
+    title: "Cinnamon Coffee",
+    content: "Rich espresso infused with wild Ceylon cinnamon, velvety steamed coconut milk & raw honey.",
+    thumbnailUrl: "https://cms.casadecapybara.com/wp-content/uploads/2026/09/5f1b1b11.webp"
+  },
+  {
+    id: "fallback-4",
+    title: "Beetroot Latte",
+    content: "Cold-pressed organic beetroot, gentle ginger spice & silky warm barista oat milk.",
+    thumbnailUrl: "https://cms.casadecapybara.com/wp-content/uploads/2026/09/1ad7865c.webp"
+  }
+];
+
 export async function getFeaturedMenuItems(): Promise<CafeMenuItem[]> {
   const query = `
     query {
@@ -739,15 +766,18 @@ export async function getFeaturedMenuItems(): Promise<CafeMenuItem[]> {
   try {
     const data = (await fetchGraphQL(query)) as any;
     const nodes = data?.cafeMenuItems?.nodes || [];
-    return nodes.map((node: any) => ({
-      id: node.id,
-      title: node.title,
-      content: node.content || "",
-      thumbnailUrl: node.featuredImage?.node?.sourceUrl || "https://images.unsplash.com/photo-1555507036-ab1e4006a8a0?q=80&w=800&auto=format&fit=crop"
-    }));
+    if (nodes.length > 0) {
+      return nodes.map((node: any) => ({
+        id: node.id,
+        title: node.title,
+        content: node.content || "",
+        thumbnailUrl: node.featuredImage?.node?.sourceUrl || "https://images.unsplash.com/photo-1555507036-ab1e4006a8a0?q=80&w=800&auto=format&fit=crop"
+      }));
+    }
+    return fallbackCafeMenuItems;
   } catch (err) {
     console.error("Error fetching cafe menu items:", err);
-    return [];
+    return fallbackCafeMenuItems;
   }
 }
 
