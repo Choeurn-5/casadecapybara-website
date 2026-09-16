@@ -60,7 +60,7 @@ export const defaultGlobalSettings: GlobalSettings = {
     address: "Sangkat Svay Dangkum, Siem Reap, Kingdom of Cambodia",
     operatingHours: "Daily: 8:00 AM - 6:30 PM (Encounter sessions by booking)",
     whatsappNumber: "+85592123456",
-    whatsappUrl: "https://wa.me/85592123456",
+    whatsappUrl: "https://wa.me/qr/VYXIK6O4OLT3M1",
     telegramUsername: "capybaracambodia",
     telegramUrl: "https://t.me/capybaracambodia",
     facebookUrl: "https://facebook.com/casadecapybara",

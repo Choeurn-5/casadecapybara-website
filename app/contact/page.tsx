@@ -70,13 +70,19 @@ export default async function ContactPage() {
                 </div>
                 
                 <h3 className="text-3xl font-bold text-gray-900 mb-2">Telegram</h3>
-                <p className="text-xl font-medium text-[#229ED9] mb-8">@capybaracambodia</p>
+                <p className="text-xl font-medium text-[#229ED9] mb-6">@capybaracambodia</p>
                 
-                <div className="w-48 h-48 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-200 mb-8">
-                  <div className="text-center text-gray-400 flex flex-col items-center gap-2">
-                    <QrCode className="w-20 h-20 text-[#229ED9]/40" />
-                    <span className="text-xs font-medium">Scan to Chat</span>
+                <div className="w-52 h-52 bg-white p-3 rounded-2xl flex flex-col items-center justify-center border border-gray-200 shadow-sm mb-6 group relative">
+                  <div className="relative w-40 h-40">
+                    <Image
+                      src="/qr/telegram-qr.svg"
+                      alt="Scan to Chat on Telegram"
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
                   </div>
+                  <span className="text-[11px] text-gray-500 font-medium mt-1">Scan to Chat</span>
                 </div>
                 
                 <a 
@@ -96,17 +102,23 @@ export default async function ContactPage() {
                 </div>
                 
                 <h3 className="text-3xl font-bold text-gray-900 mb-2">WhatsApp</h3>
-                <p className="text-xl font-medium text-[#25D366] mb-8">{whatsappNumber}</p>
+                <p className="text-xl font-medium text-[#25D366] mb-6">{whatsappNumber}</p>
                 
-                <div className="w-48 h-48 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-200 mb-8">
-                  <div className="text-center text-gray-400 flex flex-col items-center gap-2">
-                    <QrCode className="w-20 h-20 text-[#25D366]/40" />
-                    <span className="text-xs font-medium">Scan to Chat</span>
+                <div className="w-52 h-52 bg-white p-3 rounded-2xl flex flex-col items-center justify-center border border-gray-200 shadow-sm mb-6 group relative">
+                  <div className="relative w-40 h-40">
+                    <Image
+                      src="/qr/whatsapp-qr.svg"
+                      alt="Scan to Chat on WhatsApp"
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
                   </div>
+                  <span className="text-[11px] text-gray-500 font-medium mt-1">Scan to Chat</span>
                 </div>
                 
                 <a 
-                  href={whatsappLink}
+                  href="https://wa.me/qr/VYXIK6O4OLT3M1" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-full py-4 bg-[#25D366] hover:bg-[#1ebe57] text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-md"
