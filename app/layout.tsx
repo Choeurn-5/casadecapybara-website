@@ -85,7 +85,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -93,7 +93,7 @@ export default async function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&display=swap" rel="stylesheet" />
         <JsonLd data={globalBusinessSchema} />
       </head>
-      <body suppressHydrationWarning className="min-h-full flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
+      <body suppressHydrationWarning className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
         <SmoothScrolling>
           <Navbar settings={settings} />
           <div className="flex-1 flex flex-col w-full">{children}</div>
