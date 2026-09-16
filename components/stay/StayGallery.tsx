@@ -97,9 +97,18 @@ const DEFAULT_ROOMS_DATA = [
   { slug: "la-familia", title: "La Familia", occupancy: "4 Adults + 2 Children", bedType: "2 King Beds", priceFrom: "$110" },
 ];
 
+const PAGE_SIZE = 8;
+
 export default function StayGallery({ rooms }: StayGalleryProps) {
   const [activeSlug, setActiveSlug] = useState<string>("all");
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+
+  // Tab change handler (resets pagination to page 1)
+  const handleTabChange = (slug: string) => {
+    setActiveSlug(slug);
+    setCurrentPage(1);
+  };
 
   // Parse all room items and their respective photo sets
   const roomData = useMemo(() => {
@@ -165,13 +174,37 @@ export default function StayGallery({ rooms }: StayGalleryProps) {
     return list;
   }, [roomData]);
 
-  // Filtered images based on current tab
-  const displayedImages = useMemo(() => {
+  // Filtered images based on current tab (full list for that tab)
+  const filteredImages = useMemo(() => {
     if (activeSlug === "all") {
       return allImages;
     }
     return allImages.filter((item) => item.roomSlug === activeSlug);
   }, [allImages, activeSlug]);
+
+  // Total pages calculation (active only for "all" tab)
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredImages.length / PAGE_SIZE);
+  }, [filteredImages]);
+
+  // Displayed images: Paginated (8 per page) if "all" tab, otherwise full room photo list
+  const displayedImages = useMemo(() => {
+    if (activeSlug === "all") {
+      const start = (currentPage - 1) * PAGE_SIZE;
+      return filteredImages.slice(start, start + PAGE_SIZE);
+    }
+    return filteredImages;
+  }, [filteredImages, activeSlug, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    if (typeof window !== "undefined") {
+      const el = document.getElementById("stay-gallery");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
 
   // Current active room object (if a specific room tab is selected)
   const currentRoom = useMemo(() => {
@@ -229,7 +262,7 @@ export default function StayGallery({ rooms }: StayGalleryProps) {
           <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 pt-1 px-1 scrollbar-thin scrollbar-thumb-gray-200 justify-start md:justify-center">
             {/* "All Rooms" Tab */}
             <button
-              onClick={() => setActiveSlug("all")}
+              onClick={() => handleTabChange("all")}
               className={`relative px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-300 flex items-center gap-2 cursor-pointer ${
                 activeSlug === "all"
                   ? "bg-[#1B5E20] text-white shadow-md shadow-[#1B5E20]/25 scale-[1.03]"
@@ -254,7 +287,7 @@ export default function StayGallery({ rooms }: StayGalleryProps) {
               return (
                 <button
                   key={room.slug}
-                  onClick={() => setActiveSlug(room.slug)}
+                  onClick={() => handleTabChange(room.slug)}
                   className={`relative px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-300 flex items-center gap-2 cursor-pointer ${
                     isActive
                       ? "bg-[#1B5E20] text-white shadow-md shadow-[#1B5E20]/25 scale-[1.03]"
@@ -397,6 +430,64 @@ export default function StayGallery({ rooms }: StayGalleryProps) {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Pagination Bar (Displayed ONLY for "All Rooms" tab when multiple pages exist) */}
+        {activeSlug === "all" && totalPages > 1 && (
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-100">
+            {/* Range info */}
+            <p className="text-xs sm:text-sm text-gray-500 font-medium order-2 sm:order-1">
+              Showing{" "}
+              <span className="font-bold text-[#1B5E20]">
+                {(currentPage - 1) * PAGE_SIZE + 1}
+              </span>
+              –
+              <span className="font-bold text-[#1B5E20]">
+                {Math.min(currentPage * PAGE_SIZE, filteredImages.length)}
+              </span>{" "}
+              of <span className="font-bold text-[#1B5E20]">{filteredImages.length}</span> photos
+            </p>
+
+            {/* Pagination Controls */}
+            <div className="flex items-center gap-1.5 sm:gap-2 order-1 sm:order-2">
+              <button
+                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                aria-label="Previous page"
+                className="px-3 py-2 rounded-xl border border-[#E8F5E9] bg-white text-gray-700 hover:bg-[#FAF7F2] hover:border-[#1B5E20]/30 disabled:opacity-40 disabled:cursor-not-allowed transition-all text-xs font-semibold flex items-center gap-1 cursor-pointer"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span className="hidden sm:inline">Prev</span>
+              </button>
+
+              <div className="flex items-center gap-1 sm:gap-1.5">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    aria-label={`Go to page ${pageNum}`}
+                    className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                      currentPage === pageNum
+                        ? "bg-[#1B5E20] text-white shadow-md shadow-[#1B5E20]/25 scale-105"
+                        : "bg-[#FAF7F2] text-gray-700 hover:bg-[#F0EBE1] border border-[#E8F5E9]"
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                aria-label="Next page"
+                className="px-3 py-2 rounded-xl border border-[#E8F5E9] bg-white text-gray-700 hover:bg-[#FAF7F2] hover:border-[#1B5E20]/30 disabled:opacity-40 disabled:cursor-not-allowed transition-all text-xs font-semibold flex items-center gap-1 cursor-pointer"
+              >
+                <span className="hidden sm:inline">Next</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Empty state safeguard */}
         {displayedImages.length === 0 && (
