@@ -30,22 +30,22 @@ export default async function Home() {
         secondaryCtaLink="/stay"
       />
 
-      {/* Section 2: Encounter Tickets (The Viral Draw) */}
+      {/* Section 2: Families & Safety (Directly Under Hero) */}
+      <ScrollReveal delay={0.1} staggerIndex={0}>
+        <FamiliesAndSafetyTeaser />
+      </ScrollReveal>
+
+      {/* Section 3: Encounter Tickets (The Viral Draw) */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
         <EncounterTicketsSummary />
       </ScrollReveal>
 
-      {/* Section 3: The Stay / Rooms (Carousel) */}
+      {/* Section 4: The Stay / Rooms (Carousel) */}
       <RoomCarousel rooms={rooms} />
 
-      {/* Section 4: The Destination Cafe (The Experience) */}
+      {/* Section 5: The Destination Cafe (The Experience) */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
         <CafeTeaser />
-      </ScrollReveal>
-
-      {/* Section 5: Families & Safety (The Trust Builder) */}
-      <ScrollReveal delay={0.1} staggerIndex={0}>
-        <FamiliesAndSafetyTeaser />
       </ScrollReveal>
 
       {/* Section 6: Guest Reviews (Social Proof) */}
