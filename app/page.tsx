@@ -25,7 +25,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
-      {/* Section 1: Hero Banner */}
+      {/* Section 1: Hero Banner (Visual Awe & Headline) */}
       <Hero
         youtubeId="Kx3kZwcTJ3I"
         headline="Where Nature's Gentle Soul Meets Luxury Sanctuary"
@@ -36,40 +36,40 @@ export default async function Home() {
         secondaryCtaLink="/stay"
       />
 
-      {/* Section 2: About / Editorial Welcome & Proof (Directly after Hero) */}
+      {/* Section 2: About / Editorial Welcome & Press Proof (Orientation & Credibility) */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
         <AboutSection />
       </ScrollReveal>
 
-      {/* Section 3: Encounter Tickets (The Viral Draw) */}
+      {/* Section 3: Encounter Tickets (The Viral Draw & Core Attraction) */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
         <EncounterTicketsSummary />
       </ScrollReveal>
 
-      {/* Section 4: The Stay / Rooms (Carousel) */}
-      <RoomCarousel rooms={rooms} />
-
-      {/* Section 5: The Destination Cafe (The Experience) */}
-      <ScrollReveal delay={0.1} staggerIndex={0}>
-        <CafeTeaser />
-      </ScrollReveal>
-
-      {/* Section 6: Guest Reviews (Social Proof) */}
-      <ScrollReveal delay={0.1} staggerIndex={0}>
-        <TestimonialSlider />
-      </ScrollReveal>
-
-      {/* Section 7: Location & Transit Grid (Right Next to Angkor Wat) */}
-      <ScrollReveal delay={0.1} staggerIndex={0}>
-        <LocationTransitSection />
-      </ScrollReveal>
-
-      {/* Section 8: Families & Safety Sanctuary Magic */}
+      {/* Section 4: Families & Safety (Reassurance & Care Immediately After Animal Encounters) */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
         <FamiliesAndSafetyTeaser />
       </ScrollReveal>
 
-      {/* Section 9: Final Conversion Banner */}
+      {/* Section 5: The Stay / Boutique Villas (Accommodations) */}
+      <RoomCarousel rooms={rooms} />
+
+      {/* Section 6: The Destination Cafe (Farm-to-Table Dining & Lifestyle) */}
+      <ScrollReveal delay={0.1} staggerIndex={0}>
+        <CafeTeaser />
+      </ScrollReveal>
+
+      {/* Section 7: Guest Reviews & Social Proof (TripAdvisor, Booking.com, Google) */}
+      <ScrollReveal delay={0.1} staggerIndex={0}>
+        <TestimonialSlider />
+      </ScrollReveal>
+
+      {/* Section 8: Location & Transit Grid (Right Next to Angkor Wat & Directions) */}
+      <ScrollReveal delay={0.1} staggerIndex={0}>
+        <LocationTransitSection />
+      </ScrollReveal>
+
+      {/* Section 9: Final Conversion Banner (Direct Booking & Concierge Channels) */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
         <FinalConversionBanner
           bookingUrl={globalSettings.bookingEngineUrl}
