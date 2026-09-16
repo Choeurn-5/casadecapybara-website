@@ -12,28 +12,28 @@ const DISH_ENRICHMENT: Record<
     badge: "Chef's Signature",
     price: "$9.50",
     description: "Tender flame-grilled skewers with garden herbs, crisp local greens & balsamic reduction.",
-    scaleClass: "scale-[1.28] group-hover:scale-[1.38]",
+    scaleClass: "scale-[0.98] sm:scale-[1.05] group-hover:scale-[1.04] sm:group-hover:scale-[1.12]",
     tag: "Wood-Smoked",
   },
   "garden pizza": {
     badge: "Stone-Baked",
     price: "$11.00",
     description: "Artisan crispy crust with sun-ripened organic vegetables, fresh basil & melted mozzarella.",
-    scaleClass: "scale-[1.82] group-hover:scale-[1.96]",
+    scaleClass: "scale-[1.12] sm:scale-[1.22] group-hover:scale-[1.18] sm:group-hover:scale-[1.28]",
     tag: "Wood-Fired Oven",
   },
   "cinnamon coffee": {
     badge: "Specialty Brew",
     price: "$4.50",
     description: "Rich espresso infused with wild Ceylon cinnamon, velvety steamed coconut milk & raw honey.",
-    scaleClass: "scale-[1.35] group-hover:scale-[1.48]",
+    scaleClass: "scale-[1.08] sm:scale-[1.18] group-hover:scale-[1.14] sm:group-hover:scale-[1.24]",
     tag: "Artisan Roasted",
   },
   "beetroot latte": {
     badge: "Superfood Elixir",
     price: "$4.75",
     description: "Cold-pressed organic beetroot, gentle ginger spice & silky warm barista oat milk.",
-    scaleClass: "scale-[1.35] group-hover:scale-[1.48]",
+    scaleClass: "scale-[1.08] sm:scale-[1.18] group-hover:scale-[1.14] sm:group-hover:scale-[1.24]",
     tag: "Plant-Based",
   },
 };
@@ -50,7 +50,7 @@ function getDishDetails(title: string) {
       badge: "Stone-Baked",
       price: "$11.00",
       description: "Artisan crispy crust with garden vegetables, aromatic herbs & rich melted cheese.",
-      scaleClass: "scale-[1.82] group-hover:scale-[1.96]",
+      scaleClass: "scale-[1.12] sm:scale-[1.22] group-hover:scale-[1.18] sm:group-hover:scale-[1.28]",
       tag: "Wood-Fired Oven",
     };
   }
@@ -58,7 +58,7 @@ function getDishDetails(title: string) {
     badge: "Sanctuary Recipe",
     price: "$8.50",
     description: "Crafted fresh daily with 100% organic ingredients sourced from local Siem Reap growers.",
-    scaleClass: "scale-[1.3] group-hover:scale-[1.42]",
+    scaleClass: "scale-[1.02] sm:scale-[1.10] group-hover:scale-[1.08] sm:group-hover:scale-[1.16]",
     tag: "100% Organic",
   };
 }
