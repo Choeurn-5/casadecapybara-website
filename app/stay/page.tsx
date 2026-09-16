@@ -353,7 +353,7 @@ export default async function StayPage() {
       </section>
 
       {/* SECTION 8: Stay Gallery */}
-      <StayGallery />
+      <StayGallery rooms={rooms} />
 
       {/* SECTION 9: Book Direct Banner */}
       <section className="bg-[#1B5E20] py-20 px-4 text-center">
