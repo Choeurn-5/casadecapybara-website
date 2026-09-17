@@ -50,15 +50,19 @@ export default function CafeFeaturedMenu({ wpItems }: { wpItems?: WPCafeMenuItem
                     </span>
                   </div>
 
-                  {/* Thumbnail Image */}
-                  <div className="relative w-full h-44 my-3 rounded-2xl overflow-hidden bg-gray-100">
-                    <Image
-                      src={item.imageUrl}
-                      alt={item.title}
-                      fill
-                      unoptimized
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
+                  {/* Modern PNG Showcase Stage */}
+                  <div className="relative w-full h-52 my-3 rounded-2xl overflow-hidden bg-gradient-to-b from-gray-50 via-gray-100/60 to-gray-200/50 border border-gray-200/60 shadow-inner flex items-center justify-center p-3">
+                    <div className="absolute w-36 h-36 rounded-full bg-rose-200/40 blur-xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
+                    <div className="absolute bottom-2 w-3/5 h-3.5 bg-black/25 rounded-[50%] blur-sm pointer-events-none" />
+                    <div className="relative w-full h-full flex items-center justify-center z-10">
+                      <Image
+                        src={item.imageUrl}
+                        alt={item.title}
+                        fill
+                        unoptimized
+                        className="object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.35)] transition-transform duration-500 group-hover:scale-105 p-1"
+                      />
+                    </div>
                   </div>
 
                   {/* Title & Dietary */}
