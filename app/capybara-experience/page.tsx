@@ -5,7 +5,7 @@ import { getEncounterTicketsApiData, getGlobalSettings } from "@/lib/wordpress";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import VideoModal from "@/components/capybara-experience/VideoModal";
 import ExperienceGallery from "@/components/capybara-experience/ExperienceGallery";
-import { Check, Clock, MapPin, Users, Heart, Leaf, Stethoscope, Camera, Baby, Droplets, Wind } from "lucide-react";
+import { Check, Clock, MapPin, Users, Heart, Leaf, Stethoscope, Camera, Baby, Droplets, Wind, Phone, Send } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Capybara Experience Siem Reap | Meet Molly & Alex | From $10 | Casa de Capybara",
@@ -22,7 +22,11 @@ export default async function CapybaraExperiencePage() {
   const individualImgSrc = encounterData?.individualImage?.node?.sourceUrl || "/gallery/experience/individual.jpg";
   const familyImgSrc = encounterData?.familyImage?.node?.sourceUrl || "/gallery/experience/family.jpg";
   const telegramBaseUrl = globalSettings.telegramUrl || "https://t.me/capybaracambodia";
-  const whatsappUrl = globalSettings.whatsappUrl || "https://wa.me/855968149795";
+  const whatsappNumber = globalSettings.whatsappNumber || "+855968149795";
+  const cleanPhone = whatsappNumber.replace(/[^0-9]/g, "") || "855968149795";
+  const whatsappUrl = globalSettings.whatsappUrl || `https://wa.me/${cleanPhone}`;
+  const indPrice = encounterData?.individualPrice ?? 10;
+  const famPrice = encounterData?.familyPrice ?? 30;
 
   return (
     <main className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
@@ -231,9 +235,27 @@ export default async function CapybaraExperiencePage() {
                       </>
                     )}
                   </ul>
-                  <a href={telegramBaseUrl} target="_blank" rel="noopener noreferrer" className="block text-center py-4 bg-[#E65100] hover:bg-[#F57C00] text-white font-bold rounded-xl transition-all shadow-md">
-                    Message Us on Telegram
-                  </a>
+                  {/* Dual Booking Buttons */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto pt-2">
+                    <a
+                      href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hi, I'd like to book the $${indPrice} Individual Sanctuary Ticket.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 py-3.5 px-4 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold rounded-xl transition-all shadow-md active:scale-95 text-sm"
+                    >
+                      <Phone className="w-4 h-4 shrink-0" />
+                      <span>WhatsApp</span>
+                    </a>
+                    <a
+                      href={`${telegramBaseUrl}?text=${encodeURIComponent(`Hi, I'd like to book the $${indPrice} Individual Sanctuary Ticket.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 py-3.5 px-4 bg-[#2AABEE] hover:bg-[#2298d5] text-white font-bold rounded-xl transition-all shadow-md active:scale-95 text-sm"
+                    >
+                      <Send className="w-4 h-4 shrink-0" />
+                      <span>Telegram</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </ScrollReveal>
@@ -272,9 +294,27 @@ export default async function CapybaraExperiencePage() {
                       </>
                     )}
                   </ul>
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="block text-center py-4 bg-white text-[#1B5E20] hover:bg-gray-100 font-bold rounded-xl transition-all shadow-md mt-auto">
-                    Message Us on WhatsApp
-                  </a>
+                  {/* Dual Booking Buttons */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto pt-2">
+                    <a
+                      href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hi, I'd like to book the $${famPrice} Family Sanctuary Package.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 py-3.5 px-4 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold rounded-xl transition-all shadow-md active:scale-95 text-sm"
+                    >
+                      <Phone className="w-4 h-4 shrink-0" />
+                      <span>WhatsApp</span>
+                    </a>
+                    <a
+                      href={`${telegramBaseUrl}?text=${encodeURIComponent(`Hi, I'd like to book the $${famPrice} Family Sanctuary Package.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 py-3.5 px-4 bg-[#2AABEE] hover:bg-[#2298d5] text-white font-bold rounded-xl transition-all shadow-md active:scale-95 text-sm"
+                    >
+                      <Send className="w-4 h-4 shrink-0" />
+                      <span>Telegram</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </ScrollReveal>
