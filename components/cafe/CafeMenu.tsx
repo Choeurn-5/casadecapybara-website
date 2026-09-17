@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CafeMenuItem as WPCafeMenuItem } from "@/lib/wordpress";
 
@@ -158,9 +159,26 @@ function enrichMenuItem(wpItem: WPCafeMenuItem): MenuItem {
   };
 }
 
+const ITEMS_PER_PAGE = 6;
+
+function getPaginationRange(current: number, total: number): (number | string)[] {
+  if (total <= 5) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+  if (current <= 3) {
+    return [1, 2, 3, 4, "...", total];
+  }
+  if (current >= total - 2) {
+    return [1, "...", total - 3, total - 2, total - 1, total];
+  }
+  return [1, "...", current - 1, current, current + 1, "...", total];
+}
+
 export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [activeDietary, setActiveDietary] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const menuGridRef = useRef<HTMLDivElement>(null);
 
   // Transform WP items using enricher
   const menuItems = useMemo(() => wpItems.map(enrichMenuItem), [wpItems]);
@@ -179,6 +197,35 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
       return matchCategory && matchDietary;
     });
   }, [menuItems, activeCategory, activeDietary]);
+
+  const totalItems = filteredItems.length;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const validCurrentPage = Math.min(Math.max(1, currentPage), Math.max(1, totalPages || 1));
+
+  const paginatedItems = useMemo(() => {
+    const start = (validCurrentPage - 1) * ITEMS_PER_PAGE;
+    return filteredItems.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredItems, validCurrentPage]);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    if (menuGridRef.current) {
+      const yOffset = -120;
+      const element = menuGridRef.current;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat);
+    setCurrentPage(1);
+  };
+
+  const handleDietaryChange = (dietId: string) => {
+    setActiveDietary((prev) => (prev === dietId ? null : dietId));
+    setCurrentPage(1);
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8" id="menu">
@@ -208,7 +255,7 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => handleCategoryChange(cat)}
               className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 touch-manipulation active:scale-95 ${
                 activeCategory === cat
                   ? "bg-gradient-to-r from-[#E65100] to-[#FF9800] text-white shadow-lg shadow-[#E65100]/25 scale-105"
@@ -232,7 +279,7 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
           ].map((diet) => (
             <button
               key={diet.id}
-              onClick={() => setActiveDietary(activeDietary === diet.id ? null : diet.id)}
+              onClick={() => handleDietaryChange(diet.id)}
               className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-semibold transition-all duration-200 border touch-manipulation active:scale-95 ${
                 activeDietary === diet.id
                   ? "bg-[#E65100] text-white border-[#FF9800]/40 shadow-md shadow-[#E65100]/20"
@@ -245,10 +292,13 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
         </div>
       </div>
 
+      {/* Scroll anchor for smooth pagination transitions */}
+      <div ref={menuGridRef} className="scroll-mt-32" />
+
       {/* Menu Grid (Luxury Floating Gastronomy Cards - Responsive 1 to 3 cols, No Price) */}
       <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
         <AnimatePresence>
-          {filteredItems.map((item) => {
+          {paginatedItems.map((item) => {
             const details = getDishDetails(item.title);
             return (
               <motion.div
@@ -338,13 +388,89 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
         </AnimatePresence>
       </motion.div>
 
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-5 mt-12 sm:mt-16 pt-8 border-t border-white/10">
+          {/* Info label */}
+          <p className="text-xs sm:text-sm text-gray-400 font-medium order-2 sm:order-1 text-center sm:text-left">
+            Showing{" "}
+            <span className="font-bold text-[#FFB74D]">
+              {(validCurrentPage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(validCurrentPage * ITEMS_PER_PAGE, totalItems)}
+            </span>{" "}
+            of <span className="font-bold text-white">{totalItems}</span> culinary dishes
+          </p>
+
+          {/* Pagination Navigation */}
+          <div className="flex items-center gap-1.5 sm:gap-2 order-1 sm:order-2">
+            {/* Prev Button */}
+            <button
+              onClick={() => handlePageChange(Math.max(1, validCurrentPage - 1))}
+              disabled={validCurrentPage === 1}
+              aria-label="Previous page"
+              className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
+                validCurrentPage === 1
+                  ? "opacity-30 cursor-not-allowed text-gray-500 border border-transparent"
+                  : "bg-[#132317]/80 text-gray-200 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-[#FF9800]/40 shadow-sm"
+              }`}
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span className="hidden xs:inline">Prev</span>
+            </button>
+
+            {/* Page Numbers */}
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              {getPaginationRange(validCurrentPage, totalPages).map((item, idx) => {
+                if (item === "...") {
+                  return (
+                    <span key={`dots-${idx}`} className="w-7 sm:w-8 text-center text-xs font-bold text-gray-500 select-none">
+                      …
+                    </span>
+                  );
+                }
+                const pageNum = item as number;
+                const isActive = validCurrentPage === pageNum;
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    aria-label={`Go to page ${pageNum}`}
+                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer active:scale-95 ${
+                      isActive
+                        ? "bg-gradient-to-r from-[#E65100] to-[#FF9800] text-white shadow-lg shadow-[#E65100]/30 scale-105"
+                        : "bg-[#132317]/70 text-gray-300 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-white/20"
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Next Button */}
+            <button
+              onClick={() => handlePageChange(Math.min(totalPages, validCurrentPage + 1))}
+              disabled={validCurrentPage === totalPages}
+              aria-label="Next page"
+              className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
+                validCurrentPage === totalPages
+                  ? "opacity-30 cursor-not-allowed text-gray-500 border border-transparent"
+                  : "bg-[#132317]/80 text-gray-200 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-[#FF9800]/40 shadow-sm"
+              }`}
+            >
+              <span className="hidden xs:inline">Next</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Empty State */}
       {filteredItems.length === 0 && (
         <div className="text-center py-16 sm:py-20 bg-white/5 rounded-3xl border border-white/10 p-6 sm:p-8 my-8">
           <p className="text-gray-300 text-base sm:text-lg mb-4">No culinary dishes found matching these filters.</p>
           <button
             onClick={() => {
-              setActiveCategory("All");
+              handleCategoryChange("All");
               setActiveDietary(null);
             }}
             className="px-6 py-2.5 rounded-full bg-[#E65100] hover:bg-[#FF9800] text-white font-bold transition-colors text-sm"
