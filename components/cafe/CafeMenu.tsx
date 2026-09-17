@@ -2,201 +2,80 @@
 
 import { useState, useMemo, useRef } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, BookOpen, Utensils, Search, Sparkles, MessageCircle, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CafeMenuItem as WPCafeMenuItem } from "@/lib/wordpress";
+import { COMPLETE_PHYSICAL_MENU, PHYSICAL_MENU_CATEGORIES, MenuItemCatalog } from "@/data/menuCatalog";
+import VirtualMenuBook from "./VirtualMenuBook";
 
 export interface MenuItem {
   id: string;
   title: string;
+  price: string;
   description: string;
   category: string;
   imageUrl?: string;
   dietary?: ("vegetarian" | "vegan" | "gluten-free")[];
+  badge?: string;
 }
 
-const DISH_ENRICHMENT: Record<
-  string,
-  { badge: string; description: string; scaleClass: string; tag: string }
-> = {
-  "mediterranean skewers": {
-    badge: "Chef's Signature",
-    description: "Tender flame-grilled skewers with garden herbs, crisp local greens & balsamic reduction.",
-    scaleClass: "scale-[0.98] sm:scale-[1.05] group-hover:scale-[1.04] sm:group-hover:scale-[1.12]",
-    tag: "Wood-Smoked",
-  },
-  "garden pizza": {
-    badge: "Stone-Baked",
-    description: "Artisan crispy crust with sun-ripened organic vegetables, fresh basil & melted mozzarella.",
-    scaleClass: "scale-[1.12] sm:scale-[1.22] group-hover:scale-[1.18] sm:group-hover:scale-[1.28]",
-    tag: "Wood-Fired Oven",
-  },
-  "cinnamon coffee": {
-    badge: "Specialty Brew",
-    description: "Rich espresso infused with wild Ceylon cinnamon, velvety steamed coconut milk & raw honey.",
-    scaleClass: "scale-[1.08] sm:scale-[1.18] group-hover:scale-[1.14] sm:group-hover:scale-[1.24]",
-    tag: "Artisan Roasted",
-  },
-  "beetroot latte": {
-    badge: "Superfood Elixir",
-    description: "Cold-pressed organic beetroot, gentle ginger spice & silky warm barista oat milk.",
-    scaleClass: "scale-[1.08] sm:scale-[1.18] group-hover:scale-[1.14] sm:group-hover:scale-[1.24]",
-    tag: "Plant-Based",
-  },
-};
+const ITEMS_PER_PAGE = 9;
 
-function getDishDetails(title: string) {
-  const lower = title.toLowerCase();
-  for (const [key, val] of Object.entries(DISH_ENRICHMENT)) {
-    if (lower.includes(key) || key.includes(lower)) {
-      return val;
-    }
-  }
-  if (lower.includes("pizza")) {
-    return {
-      badge: "Stone-Baked",
-      description: "Artisan crispy crust with garden vegetables, aromatic herbs & rich melted cheese.",
-      scaleClass: "scale-[1.12] sm:scale-[1.22] group-hover:scale-[1.18] sm:group-hover:scale-[1.28]",
-      tag: "Wood-Fired Oven",
-    };
-  }
-  if (lower.includes("skewer") || lower.includes("grill") || lower.includes("bbq")) {
-    return {
-      badge: "Chef's Signature",
-      description: "Flame-grilled to perfection with aromatic herbs and seasonal local greens.",
-      scaleClass: "scale-[0.98] sm:scale-[1.05] group-hover:scale-[1.04] sm:group-hover:scale-[1.12]",
-      tag: "Wood-Smoked",
-    };
-  }
-  if (lower.includes("coffee") || lower.includes("latte") || lower.includes("espresso") || lower.includes("tea")) {
-    return {
-      badge: "Specialty Brew",
-      description: "Handcrafted beverage infused with natural botanical notes and velvety steamed foam.",
-      scaleClass: "scale-[1.08] sm:scale-[1.18] group-hover:scale-[1.14] sm:group-hover:scale-[1.24]",
-      tag: "Artisan Roasted",
-    };
-  }
-  if (lower.includes("cake") || lower.includes("pastry") || lower.includes("tart") || lower.includes("dessert")) {
-    return {
-      badge: "Daily Patisserie",
-      description: "Freshly baked in-house with European butter and tropical fruit glazes.",
-      scaleClass: "scale-[1.05] sm:scale-[1.14] group-hover:scale-[1.10] sm:group-hover:scale-[1.20]",
-      tag: "Freshly Baked",
-    };
-  }
-  return {
-    badge: "Sanctuary Recipe",
-    description: "Crafted fresh daily with 100% organic ingredients sourced from local Siem Reap growers.",
-    scaleClass: "scale-[1.02] sm:scale-[1.10] group-hover:scale-[1.08] sm:group-hover:scale-[1.16]",
-    tag: "100% Organic",
-  };
-}
-
-// Helper to strip HTML tags from WP content
-function stripHtml(html: string) {
-  if (!html) return "";
-  if (typeof window === "undefined") {
-    return html.replace(/<[^>]*>?/gm, "");
-  }
-  const tmp = document.createElement("DIV");
-  tmp.innerHTML = html;
-  return tmp.textContent || tmp.innerText || "";
-}
-
-function enrichMenuItem(wpItem: WPCafeMenuItem): MenuItem {
-  const titleLower = wpItem.title.toLowerCase();
-
-  let category = "All Day & Mains";
-  if (
-    titleLower.includes("breakfast") ||
-    titleLower.includes("pancake") ||
-    titleLower.includes("croissant") ||
-    titleLower.includes("benedict") ||
-    titleLower.includes("toast")
-  ) {
-    category = "Breakfast (7am–11am)";
-  } else if (
-    titleLower.includes("amok") ||
-    titleLower.includes("khmer") ||
-    titleLower.includes("noodle") ||
-    titleLower.includes("rice") ||
-    titleLower.includes("curry")
-  ) {
-    category = "Khmer & Asian Specialties";
-  } else if (
-    titleLower.includes("cake") ||
-    titleLower.includes("tart") ||
-    titleLower.includes("sweet") ||
-    titleLower.includes("dessert") ||
-    titleLower.includes("cookie")
-  ) {
-    category = "Pastries & Sweets";
-  } else if (
-    titleLower.includes("latte") ||
-    titleLower.includes("matcha") ||
-    titleLower.includes("coffee") ||
-    titleLower.includes("drink") ||
-    titleLower.includes("tea") ||
-    titleLower.includes("juice") ||
-    titleLower.includes("smoothie")
-  ) {
-    category = "Signature Drinks & Coffee";
-  }
-
-  const dietary: ("vegetarian" | "vegan" | "gluten-free")[] = [];
-  if (titleLower.includes("vegan")) dietary.push("vegan");
-  if (titleLower.includes("vegetarian") || titleLower.includes("salad") || titleLower.includes("veg"))
-    dietary.push("vegetarian");
-  if (titleLower.includes("gluten-free") || titleLower.includes("gf")) dietary.push("gluten-free");
-
-  return {
-    id: wpItem.id,
-    title: wpItem.title,
-    description: stripHtml(wpItem.content),
-    category,
-    imageUrl: wpItem.thumbnailUrl,
-    dietary,
-  };
-}
-
-const ITEMS_PER_PAGE = 6;
-
-function getPaginationRange(current: number, total: number): (number | string)[] {
-  if (total <= 5) {
-    return Array.from({ length: total }, (_, i) => i + 1);
-  }
-  if (current <= 3) {
-    return [1, 2, 3, 4, "...", total];
-  }
-  if (current >= total - 2) {
-    return [1, "...", total - 3, total - 2, total - 1, total];
-  }
-  return [1, "...", current - 1, current, current + 1, "...", total];
-}
-
-export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
+export default function CafeMenu({ wpItems }: { wpItems?: WPCafeMenuItem[] }) {
+  const [viewMode, setViewMode] = useState<"booklet" | "interactive">("booklet");
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [activeDietary, setActiveDietary] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const menuGridRef = useRef<HTMLDivElement>(null);
 
-  // Transform WP items using enricher
-  const menuItems = useMemo(() => wpItems.map(enrichMenuItem), [wpItems]);
+  // Merge physical catalog with any extra WordPress items
+  const menuItems = useMemo<MenuItem[]>(() => {
+    const baseItems: MenuItem[] = COMPLETE_PHYSICAL_MENU.map((item) => ({
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      description: item.description,
+      category: item.category,
+      imageUrl: item.imageUrl,
+      dietary: item.dietary,
+      badge: item.badge,
+    }));
 
-  // Extract unique categories
-  const categories = useMemo(() => {
-    const cats = new Set(menuItems.map((item) => item.category));
-    return ["All", ...Array.from(cats)];
-  }, [menuItems]);
+    if (!wpItems || wpItems.length === 0) return baseItems;
 
-  // Filter items based on active category and dietary
+    // Append any custom WP items not in catalog
+    const baseTitles = new Set(baseItems.map((i) => i.title.toLowerCase()));
+    const additional = wpItems
+      .filter((wp) => !baseTitles.has(wp.title.toLowerCase()))
+      .map((wp) => ({
+        id: wp.id,
+        title: wp.title,
+        price: "$6.00",
+        description: wp.content.replace(/<[^>]*>?/gm, "") || "Freshly made daily in our sanctuary kitchen.",
+        category: "Capybara Favourites (Burgers & Sandwiches)",
+        imageUrl: wp.thumbnailUrl || "/gallery/cafe/atmosphere-1.jpg",
+        badge: "Specialty",
+      }));
+
+    return [...baseItems, ...additional];
+  }, [wpItems]);
+
+  // Categories list
+  const categories = PHYSICAL_MENU_CATEGORIES;
+
+  // Filter items
   const filteredItems = useMemo(() => {
     return menuItems.filter((item) => {
       const matchCategory = activeCategory === "All" || item.category === activeCategory;
       const matchDietary = !activeDietary || (item.dietary && item.dietary.includes(activeDietary as any));
-      return matchCategory && matchDietary;
+      const matchSearch =
+        !searchQuery.trim() ||
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchCategory && matchDietary && matchSearch;
     });
-  }, [menuItems, activeCategory, activeDietary]);
+  }, [menuItems, activeCategory, activeDietary, searchQuery]);
 
   const totalItems = filteredItems.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
@@ -230,263 +109,274 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
   return (
     <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8" id="menu">
       {/* Header Section */}
-      <div className="text-center mb-10 sm:mb-16">
-        <p className="text-[#E65100] text-[11px] sm:text-sm font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-3 sm:mb-4 flex items-center justify-center gap-2 sm:gap-3">
-          <span className="w-8 sm:w-10 h-px bg-[#E65100]/60" />
+      <div className="text-center mb-10 sm:mb-14">
+        <p className="text-[#F43F5E] text-[11px] sm:text-sm font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-3 sm:mb-4 flex items-center justify-center gap-2 sm:gap-3">
+          <span className="w-8 sm:w-10 h-px bg-[#F43F5E]/60" />
           The Sanctuary Café Gastronomy
-          <span className="w-8 sm:w-10 h-px bg-[#E65100]/60" />
+          <span className="w-8 sm:w-10 h-px bg-[#0284C7]/60" />
         </p>
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-light text-white mb-4 sm:mb-6 tracking-tight leading-[1.15]">
           Taste the Tropics, <br className="hidden xs:inline" />
-          <span className="italic bg-gradient-to-r from-[#F472B6] via-[#FB7185] to-[#FDA4AF] bg-clip-text text-transparent">
+          <span className="italic bg-gradient-to-r from-[#F472B6] via-[#FB7185] to-[#38BDF8] bg-clip-text text-transparent">
             Nourish the Soul.
           </span>
         </h1>
         <p className="text-gray-300/85 max-w-2xl mx-auto text-sm sm:text-lg font-light leading-relaxed px-2">
-          Unwind in our breathtaking open-air dining sanctuary. Serving 100% organic, farm-to-table cuisine prepared
-          fresh daily by our passionate culinary team.
+          Experience our physical café menu online. Browse the authentic Canva booklet replica or explore our complete interactive menu with prices, dietary tags, and direct ordering.
         </p>
-      </div>
 
-      {/* Filter Controls (Mobile-Friendly Touch Targets & Spacing) */}
-      <div className="flex flex-col items-center gap-5 sm:gap-6 mb-12 sm:mb-16">
-        {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 max-w-4xl px-1">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => handleCategoryChange(cat)}
-              className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 touch-manipulation active:scale-95 ${
-                activeCategory === cat
-                  ? "bg-gradient-to-r from-[#F43F5E] to-[#EC4899] text-white shadow-lg shadow-[#F43F5E]/30 scale-105"
-                  : "bg-[#132317]/80 text-gray-300 hover:text-white hover:bg-[#1E3725]/80 border border-white/10"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Dietary Toggles */}
-        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-2.5 px-2">
-          <span className="text-xs sm:text-sm text-gray-400 font-medium py-1 w-full sm:w-auto text-center sm:text-left">
-            Dietary filters:
-          </span>
-          {[
-            { id: "vegetarian", label: "🌱 Vegetarian" },
-            { id: "vegan", label: "🌿 Vegan" },
-            { id: "gluten-free", label: "🌾 Gluten-Free" },
-          ].map((diet) => (
-            <button
-              key={diet.id}
-              onClick={() => handleDietaryChange(diet.id)}
-              className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-semibold transition-all duration-200 border touch-manipulation active:scale-95 ${
-                activeDietary === diet.id
-                  ? "bg-[#F43F5E] text-white border-[#FDA4AF]/50 shadow-md shadow-[#F43F5E]/25"
-                  : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:text-white"
-              }`}
-            >
-              {diet.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Scroll anchor for smooth pagination transitions */}
-      <div ref={menuGridRef} className="scroll-mt-32" />
-
-      {/* Menu Grid (Luxury Floating Gastronomy Cards - Responsive 1 to 3 cols, No Price) */}
-      <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
-        <AnimatePresence>
-          {paginatedItems.map((item) => {
-            const details = getDishDetails(item.title);
-            return (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0, scale: 0.94 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.94 }}
-                transition={{ duration: 0.35 }}
-                className="relative flex flex-col justify-between rounded-3xl p-5 sm:p-6 group transition-all duration-500 bg-gradient-to-b from-[#132317]/90 via-[#0E1C12]/90 to-[#071109]/95 border border-white/10 hover:border-[#FF9800]/50 shadow-xl hover:shadow-[0_20px_50px_rgba(230,81,0,0.25)] hover:-translate-y-1.5 sm:hover:-translate-y-2 backdrop-blur-md overflow-visible"
-              >
-                {/* Top Info Bar: Category Badge + Dietary Pills */}
-                <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3 z-10">
-                  <span className="px-2.5 sm:px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#E65100]/20 text-[#FF9800] border border-[#E65100]/30 shadow-xs">
-                    {details.badge}
-                  </span>
-                  {item.dietary && item.dietary.length > 0 && (
-                    <div className="flex items-center gap-1.5">
-                      {item.dietary.includes("vegan") && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950/70 text-[#81C784] border border-[#81C784]/30">
-                          🌿 Vegan
-                        </span>
-                      )}
-                      {item.dietary.includes("vegetarian") && !item.dietary.includes("vegan") && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-950/70 text-[#81C784] border border-[#81C784]/30">
-                          🌱 Veg
-                        </span>
-                      )}
-                      {item.dietary.includes("gluten-free") && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-950/70 text-[#FFB74D] border border-[#FFB74D]/30">
-                          🌾 GF
-                        </span>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                {/* Hero Image Presentation Stage with Ambient Glow & Floating Lift */}
-                <div className="relative w-full aspect-square max-h-[260px] sm:max-h-none my-3 sm:my-4 flex items-center justify-center overflow-visible">
-                  {/* Radiant Ambient Halo */}
-                  <div className="absolute inset-2 rounded-full bg-[radial-gradient(circle,_var(--tw-gradient-stops))] from-[#FF9800]/25 via-[#E65100]/10 to-transparent blur-2xl pointer-events-none group-hover:from-[#FF9800]/45 group-hover:via-[#E65100]/20 transition-all duration-700" />
-
-                  {/* Grounding Soft Shadow */}
-                  <div className="absolute bottom-1 w-3/4 h-5 rounded-[50%] bg-black/50 blur-md group-hover:scale-110 group-hover:opacity-75 transition-all duration-500" />
-
-                  {/* Bold Scaled Dish Image */}
-                  {item.imageUrl ? (
-                    <div className="relative w-full h-full flex items-center justify-center">
-                      <Image
-                        src={item.imageUrl}
-                        alt={item.title}
-                        fill
-                        unoptimized
-                        className={`object-contain transition-all duration-700 ease-out drop-shadow-[0_16px_28px_rgba(0,0,0,0.65)] group-hover:-translate-y-2 ${details.scaleClass}`}
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-[#81C784]/30">
-                      <span className="text-4xl sm:text-5xl">🍽️</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Typography and Description */}
-                <div className="text-left mt-2 z-10">
-                  <h3 className="text-lg sm:text-2xl font-serif font-bold text-white mb-1.5 sm:mb-2 group-hover:text-[#FFB74D] transition-colors duration-300 line-clamp-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-300/85 font-light leading-relaxed line-clamp-2 mb-3 sm:mb-4">
-                    {item.description || details.description}
-                  </p>
-
-                  {/* Micro Footnote: Farm/Culinary Tag & Freshness indicator */}
-                  <div className="pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between text-xs text-gray-400">
-                    <span className="text-[#81C784] font-medium flex items-center gap-1.5 text-[11px] sm:text-xs">
-                      <span className="w-2 h-2 rounded-full bg-[#4CAF50] inline-block shadow-[0_0_8px_#4CAF50]" />
-                      {details.tag}
-                    </span>
-                    <span className="text-[#FF9800] text-[11px] sm:text-xs font-semibold tracking-wider uppercase group-hover:translate-x-1 transition-transform duration-300 flex items-center gap-1">
-                      Fresh Daily →
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
-      </motion.div>
-
-      {/* Pagination Controls */}
-      {totalPages > 1 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-5 mt-12 sm:mt-16 pt-8 border-t border-white/10">
-          {/* Info label */}
-          <p className="text-xs sm:text-sm text-gray-400 font-medium order-2 sm:order-1 text-center sm:text-left">
-            Showing{" "}
-            <span className="font-bold text-[#F472B6]">
-              {(validCurrentPage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(validCurrentPage * ITEMS_PER_PAGE, totalItems)}
-            </span>{" "}
-            of <span className="font-bold text-white">{totalItems}</span> culinary dishes
-          </p>
-
-          {/* Pagination Navigation */}
-          <div className="flex items-center gap-1.5 sm:gap-2 order-1 sm:order-2">
-            {/* Prev Button */}
-            <button
-              onClick={() => handlePageChange(Math.max(1, validCurrentPage - 1))}
-              disabled={validCurrentPage === 1}
-              aria-label="Previous page"
-              className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
-                validCurrentPage === 1
-                  ? "opacity-30 cursor-not-allowed text-gray-500 border border-transparent"
-                  : "bg-[#132317]/80 text-gray-200 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-[#FDA4AF]/40 shadow-sm"
-              }`}
-            >
-              <ChevronLeft className="w-4 h-4" />
-              <span className="hidden xs:inline">Prev</span>
-            </button>
-
-            {/* Page Numbers */}
-            <div className="flex items-center gap-1 sm:gap-1.5">
-              {getPaginationRange(validCurrentPage, totalPages).map((item, idx) => {
-                if (item === "...") {
-                  return (
-                    <span key={`dots-${idx}`} className="w-7 sm:w-8 text-center text-xs font-bold text-gray-500 select-none">
-                      …
-                    </span>
-                  );
-                }
-                const pageNum = item as number;
-                const isActive = validCurrentPage === pageNum;
-                return (
-                  <button
-                    key={pageNum}
-                    onClick={() => handlePageChange(pageNum)}
-                    aria-label={`Go to page ${pageNum}`}
-                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer active:scale-95 ${
-                      isActive
-                        ? "bg-gradient-to-r from-[#F43F5E] to-[#EC4899] text-white shadow-lg shadow-[#F43F5E]/35 scale-105"
-                        : "bg-[#132317]/70 text-gray-300 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-white/20"
-                    }`}
-                  >
-                    {pageNum}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Next Button */}
-            <button
-              onClick={() => handlePageChange(Math.min(totalPages, validCurrentPage + 1))}
-              disabled={validCurrentPage === totalPages}
-              aria-label="Next page"
-              className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
-                validCurrentPage === totalPages
-                  ? "opacity-30 cursor-not-allowed text-gray-500 border border-transparent"
-                  : "bg-[#132317]/80 text-gray-200 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-[#FDA4AF]/40 shadow-sm"
-              }`}
-            >
-              <span className="hidden xs:inline">Next</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Empty State */}
-      {filteredItems.length === 0 && (
-        <div className="text-center py-16 sm:py-20 bg-white/5 rounded-3xl border border-white/10 p-6 sm:p-8 my-8">
-          <p className="text-gray-300 text-base sm:text-lg mb-4">No culinary dishes found matching these filters.</p>
+        {/* Master View Mode Switcher: Virtual Booklet vs Interactive Menu */}
+        <div className="inline-flex p-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-lg mt-8 shadow-xl">
           <button
-            onClick={() => {
-              handleCategoryChange("All");
-              setActiveDietary(null);
-            }}
-            className="px-6 py-2.5 rounded-full bg-[#F43F5E] hover:bg-[#E11D48] text-white font-bold transition-colors text-sm shadow-lg shadow-[#F43F5E]/25"
+            onClick={() => setViewMode("booklet")}
+            className={`flex items-center gap-2.5 px-6 sm:px-8 py-3 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${
+              viewMode === "booklet"
+                ? "bg-gradient-to-r from-[#F43F5E] to-[#EC4899] text-white shadow-lg shadow-[#F43F5E]/30 scale-105"
+                : "text-gray-300 hover:text-white"
+            }`}
           >
-            Clear Filters
+            <BookOpen className="w-4 h-4" />
+            <span>📖 Virtual Menu Booklet</span>
+          </button>
+
+          <button
+            onClick={() => setViewMode("interactive")}
+            className={`flex items-center gap-2.5 px-6 sm:px-8 py-3 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${
+              viewMode === "interactive"
+                ? "bg-gradient-to-r from-[#0284C7] to-[#38BDF8] text-white shadow-lg shadow-[#0284C7]/30 scale-105"
+                : "text-gray-300 hover:text-white"
+            }`}
+          >
+            <Utensils className="w-4 h-4" />
+            <span>✨ Interactive Menu & Prices</span>
           </button>
         </div>
-      )}
-
-      {/* Dietary & Custom Order Footnote */}
-      <div className="mt-14 sm:mt-20 bg-gradient-to-r from-[#132317]/90 via-[#1B3521]/80 to-[#132317]/90 border border-[#E65100]/30 rounded-3xl p-6 sm:p-8 text-center max-w-3xl mx-auto shadow-2xl backdrop-blur-md">
-        <p className="text-gray-200 font-light text-sm sm:text-lg leading-relaxed">
-          Have special dietary needs or allergies? Our kitchen crafts custom orders upon request. <br className="hidden sm:block" />
-          <span className="text-[#FF9800] font-medium">Please inform our sanctuary team when placing your order.</span>
-        </p>
       </div>
+
+      {/* VIEW MODE 1: VIRTUAL MENU BOOKLET (REAL PRINT REPLICA) */}
+      {viewMode === "booklet" ? (
+        <div className="w-full">
+          <VirtualMenuBook />
+        </div>
+      ) : (
+        /* VIEW MODE 2: INTERACTIVE DIGITAL MENU */
+        <div>
+          {/* Search & Filter Controls */}
+          <div className="flex flex-col items-center gap-5 sm:gap-6 mb-12">
+            {/* Search Bar */}
+            <div className="relative w-full max-w-md">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1);
+                }}
+                placeholder="Search food, drinks, ingredients (e.g. burger, matcha, gnocchi)..."
+                className="w-full pl-11 pr-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-400 text-sm focus:outline-none focus:border-[#F43F5E] focus:ring-1 focus:ring-[#F43F5E] transition-all"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-white bg-white/10 px-2 py-0.5 rounded-full"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+
+            {/* Category Tabs */}
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 max-w-5xl px-1">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => handleCategoryChange(cat)}
+                  className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold transition-all duration-300 touch-manipulation active:scale-95 ${
+                    activeCategory === cat
+                      ? "bg-gradient-to-r from-[#F43F5E] to-[#EC4899] text-white shadow-lg shadow-[#F43F5E]/30 scale-105"
+                      : "bg-[#1E293B]/70 text-gray-300 hover:text-white hover:bg-[#334155]/80 border border-white/10"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            {/* Dietary Toggles */}
+            <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-2.5 px-2">
+              <span className="text-xs text-gray-400 font-medium py-1">Dietary:</span>
+              {[
+                { id: "vegetarian", label: "🌱 Vegetarian" },
+                { id: "vegan", label: "🌿 Vegan" },
+                { id: "gluten-free", label: "🌾 Gluten-Free" },
+              ].map((diet) => (
+                <button
+                  key={diet.id}
+                  onClick={() => handleDietaryChange(diet.id)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 border touch-manipulation active:scale-95 ${
+                    activeDietary === diet.id
+                      ? "bg-[#0284C7] text-white border-[#38BDF8]/50 shadow-md shadow-[#0284C7]/25"
+                      : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:text-white"
+                  }`}
+                >
+                  {diet.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Scroll anchor */}
+          <div ref={menuGridRef} className="scroll-mt-32" />
+
+          {/* Menu Grid */}
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <AnimatePresence>
+              {paginatedItems.map((item) => {
+                const orderText = encodeURIComponent(
+                  `Hi Casa de Capybara, I would like to order: ${item.title} (${item.price}).`
+                );
+                const orderUrl = `https://wa.me/855968149795?text=${orderText}`;
+
+                return (
+                  <motion.div
+                    key={item.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative flex flex-col justify-between rounded-3xl p-6 group transition-all duration-300 bg-gradient-to-b from-[#1E293B]/80 via-[#0F172A]/90 to-[#020617]/95 border border-white/10 hover:border-[#F43F5E]/50 shadow-xl hover:shadow-2xl hover:shadow-[#F43F5E]/20 hover:-translate-y-1.5 backdrop-blur-md"
+                  >
+                    <div>
+                      {/* Top Bar: Category/Badge + Price */}
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span className="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-[#F43F5E]/15 text-[#FDA4AF] border border-[#F43F5E]/30">
+                          {item.badge || item.category}
+                        </span>
+                        <span className="px-3 py-1 rounded-full text-base font-extrabold text-white bg-white/10 border border-white/20 shadow-sm">
+                          {item.price}
+                        </span>
+                      </div>
+
+                      {/* Image Thumbnail */}
+                      <div className="relative w-full h-44 my-3 rounded-2xl overflow-hidden bg-black/30 border border-white/5">
+                        <Image
+                          src={item.imageUrl || "/gallery/cafe/atmosphere-1.jpg"}
+                          alt={item.title}
+                          fill
+                          unoptimized
+                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      </div>
+
+                      {/* Title & Dietary */}
+                      <h3 className="text-xl font-serif font-bold text-white mb-2 group-hover:text-[#FDA4AF] transition-colors">
+                        {item.title}
+                      </h3>
+
+                      {item.dietary && item.dietary.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mb-2.5">
+                          {item.dietary.includes("vegan") && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
+                              🌿 Vegan
+                            </span>
+                          )}
+                          {item.dietary.includes("vegetarian") && !item.dietary.includes("vegan") && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-green-950/80 text-green-300 border border-green-500/30">
+                              🌱 Vegetarian
+                            </span>
+                          )}
+                          {item.dietary.includes("gluten-free") && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-950/80 text-amber-300 border border-amber-500/30">
+                              🌾 Gluten-Free
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Description */}
+                      <p className="text-xs sm:text-sm text-gray-300/85 font-light leading-relaxed line-clamp-3 mb-4">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    {/* Bottom Action: WhatsApp Quick Order */}
+                    <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+                      <span className="text-[11px] text-gray-400">Freshly prepared</span>
+                      <a
+                        href={orderUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#25D366]/20 hover:bg-[#25D366] text-[#25D366] hover:text-white border border-[#25D366]/30 text-xs font-bold transition-all duration-200"
+                        title="Order this dish on WhatsApp"
+                      >
+                        <MessageCircle className="w-3.5 h-3.5" />
+                        <span>Order Now</span>
+                      </a>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Empty state */}
+          {filteredItems.length === 0 && (
+            <div className="py-20 text-center">
+              <p className="text-lg text-gray-300 mb-2">No menu items found.</p>
+              <button
+                onClick={() => {
+                  setActiveCategory("All");
+                  setActiveDietary(null);
+                  setSearchQuery("");
+                }}
+                className="mt-4 px-6 py-2.5 bg-gradient-to-r from-[#F43F5E] to-[#EC4899] text-white font-bold rounded-full text-sm"
+              >
+                Reset Filters
+              </button>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-12">
+              <button
+                onClick={() => handlePageChange(validCurrentPage - 1)}
+                disabled={validCurrentPage === 1}
+                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                aria-label="Previous page"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                <button
+                  key={num}
+                  onClick={() => handlePageChange(num)}
+                  className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${
+                    validCurrentPage === num
+                      ? "bg-gradient-to-r from-[#F43F5E] to-[#EC4899] text-white shadow-md shadow-[#F43F5E]/30"
+                      : "bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10"
+                  }`}
+                >
+                  {num}
+                </button>
+              ))}
+
+              <button
+                onClick={() => handlePageChange(validCurrentPage + 1)}
+                disabled={validCurrentPage === totalPages}
+                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                aria-label="Next page"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
