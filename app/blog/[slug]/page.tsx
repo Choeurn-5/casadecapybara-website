@@ -5,7 +5,6 @@ import { ChevronRight, Clock } from "lucide-react";
 import { getPostBySlug, getBlogPosts } from "@/lib/wordpress";
 import type { Metadata, ResolvingMetadata } from "next";
 import SocialShareButtons from "@/components/blog/SocialShareButtons";
-import BlogLanguageSwitcher from "@/components/blog/BlogLanguageSwitcher";
 
 // Define the params interface
 interface PageProps {
@@ -112,8 +111,6 @@ export default async function SingleBlogPost({ params }: PageProps) {
           <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {readingTime} min read</span>
         </div>
 
-        {/* Interactive Translation Switcher Bar */}
-        <BlogLanguageSwitcher currentPost={post} allPosts={allPosts} />
 
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#1B5E20] leading-tight mb-8">
           {post.title}
