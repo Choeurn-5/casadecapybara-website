@@ -5,6 +5,7 @@ import { ChevronRight, Clock } from "lucide-react";
 import { getPostBySlug, getBlogPosts } from "@/lib/wordpress";
 import type { Metadata, ResolvingMetadata } from "next";
 import SocialShareButtons from "@/components/blog/SocialShareButtons";
+import BlogLanguageSwitcher from "@/components/blog/BlogLanguageSwitcher";
 
 // Define the params interface
 interface PageProps {
@@ -111,19 +112,8 @@ export default async function SingleBlogPost({ params }: PageProps) {
           <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {readingTime} min read</span>
         </div>
 
-        {/* Translation Switcher Bar */}
-        <div className="bg-[#E8F5E9] rounded-xl p-4 mb-8 flex flex-col sm:flex-row sm:items-center gap-4">
-          <span className="text-[#1B5E20] font-semibold text-sm shrink-0">Read this guide in:</span>
-          <div className="flex flex-wrap gap-2">
-            <Link href="#" className="px-3 py-1.5 bg-white text-[#1B5E20] text-sm font-medium rounded-full border border-[#2E7D32]/20 hover:bg-[#1B5E20] hover:text-white transition-colors">🇬🇧 EN</Link>
-            <Link href="#" className="px-3 py-1.5 bg-white text-[#1B5E20] text-sm font-medium rounded-full border border-[#2E7D32]/20 hover:bg-[#1B5E20] hover:text-white transition-colors">🇰🇭 KH</Link>
-            <Link href="#" className="px-3 py-1.5 bg-white text-[#1B5E20] text-sm font-medium rounded-full border border-[#2E7D32]/20 hover:bg-[#1B5E20] hover:text-white transition-colors">🇫🇷 FR</Link>
-            <Link href="#" className="px-3 py-1.5 bg-white text-[#1B5E20] text-sm font-medium rounded-full border border-[#2E7D32]/20 hover:bg-[#1B5E20] hover:text-white transition-colors">🇩🇪 DE</Link>
-            <Link href="#" className="px-3 py-1.5 bg-white text-[#1B5E20] text-sm font-medium rounded-full border border-[#2E7D32]/20 hover:bg-[#1B5E20] hover:text-white transition-colors">🇰🇷 KR</Link>
-            <Link href="#" className="px-3 py-1.5 bg-white text-[#1B5E20] text-sm font-medium rounded-full border border-[#2E7D32]/20 hover:bg-[#1B5E20] hover:text-white transition-colors">🇨🇳 CN</Link>
-            <Link href="#" className="px-3 py-1.5 bg-white text-[#1B5E20] text-sm font-medium rounded-full border border-[#2E7D32]/20 hover:bg-[#1B5E20] hover:text-white transition-colors">🇯🇵 JP</Link>
-          </div>
-        </div>
+        {/* Interactive Translation Switcher Bar */}
+        <BlogLanguageSwitcher currentPost={post} allPosts={allPosts} />
 
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#1B5E20] leading-tight mb-8">
           {post.title}
