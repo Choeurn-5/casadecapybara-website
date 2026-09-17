@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { GlobalSettings } from "@/lib/wordpress";
 import { MapPin, Clock, Phone, Mail, Send, Map } from "lucide-react";
 
 export default function GlobalFooter({ settings }: { settings: GlobalSettings }) {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
+  const isKhmer = pathname === '/kh' || pathname?.startsWith('/kh/');
 
   return (
     <footer className="relative bg-[#070D18] text-white pt-16 pb-8 overflow-hidden">
@@ -158,25 +163,76 @@ export default function GlobalFooter({ settings }: { settings: GlobalSettings })
             <h3 className="text-xs font-bold tracking-widest uppercase text-white pt-4">Follow Us</h3>
             <div className="flex flex-wrap gap-3">
               {/* Social Round Buttons */}
-              <a href="https://www.instagram.com/casadecapybaracambodia/" className="w-8 h-8 rounded bg-[#E1306C] flex items-center justify-center hover:opacity-90">
+              <a 
+                href="https://www.instagram.com/casadecapybaracambodia/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded bg-[#E1306C] flex items-center justify-center hover:opacity-90 transition-opacity"
+                aria-label="Instagram"
+              >
                 <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
               </a>
-              <a href="https://www.tiktok.com/@casadecapybara" className="w-8 h-8 rounded bg-black flex items-center justify-center hover:opacity-90">
+              <a 
+                href="https://www.tiktok.com/@casadecapybara" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded bg-black flex items-center justify-center hover:opacity-90 transition-opacity"
+                aria-label="TikTok"
+              >
                 <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
               </a>
-              <a href="https://web.facebook.com/casadecapybara/" className="w-8 h-8 rounded bg-[#1877F2] flex items-center justify-center hover:opacity-90">
+              <a 
+                href="https://web.facebook.com/casadecapybara/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded bg-[#1877F2] flex items-center justify-center hover:opacity-90 transition-opacity"
+                aria-label="Facebook"
+              >
                 <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
               </a>
-              <a href={`https://wa.me/${settings.whatsappNumber ? settings.whatsappNumber.replace(/[^0-9]/g, '') : ''}`} className="w-8 h-8 rounded bg-[#25D366] flex items-center justify-center hover:opacity-90">
+              <a 
+                href={`https://wa.me/${(settings.whatsappNumber || '+855968149795').replace(/[^0-9]/g, '')}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded bg-[#25D366] flex items-center justify-center hover:opacity-90 transition-opacity"
+                aria-label="WhatsApp"
+              >
                 <Phone className="w-4 h-4 text-white" />
               </a>
-              <a href={settings.telegramUrl || '#'} className="w-8 h-8 rounded bg-[#229ED9] flex items-center justify-center hover:opacity-90">
+              <a 
+                href={settings.telegramUrl || 'https://t.me/casadecapybara'} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded bg-[#229ED9] flex items-center justify-center hover:opacity-90 transition-opacity"
+                aria-label="Telegram"
+              >
                 <Send className="w-4 h-4 text-white" />
               </a>
             </div>
 
-            <div className="pt-2 font-bold text-sm flex items-center gap-2">
-              <span className="text-[10px]">KH</span> ភាសាខ្មែរ
+            {/* Language Switcher Link */}
+            <div className="pt-2">
+              <Link
+                href={isKhmer ? "/" : "/kh"}
+                className="inline-flex items-center gap-2 font-bold text-sm text-gray-200 hover:text-white transition-all group py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#0284C7]/50 active:scale-95"
+                title={isKhmer ? "Switch to English" : "ប្តូរទៅភាសាខ្មែរ (Switch to Khmer)"}
+              >
+                {isKhmer ? (
+                  <>
+                    <span className="text-[10px] font-bold bg-[#0284C7]/40 text-[#38BDF8] border border-[#0284C7]/60 px-1.5 py-0.5 rounded tracking-wider">
+                      EN
+                    </span>
+                    <span className="group-hover:text-[#38BDF8] transition-colors">English</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-[10px] font-bold bg-[#0284C7]/40 text-[#38BDF8] border border-[#0284C7]/60 px-1.5 py-0.5 rounded tracking-wider">
+                      KH
+                    </span>
+                    <span className="group-hover:text-[#38BDF8] transition-colors">ភាសាខ្មែរ</span>
+                  </>
+                )}
+              </Link>
             </div>
           </div>
 
