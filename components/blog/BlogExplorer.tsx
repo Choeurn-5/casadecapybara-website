@@ -5,6 +5,7 @@ import Link from "next/link";
 import { 
   Search, 
   ChevronRight, 
+  ChevronLeft,
   BookOpen, 
   Clock, 
   Globe, 
@@ -22,6 +23,21 @@ import type { BlogPost } from "@/lib/wordpress";
 
 interface BlogExplorerProps {
   initialPosts: BlogPost[];
+}
+
+const POSTS_PER_PAGE = 6;
+
+function getPaginationRange(current: number, total: number): (number | string)[] {
+  if (total <= 5) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+  if (current <= 3) {
+    return [1, 2, 3, 4, "...", total];
+  }
+  if (current >= total - 2) {
+    return [1, "...", total - 3, total - 2, total - 1, total];
+  }
+  return [1, "...", current - 1, current, current + 1, "...", total];
 }
 
 const CATEGORIES = [
@@ -85,6 +101,7 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
   const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const langDropdownRef = useRef<HTMLDivElement>(null);
 
   // Initialize dark mode from localStorage or system preference on client mount
@@ -119,6 +136,11 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
     };
   }, []);
 
+  // Reset pagination when search query or filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedCategory, selectedLanguage]);
+
   const currentLang = LANGUAGES.find((l) => l.id === selectedLanguage) || LANGUAGES[0];
 
   const filteredPosts = useMemo(() => {
@@ -142,8 +164,31 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
     });
   }, [initialPosts, searchQuery, selectedCategory, selectedLanguage]);
 
-  const featuredPost = filteredPosts.length > 0 ? filteredPosts[0] : null;
-  const gridPosts = filteredPosts.length > 0 ? filteredPosts.slice(1) : [];
+  const totalPosts = filteredPosts.length;
+  // Page 1 shows 1 featured + 6 grid stories = 7 stories. Subsequent pages show 6 stories.
+  const totalPages = Math.max(1, 1 + Math.ceil(Math.max(0, totalPosts - 7) / POSTS_PER_PAGE));
+
+  // Only show the big featured hero card on page 1
+  const featuredPost = currentPage === 1 && totalPosts > 0 ? filteredPosts[0] : null;
+
+  // Paginated grid stories
+  const gridPosts = useMemo(() => {
+    if (currentPage === 1) {
+      return filteredPosts.slice(1, 1 + POSTS_PER_PAGE);
+    }
+    const startIdx = 1 + (currentPage - 1) * POSTS_PER_PAGE;
+    return filteredPosts.slice(startIdx, startIdx + POSTS_PER_PAGE);
+  }, [filteredPosts, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    if (typeof window !== "undefined") {
+      const el = document.getElementById("blog-stories-feed");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
 
   const hasActiveFilters = searchQuery !== "" || selectedCategory !== "All Topics" || selectedLanguage !== "all";
 
@@ -151,6 +196,7 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
     setSearchQuery("");
     setSelectedCategory("All Topics");
     setSelectedLanguage("all");
+    setCurrentPage(1);
   };
 
   return (
@@ -358,7 +404,7 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
       </div>
 
       {/* 3. Articles Feed (Mobile Responsive) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="blog-stories-feed" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
         
         {/* Featured Post (Hero Article) */}
         {featuredPost && (
@@ -575,7 +621,97 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
           </div>
         )}
 
-        {/* 4. Luxury Bottom Resort Invitation (Mobile Optimized) */}
+        {/* 4. Modern Pagination Controls (Touch-Friendly UI/UX) */}
+        {totalPages > 1 && (
+          <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-200/60 dark:border-[#223525]">
+            {/* Story count summary */}
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium order-2 sm:order-1 text-center sm:text-left">
+              Page <span className="font-bold text-[#1B5E20] dark:text-[#81C784]">{currentPage}</span> of{" "}
+              <span className="font-bold text-[#1B5E20] dark:text-[#81C784]">{totalPages}</span> · Showing{" "}
+              <span className="font-bold text-[#1B5E20] dark:text-[#81C784]">
+                {currentPage === 1 
+                  ? `1–${Math.min(7, totalPosts)}` 
+                  : `${2 + (currentPage - 1) * POSTS_PER_PAGE}–${Math.min(1 + currentPage * POSTS_PER_PAGE, totalPosts)}`}
+              </span>{" "}
+              of <span className="font-bold text-[#1B5E20] dark:text-[#81C784]">{totalPosts}</span> stories
+            </p>
+
+            {/* Pagination Controls */}
+            <div className="flex items-center gap-1.5 sm:gap-2 order-1 sm:order-2">
+              {/* Prev Button */}
+              <button
+                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                aria-label="Previous page"
+                className={`inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer active:scale-95 ${
+                  currentPage === 1
+                    ? "opacity-30 cursor-not-allowed border border-transparent"
+                    : isDarkMode
+                      ? "bg-[#142017] text-gray-200 border border-[#223525] hover:bg-[#1A2A1D] hover:border-[#4CAF50]/50"
+                      : "bg-white text-gray-700 border border-gray-200 hover:bg-[#FAF7F2] hover:border-[#1B5E20]/40 shadow-xs"
+                }`}
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span className="hidden sm:inline">Prev</span>
+              </button>
+
+              {/* Number Buttons */}
+              <div className="flex items-center gap-1 sm:gap-1.5">
+                {getPaginationRange(currentPage, totalPages).map((item, idx) => {
+                  if (item === "...") {
+                    return (
+                      <span
+                        key={`dots-${idx}`}
+                        className="w-6 sm:w-8 text-center text-xs font-bold text-gray-400 select-none"
+                      >
+                        …
+                      </span>
+                    );
+                  }
+                  const pageNum = item as number;
+                  const isActive = currentPage === pageNum;
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      aria-label={`Go to page ${pageNum}`}
+                      className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer active:scale-95 ${
+                        isActive
+                          ? isDarkMode
+                            ? "bg-[#2E7D32] text-white shadow-md shadow-[#2E7D32]/30 scale-105"
+                            : "bg-[#1B5E20] text-white shadow-md scale-105"
+                          : isDarkMode
+                            ? "bg-[#142017] text-gray-300 hover:bg-[#1A2A1D] hover:text-white border border-[#223525]"
+                            : "bg-white text-gray-700 hover:bg-[#FAF7F2] hover:text-[#1B5E20] border border-gray-200 shadow-xs"
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Next Button */}
+              <button
+                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                aria-label="Next page"
+                className={`inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer active:scale-95 ${
+                  currentPage === totalPages
+                    ? "opacity-30 cursor-not-allowed border border-transparent"
+                    : isDarkMode
+                      ? "bg-[#142017] text-gray-200 border border-[#223525] hover:bg-[#1A2A1D] hover:border-[#4CAF50]/50"
+                      : "bg-white text-gray-700 border border-gray-200 hover:bg-[#FAF7F2] hover:border-[#1B5E20]/40 shadow-xs"
+                }`}
+              >
+                <span className="hidden sm:inline">Next</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* 5. Luxury Bottom Resort Invitation (Mobile Optimized) */}
         <div className="mt-14 sm:mt-20 lg:mt-24 rounded-3xl bg-gradient-to-br from-[#1B5E20] via-[#154619] to-[#0D2D10] overflow-hidden relative shadow-2xl border border-white/10">
           <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/30 z-10" />
           <div className="relative z-20 p-6 sm:p-10 md:p-14 lg:p-16 flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8">
