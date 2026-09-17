@@ -140,10 +140,10 @@ export default function Hero({
 
         {/* Call to Actions (CTAs) */}
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 w-full max-w-md sm:max-w-none">
-          {/* Primary CTA - Book an Encounter */}
+          {/* Primary CTA - Book an Encounter (Pink Lead) */}
           <Link
             href={primaryCtaLink}
-            className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white transition-all duration-300 rounded-full overflow-hidden shadow-xl shadow-[#E65100]/25 hover:shadow-2xl hover:shadow-[#E65100]/40 hover:-translate-y-1 active:translate-y-0 bg-gradient-to-r from-[#E65100] to-[#F57C00] hover:from-[#d84315] hover:to-[#e65100]"
+            className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white transition-all duration-300 rounded-full overflow-hidden shadow-xl shadow-[#F43F5E]/25 hover:shadow-2xl hover:shadow-[#F43F5E]/40 hover:-translate-y-1 active:translate-y-0 bg-gradient-to-r from-[#F43F5E] via-[#FB7185] to-[#EC4899] hover:from-[#E11D48] hover:to-[#DB2777]"
           >
             <span className="flex items-center gap-2">
               <span className="text-xl group-hover:scale-125 transition-transform duration-300 origin-bottom-right">🐾</span>
@@ -151,10 +151,10 @@ export default function Hero({
             </span>
           </Link>
 
-          {/* Secondary CTA - Explore Stays */}
+          {/* Secondary CTA - Explore Stays (Blue Lead) */}
           <Link
             href={secondaryCtaLink}
-            className="group inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white transition-all duration-300 rounded-full backdrop-blur-md bg-white/10 hover:bg-white/20 border border-white/30 hover:border-[#F8BBD0]/60 hover:-translate-y-1 active:translate-y-0 shadow-lg shadow-black/20"
+            className="group inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white transition-all duration-300 rounded-full backdrop-blur-md bg-white/10 hover:bg-[#0284C7]/20 border border-white/30 hover:border-[#38BDF8]/80 hover:text-[#38BDF8] hover:-translate-y-1 active:translate-y-0 shadow-lg shadow-black/20"
           >
             <span className="flex items-center gap-2">
               <span>{secondaryCtaText}</span>
@@ -163,10 +163,10 @@ export default function Hero({
           </Link>
         </motion.div>
 
-        {/* Quick Highlights / Trust Pills */}
+        {/* Quick Highlights / Trust Pills (Pink & Blue Primary Leads) */}
         <motion.div variants={itemVariants} className="mt-12 pt-8 border-t border-white/15 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 w-full max-w-4xl text-left">
-          <div className="flex items-center gap-3 p-2 rounded-xl bg-black/20 backdrop-blur-xs border border-white/5">
-            <div className="p-2 rounded-lg bg-[#1B5E20]/60 text-[#F8BBD0]">
+          <div className="flex items-center gap-3 p-2 rounded-xl bg-black/20 backdrop-blur-xs border border-[#FB7185]/20">
+            <div className="p-2 rounded-lg bg-[#F43F5E]/20 text-[#FB7185]">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
@@ -177,8 +177,8 @@ export default function Hero({
             </div>
           </div>
 
-          <div className="flex items-center gap-3 p-2 rounded-xl bg-black/20 backdrop-blur-xs border border-white/5">
-            <div className="p-2 rounded-lg bg-[#2E7D32]/60 text-emerald-300">
+          <div className="flex items-center gap-3 p-2 rounded-xl bg-black/20 backdrop-blur-xs border border-[#38BDF8]/20">
+            <div className="p-2 rounded-lg bg-[#0284C7]/25 text-[#38BDF8]">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
@@ -190,7 +190,7 @@ export default function Hero({
           </div>
 
           <div className="flex items-center gap-3 p-2 rounded-xl bg-black/20 backdrop-blur-xs border border-white/5">
-            <div className="p-2 rounded-lg bg-[#E65100]/60 text-amber-300">
+            <div className="p-2 rounded-lg bg-amber-500/20 text-amber-300">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -202,7 +202,7 @@ export default function Hero({
           </div>
 
           <div className="flex items-center gap-3 p-2 rounded-xl bg-black/20 backdrop-blur-xs border border-white/5">
-            <div className="p-2 rounded-lg bg-[#1B5E20]/60 text-[#F8BBD0]">
+            <div className="p-2 rounded-lg bg-emerald-600/20 text-emerald-300">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>

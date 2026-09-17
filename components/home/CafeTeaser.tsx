@@ -64,9 +64,9 @@ export default async function CafeTeaser() {
   return (
     <section className="relative w-full py-24 sm:py-36 bg-[#070D08] text-[#FAF7F2] overflow-hidden">
       {/* Subtle Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#E65100]/40 to-transparent" />
-      <div className="absolute top-1/4 -right-64 w-[550px] h-[550px] bg-[#1B5E20]/25 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-64 w-[450px] h-[450px] bg-[#E65100]/15 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#F43F5E]/40 to-transparent" />
+      <div className="absolute top-1/4 -right-64 w-[550px] h-[550px] bg-[#F43F5E]/15 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-64 w-[450px] h-[450px] bg-[#0284C7]/15 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container relative z-10 mx-auto px-6 lg:px-12 max-w-7xl">
         <div className="flex flex-col lg:flex-row gap-14 lg:gap-16 items-center">
@@ -74,8 +74,8 @@ export default async function CafeTeaser() {
           {/* Left Column: Copy & CTA */}
           <div className="w-full lg:w-5/12 flex flex-col items-start">
             <ScrollReveal direction="up" staggerIndex={0}>
-              <p className="text-[#E65100] text-sm md:text-base font-medium tracking-[0.2em] uppercase mb-6 flex items-center gap-4">
-                <span className="w-12 h-px bg-[#E65100]/60" />
+              <p className="text-[#FDA4AF] text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-6 flex items-center gap-4">
+                <span className="w-12 h-px bg-[#FDA4AF]/60" />
                 The Sanctuary Café
               </p>
             </ScrollReveal>
@@ -83,7 +83,7 @@ export default async function CafeTeaser() {
             <ScrollReveal direction="up" staggerIndex={1}>
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-white leading-[1.1] mb-8 font-serif">
                 Taste the Tropics, <br />
-                <span className="italic bg-gradient-to-r from-[#F8BBD0] via-[#FFB300] to-[#E65100] bg-clip-text text-transparent">Nourish the Soul.</span>
+                <span className="italic bg-gradient-to-r from-[#F472B6] via-[#FB7185] to-[#FDA4AF] bg-clip-text text-transparent">Nourish the Soul.</span>
               </h2>
             </ScrollReveal>
 
@@ -96,9 +96,9 @@ export default async function CafeTeaser() {
             <ScrollReveal direction="up" staggerIndex={3}>
               <Link
                 href="/cafe"
-                className="group relative inline-flex items-center justify-center gap-4 py-4 px-10 rounded-full border border-[#E65100] text-[#FAF7F2] text-xs uppercase tracking-widest font-bold shadow-[0_4px_20px_rgba(230,81,0,0.25)] hover:shadow-[0_6px_30px_rgba(230,81,0,0.45)] transition-all duration-500 overflow-hidden"
+                className="group relative inline-flex items-center justify-center gap-4 py-4 px-10 rounded-full border border-[#F43F5E] text-[#FAF7F2] text-xs uppercase tracking-widest font-bold shadow-[0_4px_20px_rgba(244,63,94,0.25)] hover:shadow-[0_6px_30px_rgba(244,63,94,0.45)] transition-all duration-500 overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#E65100] to-[#FF9800] group-hover:scale-105 transition-transform duration-500 ease-out" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#F43F5E] to-[#EC4899] group-hover:scale-105 transition-transform duration-500 ease-out" />
                 <span className="relative z-10">Discover the Menu</span>
                 <svg className="w-4 h-4 relative z-10 group-hover:translate-x-1.5 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -116,13 +116,13 @@ export default async function CafeTeaser() {
                   <ScrollReveal key={item.id} direction="up" staggerIndex={index} delay={0.15 * index}>
                     <Link
                       href="/cafe"
-                      className={`relative flex flex-col justify-between rounded-3xl p-5 sm:p-6 group cursor-pointer transition-all duration-500 bg-gradient-to-b from-[#132317]/90 via-[#0E1C12]/90 to-[#071109]/95 border border-white/10 hover:border-[#FF9800]/50 shadow-xl hover:shadow-[0_20px_50px_rgba(230,81,0,0.25)] hover:-translate-y-2 backdrop-blur-md overflow-visible ${
+                      className={`relative flex flex-col justify-between rounded-3xl p-5 sm:p-6 group cursor-pointer transition-all duration-500 bg-gradient-to-b from-[#132317]/90 via-[#0E1C12]/90 to-[#071109]/95 border border-white/10 hover:border-[#FDA4AF]/50 shadow-xl hover:shadow-[0_20px_50px_rgba(244,63,94,0.25)] hover:-translate-y-2 backdrop-blur-md overflow-visible ${
                         index === 1 ? "sm:translate-y-6" : index === 2 ? "sm:translate-y-12" : ""
                       }`}
                     >
                       {/* Top Info Bar: Badge (No Price) */}
                       <div className="flex items-center justify-between gap-2 mb-2 z-10">
-                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#E65100]/20 text-[#FF9800] border border-[#E65100]/30 shadow-xs">
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#F43F5E]/20 text-[#FDA4AF] border border-[#F43F5E]/30 shadow-xs">
                           {meta.badge}
                         </span>
                       </div>
@@ -130,7 +130,7 @@ export default async function CafeTeaser() {
                       {/* Hero Image Presentation Stage with Ambient Glow & Floating Lift */}
                       <div className="relative w-full aspect-square my-3 flex items-center justify-center overflow-visible">
                         {/* Radiant Ambient Halo */}
-                        <div className="absolute inset-2 rounded-full bg-[radial-gradient(circle,_var(--tw-gradient-stops))] from-[#FF9800]/25 via-[#E65100]/10 to-transparent blur-2xl pointer-events-none group-hover:from-[#FF9800]/45 group-hover:via-[#E65100]/20 transition-all duration-700" />
+                        <div className="absolute inset-2 rounded-full bg-[radial-gradient(circle,_var(--tw-gradient-stops))] from-[#F43F5E]/25 via-[#EC4899]/10 to-transparent blur-2xl pointer-events-none group-hover:from-[#F43F5E]/45 group-hover:via-[#EC4899]/20 transition-all duration-700" />
 
                         {/* Grounding Shadow */}
                         <div className="absolute bottom-1 w-3/4 h-5 rounded-[50%] bg-black/50 blur-md group-hover:scale-110 group-hover:opacity-75 transition-all duration-500" />

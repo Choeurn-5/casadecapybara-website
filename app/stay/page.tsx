@@ -34,12 +34,12 @@ export default async function StayPage() {
       {/* SECTION 2: Introduction & Concept */}
       <section className="py-20 px-4 md:px-8 max-w-5xl mx-auto text-center">
         <ScrollReveal>
-          <h2 className="text-4xl font-bold text-[#1B5E20] mb-6">Every Room is an Adventure</h2>
+          <h2 className="text-4xl font-bold text-[#0284C7] mb-6">Every Room is an Adventure</h2>
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-10">
             Designed as a treasure hunt for children (capybara-themed bathroom tiles, neon lighting, custom capybara toothbrushes, slippers, cups, towels, pillows, and toys). For parents: dimmable lighting, silent AC & ceiling fan, large smart TV, spacious wardrobes, and private balconies overlooking lush botanical gardens.
           </p>
           <div>
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 bg-[#E65100] hover:bg-[#F57C00] text-white font-bold rounded-full transition-all shadow-md hover:-translate-y-1">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] hover:from-[#0369a1] hover:to-[#0284c7] text-white font-bold rounded-full transition-all shadow-md shadow-[#0284C7]/25 hover:-translate-y-1">
               Check Availability
             </a>
           </div>
@@ -47,37 +47,37 @@ export default async function StayPage() {
       </section>
 
       {/* SECTION 3: Guest Perks & Inclusions */}
-      <section className="bg-[#1B5E20] text-white py-16 px-4">
+      <section className="bg-gradient-to-br from-[#0F172A] via-[#0C4A6E] to-[#082F49] text-white py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <div className="flex flex-col items-center text-center p-6 bg-black/20 rounded-2xl backdrop-blur-sm border border-white/10">
-                <div className="w-16 h-16 bg-[#E65100]/20 rounded-full flex items-center justify-center mb-4 text-[#E65100]">
+              <div className="flex flex-col items-center text-center p-6 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10">
+                <div className="w-16 h-16 bg-[#38BDF8]/20 rounded-full flex items-center justify-center mb-4 text-[#38BDF8]">
                   <Check className="w-8 h-8" />
                 </div>
                 <h3 className="font-bold text-lg mb-2">FREE Encounters</h3>
-                <p className="text-sm text-gray-300">Meet Molly & Alex with no extra ticket or time limit throughout your stay.</p>
+                <p className="text-sm text-gray-200">Meet Molly & Alex with no extra ticket or time limit throughout your stay.</p>
               </div>
-              <div className="flex flex-col items-center text-center p-6 bg-black/20 rounded-2xl backdrop-blur-sm border border-white/10">
-                <div className="w-16 h-16 bg-[#B3E5FC]/20 rounded-full flex items-center justify-center mb-4 text-[#B3E5FC]">
+              <div className="flex flex-col items-center text-center p-6 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10">
+                <div className="w-16 h-16 bg-[#38BDF8]/20 rounded-full flex items-center justify-center mb-4 text-[#38BDF8]">
                   <Wind className="w-8 h-8" />
                 </div>
                 <h3 className="font-bold text-lg mb-2">Private Balcony</h3>
-                <p className="text-sm text-gray-300">A quiet personal outdoor sanctuary in every single room.</p>
+                <p className="text-sm text-gray-200">A quiet personal outdoor sanctuary in every single room.</p>
               </div>
-              <div className="flex flex-col items-center text-center p-6 bg-black/20 rounded-2xl backdrop-blur-sm border border-white/10">
-                <div className="w-16 h-16 bg-[#F8BBD0]/20 rounded-full flex items-center justify-center mb-4 text-[#F8BBD0]">
+              <div className="flex flex-col items-center text-center p-6 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10">
+                <div className="w-16 h-16 bg-[#F472B6]/25 rounded-full flex items-center justify-center mb-4 text-[#F472B6]">
                   <Droplets className="w-8 h-8" />
                 </div>
                 <h3 className="font-bold text-lg mb-2">Pool & Water Slide</h3>
-                <p className="text-sm text-gray-300">Daily water quality tested, fun, safe, and right outside your door.</p>
+                <p className="text-sm text-gray-200">Daily water quality tested, fun, safe, and right outside your door.</p>
               </div>
-              <div className="flex flex-col items-center text-center p-6 bg-black/20 rounded-2xl backdrop-blur-sm border border-white/10">
-                <div className="w-16 h-16 bg-[#2E7D32]/40 rounded-full flex items-center justify-center mb-4 text-[#4CAF50]">
+              <div className="flex flex-col items-center text-center p-6 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10">
+                <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mb-4 text-emerald-300">
                   <Wifi className="w-8 h-8" />
                 </div>
                 <h3 className="font-bold text-lg mb-2">Free WiFi & Parking</h3>
-                <p className="text-sm text-gray-300">High-speed internet and spacious on-site parking (rare for Siem Reap).</p>
+                <p className="text-sm text-gray-200">High-speed internet and spacious on-site parking (rare for Siem Reap).</p>
               </div>
             </div>
           </ScrollReveal>
@@ -88,13 +88,13 @@ export default async function StayPage() {
       <section id="room-collection" className="py-24 px-4 md:px-8 max-w-7xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-20">
-            <p className="text-[#E65100] text-sm font-medium tracking-[0.2em] uppercase mb-4 flex items-center justify-center gap-4">
-              <span className="w-12 h-px bg-[#E65100]/40" />
+            <p className="text-[#0284C7] text-sm font-bold tracking-[0.2em] uppercase mb-4 flex items-center justify-center gap-4">
+              <span className="w-12 h-px bg-[#0284C7]/40" />
               Our Collection
-              <span className="w-12 h-px bg-[#E65100]/40" />
+              <span className="w-12 h-px bg-[#0284C7]/40" />
             </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#1B5E20] mb-4 font-serif">
-              Choose Your <span className="italic">Sanctuary</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 mb-4 font-serif">
+              Choose Your <span className="italic text-[#0284C7]">Sanctuary</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Find the perfect capybara-themed retreat for your family, friends, or romantic getaway.
@@ -165,7 +165,7 @@ export default async function StayPage() {
                   {/* Content Side (50%) */}
                   <div className="lg:w-1/2 p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
                     <Link href={`/stay/${room.slug}`}>
-                      <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1B5E20] mb-3 tracking-tight group-hover:text-[#E65100] transition-colors duration-300">
+                      <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 tracking-tight group-hover:text-[#0284C7] transition-colors duration-300">
                         {room.title}
                       </h3>
                     </Link>
@@ -176,7 +176,7 @@ export default async function StayPage() {
                     </p>
                     <Link
                       href={`/stay/${room.slug}`}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1B5E20] hover:text-[#E65100] transition-colors mb-6 group/link w-fit"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0284C7] hover:text-[#0369a1] transition-colors mb-6 group/link w-fit"
                     >
                       <span>Read full room description & details</span>
                       <svg className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
@@ -186,12 +186,12 @@ export default async function StayPage() {
 
                     {/* Room Highlights & Special Features (Rendered as Elegant Luxury Tags) */}
                     {room.specialFeature && (
-                      <div className="mb-6 p-4 rounded-2xl bg-gradient-to-br from-[#F4F9F4] to-[#FAF7F2] border border-[#E8F5E9] shadow-xs">
+                      <div className="mb-6 p-4 rounded-2xl bg-gradient-to-br from-[#F0F9FF] to-[#FAF7F2] border border-sky-100 shadow-xs">
                         <div className="flex items-center gap-2 mb-2.5">
-                          <div className="w-6 h-6 rounded-lg bg-[#E65100]/10 flex items-center justify-center text-[#E65100]">
+                          <div className="w-6 h-6 rounded-lg bg-[#0284C7]/15 flex items-center justify-center text-[#0284C7]">
                             <Sparkles className="w-3.5 h-3.5" />
                           </div>
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#1B5E20]">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#0284C7]">
                             Room Highlights & Amenities
                           </span>
                         </div>
@@ -203,9 +203,9 @@ export default async function StayPage() {
                             .map((feature: string, fIdx: number) => (
                               <span
                                 key={fIdx}
-                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white text-xs font-medium text-[#1A2E1C] rounded-full shadow-xs border border-[#E8F5E9] hover:border-[#1B5E20]/40 transition-colors"
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white text-xs font-medium text-[#1A2E1C] rounded-full shadow-xs border border-sky-100 hover:border-[#0284C7]/40 transition-colors"
                               >
-                                <Check className="w-3.5 h-3.5 text-[#2E7D32]" />
+                                <Check className="w-3.5 h-3.5 text-[#0284C7]" />
                                 <span>{feature}</span>
                               </span>
                             ))}
@@ -219,7 +219,7 @@ export default async function StayPage() {
                         href={BOOKING_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 py-3.5 sm:py-4 bg-[#E65100] text-white font-bold rounded-2xl hover:bg-[#d84315] shadow-lg shadow-[#E65100]/25 transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
+                        className="flex-1 flex items-center justify-center gap-2 py-3.5 sm:py-4 bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] text-white font-bold rounded-2xl hover:from-[#0369a1] hover:to-[#0284c7] shadow-lg shadow-[#0284C7]/25 transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
                       >
                         <span>Book Now</span>
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -228,7 +228,7 @@ export default async function StayPage() {
                       </a>
                       <Link
                         href={`/stay/${room.slug}`}
-                        className="flex-1 flex items-center justify-center py-3.5 sm:py-4 bg-transparent border-2 border-[#1B5E20] text-[#1B5E20] hover:bg-[#1B5E20] hover:text-white font-bold rounded-2xl transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
+                        className="flex-1 flex items-center justify-center py-3.5 sm:py-4 bg-transparent border-2 border-[#0284C7] text-[#0284C7] hover:bg-[#0284C7] hover:text-white font-bold rounded-2xl transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
                       >
                         View Details
                       </Link>

@@ -3,13 +3,20 @@
 
 @theme {
   --font-battambang: 'Battambang', system-ui, sans-serif;
+  --color-capy-pink: #EC4899;
+  --color-capy-rose: #F43F5E;
+  --color-capy-softpink: #FDF2F8;
+  --color-capy-lightpink: #FCE7F3;
+  --color-capy-blue: #0284C7;
+  --color-capy-skyblue: #0EA5E9;
+  --color-capy-softblue: #F0F9FF;
+  --color-capy-lightblue: #E0F2FE;
   --color-capy-forest: #1B5E20;
   --color-capy-green: #2E7D32;
   --color-capy-lightgreen: #4CAF50;
   --color-capy-gold: #E65100;
-  --color-capy-amber: #FF9800;
-  --color-capy-pink: #F8BBD0;
-  --color-capy-softpink: #FCE4EC;
+  --color-capy-amber: #F59E0B;
+  --color-capy-yellow: #EAB308;
   --color-capy-cream: #FAF7F2;
   --color-capy-dark: #0F1710;
 }

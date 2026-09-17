@@ -6,7 +6,9 @@ export default function GlobalFooter({ settings }: { settings: GlobalSettings })
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#056030] text-white pt-16 pb-8 border-t-[8px] border-[#E65100]">
+    <footer className="relative bg-[#070D18] text-white pt-16 pb-8 overflow-hidden">
+      {/* Pink and Blue Luxury Accent Ribbon */}
+      <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-[#F43F5E] via-[#0284C7] to-[#38BDF8]" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">

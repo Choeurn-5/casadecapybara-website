@@ -19,7 +19,7 @@ export default async function FamiliesPage() {
     <main className="min-h-screen flex flex-col bg-[#FBFDFB] text-[#1A1A1A]">
       
       {/* SECTION 1: Hero Section */}
-      <section className="relative w-full min-h-[90svh] flex flex-col justify-center items-center overflow-hidden bg-[#1B5E20] text-white">
+      <section className="relative w-full min-h-[90svh] flex flex-col justify-center items-center overflow-hidden bg-[#0C4A6E] text-white">
         <div className="absolute inset-0 z-0">
           <Image
             src="/gallery/families/f1.jpg"
@@ -29,15 +29,15 @@ export default async function FamiliesPage() {
             priority
             unoptimized
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1B5E20] via-black/40 to-black/60 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0C4A6E] via-black/45 to-black/65 z-10" />
         </div>
         
         <div className="w-full pt-20 sm:pt-24" />
 
         <div className="relative z-20 text-center max-w-5xl mx-auto flex flex-col items-center flex-grow justify-center pb-20 px-4">
           <ScrollReveal delay={0.1}>
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/40 backdrop-blur-md border border-[#F8BBD0]/50 text-[#F8BBD0] text-xs sm:text-sm font-bold tracking-widest uppercase mb-8 shadow-lg">
-              <Sparkles className="w-4 h-4 text-[#E65100]" />
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-sky-950/60 backdrop-blur-md border border-sky-400/40 text-sky-200 text-xs sm:text-sm font-bold tracking-widest uppercase mb-8 shadow-lg">
+              <Sparkles className="w-4 h-4 text-[#38BDF8]" />
               <span>CAMBODIA'S FIRST & ONLY DEDICATED KIDS' HOTEL</span>
             </div>
           </ScrollReveal>
@@ -45,7 +45,7 @@ export default async function FamiliesPage() {
           <ScrollReveal delay={0.2}>
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6 text-white drop-shadow-xl">
               Built For Families. <br className="hidden md:block"/> 
-              <span className="text-[#E8F5E9]">Designed For Memories.</span>
+              <span className="text-[#38BDF8]">Designed For Memories.</span>
             </h1>
           </ScrollReveal>
           
@@ -56,7 +56,7 @@ export default async function FamiliesPage() {
           </ScrollReveal>
           
           <ScrollReveal delay={0.4} className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
-            <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#E65100] hover:bg-[#c94600] text-white font-bold rounded-full transition-all text-lg shadow-xl shadow-[#E65100]/20 hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center">
+            <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] hover:from-[#0369a1] hover:to-[#0284c7] text-white font-bold rounded-full transition-all text-lg shadow-xl shadow-[#0284C7]/30 hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center">
               Check Availability
             </a>
             <Link href="/book" className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold rounded-full transition-all text-lg hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center">

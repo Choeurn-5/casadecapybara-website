@@ -23,16 +23,16 @@ export default async function EncounterTicketsSummary() {
   const cleanPhone = whatsappNumber.replace(/[^0-9]/g, "") || "855968149795";
 
   return (
-    <section className="relative w-full py-16 sm:py-24 bg-[#F5EFE6]/60 text-[#1A2E1C] overflow-hidden border-t border-[#1B5E20]/10">
+    <section className="relative w-full py-16 sm:py-24 bg-gradient-to-b from-[#FFF5F7]/80 via-[#FAF7F2] to-[#F0F9FF]/70 text-[#1A2E1C] overflow-hidden border-t border-[#FDA4AF]/20">
       {/* Ambient background decoration */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 -ml-32 w-80 h-80 rounded-full bg-[#1B5E20]/5 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 -mr-32 w-96 h-96 rounded-full bg-[#E65100]/5 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 -ml-32 w-80 h-80 rounded-full bg-[#F43F5E]/10 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 -mr-32 w-96 h-96 rounded-full bg-[#0284C7]/10 blur-3xl pointer-events-none" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <ScrollReveal direction="up" staggerIndex={0}>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E65100]/10 border border-[#E65100]/20 text-[#E65100] text-xs font-bold uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FCE7F3] border border-[#FDA4AF]/60 text-[#BE123C] text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
               <span>🐾</span>
               <span>Ethical Wildlife Encounters</span>
             </div>
@@ -41,7 +41,7 @@ export default async function EncounterTicketsSummary() {
           <ScrollReveal direction="up" staggerIndex={1}>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1A2E1C] leading-tight mb-6">
               Meet Our Resident{" "}
-              <span className="bg-gradient-to-r from-[#E65100] via-[#FF9800] to-[#1B5E20] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#F43F5E] via-[#EC4899] to-[#0284C7] bg-clip-text text-transparent">
                 Capybaras
               </span>
             </h2>
@@ -68,25 +68,25 @@ export default async function EncounterTicketsSummary() {
                </div>
 
                <div className="p-6 sm:p-8 flex-1 flex flex-col">
-                  <div className="inline-block px-3 py-1 bg-[#1B5E20]/10 text-[#1B5E20] text-xs font-bold rounded-full mb-4 w-fit">
+                  <div className="inline-block px-3 py-1 bg-[#FCE7F3] text-[#BE123C] text-xs font-bold rounded-full mb-4 w-fit">
                      Capybara Experience Only
                   </div>
                   
                   {data.individualPaxNote && (
-                    <div className="mb-4 text-sm font-medium text-[#1B5E20]">
+                    <div className="mb-4 text-sm font-medium text-[#BE123C]">
                       {data.individualPaxNote}
                     </div>
                   )}
 
                   <div className="flex items-baseline gap-1 mb-6">
-                      <span className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#1B5E20]">${data.individualPrice}</span>
+                      <span className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#BE123C]">${data.individualPrice}</span>
                       <span className="text-sm text-gray-500 font-medium">/ person</span>
                   </div>
 
                   <ul className="space-y-3 mb-8 flex-1">
                      {data.individualInclusions?.map((inclusion: any, idx: number) => (
                        <li key={idx} className="flex items-start gap-3">
-                         <span className="w-5 h-5 rounded-full bg-[#1B5E20]/10 flex items-center justify-center text-[#1B5E20] shrink-0 mt-0.5">
+                         <span className="w-5 h-5 rounded-full bg-[#FCE7F3] flex items-center justify-center text-[#BE123C] shrink-0 mt-0.5">
                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                          </span>
                          <span className="text-sm text-gray-700">{inclusion.inclusionText}</span>
@@ -125,8 +125,8 @@ export default async function EncounterTicketsSummary() {
 
           {/* Family Package */}
           <ScrollReveal direction="up" staggerIndex={1} delay={0.1}>
-            <div className="relative flex flex-col justify-between rounded-3xl bg-white border-2 border-[#E65100] shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden group h-full">
-               <div className="absolute top-4 left-4 z-20 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#E65100] to-[#FF9800] text-white text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-md whitespace-nowrap">
+            <div className="relative flex flex-col justify-between rounded-3xl bg-white border-2 border-[#FDA4AF] shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden group h-full">
+               <div className="absolute top-4 left-4 z-20 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#F43F5E] to-[#EC4899] text-white text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-md whitespace-nowrap">
                   ★ Best Value ★
                </div>
 
@@ -144,12 +144,12 @@ export default async function EncounterTicketsSummary() {
                </div>
 
                <div className="p-6 sm:p-8 flex-1 flex flex-col">
-                  <div className="inline-block px-3 py-1 bg-[#E65100]/10 text-[#E65100] text-xs font-bold rounded-full mb-3 w-fit">
+                  <div className="inline-block px-3 py-1 bg-[#FCE7F3] text-[#BE123C] text-xs font-bold rounded-full mb-3 w-fit">
                      Capybara Experience Only
                   </div>
                   
                   {data.familyPaxNote && (
-                    <div className="mb-4 inline-flex items-start bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded-lg">
+                    <div className="mb-4 inline-flex items-start bg-rose-50 border border-rose-200 text-rose-700 px-3 py-2 rounded-lg">
                        <span className="text-[10px] font-bold uppercase tracking-wide leading-tight">
                          {data.familyPaxNote}
                        </span>
@@ -157,7 +157,7 @@ export default async function EncounterTicketsSummary() {
                   )}
 
                   <div className="flex items-baseline gap-1 mb-6">
-                      <span className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#E65100]">${data.familyPrice}</span>
+                      <span className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#BE123C]">${data.familyPrice}</span>
                       <span className="text-sm text-gray-500 font-medium">/ family</span>
                   </div>
 

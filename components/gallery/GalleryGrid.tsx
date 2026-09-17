@@ -55,13 +55,13 @@ export default function GalleryGrid({ initialImages }: GalleryGridProps) {
       {/* Category Filter Tabs */}
       <div className="flex flex-col items-center mb-12">
         <div className="text-center max-w-xl mx-auto mb-8">
-          <p className="text-[#E65100] text-xs md:text-sm font-semibold tracking-[0.2em] uppercase mb-2 flex items-center justify-center gap-3">
-            <span className="w-8 h-px bg-[#E65100]/40" />
+          <p className="text-[#0284C7] text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-2 flex items-center justify-center gap-3">
+            <span className="w-8 h-px bg-[#0284C7]/40" />
             Curated Visual Collection
-            <span className="w-8 h-px bg-[#E65100]/40" />
+            <span className="w-8 h-px bg-[#0284C7]/40" />
           </p>
-          <h2 className="text-3xl md:text-4xl font-light text-[#1B5E20] font-serif">
-            Select an <span className="italic font-normal">Atmosphere</span>
+          <h2 className="text-3xl md:text-4xl font-light text-gray-900 font-serif">
+            Select an <span className="italic font-normal text-[#0284C7]">Atmosphere</span>
           </h2>
         </div>
 
@@ -73,9 +73,9 @@ export default function GalleryGrid({ initialImages }: GalleryGridProps) {
               <button
                 key={cat.key}
                 onClick={() => setSelectedCategory(cat.key)}
-                className={`relative px-4 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 flex items-center gap-2 cursor-pointer ${
+                className={`relative px-4 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-2 cursor-pointer ${
                   isSelected
-                    ? "bg-[#1B5E20] text-white shadow-md shadow-[#1B5E20]/25"
+                    ? "bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] text-white shadow-md shadow-[#0284C7]/25"
                     : "text-gray-700 hover:text-gray-900 hover:bg-white/60"
                 }`}
               >

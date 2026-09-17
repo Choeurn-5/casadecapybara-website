@@ -258,7 +258,7 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
                       <span>{link.name}</span>
                       {/* Classy Underline Indicator */}
                       <span
-                        className={`absolute bottom-0.5 left-2.5 right-2.5 h-[2px] bg-[#E65100] rounded-full transition-transform duration-300 origin-center ${
+                        className={`absolute bottom-0.5 left-2.5 right-2.5 h-[2px] bg-gradient-to-r from-[#FB7185] to-[#38BDF8] rounded-full transition-transform duration-300 origin-center ${
                           isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                         }`}
                       />
@@ -273,9 +273,9 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
                   href={bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-[#E65100] via-[#F57C00] to-[#E65100] bg-[length:200%_auto] hover:bg-right text-white text-xs uppercase tracking-wider font-bold px-5 py-2 rounded-full shadow-[0_2px_12px_rgba(230,81,0,0.35)] hover:shadow-[0_4px_18px_rgba(230,81,0,0.5)] hover:-translate-y-0.5 active:scale-95 transition-all duration-300 border border-[#FFA726]/30 flex items-center gap-1.5 group"
+                  className="bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] bg-[length:200%_auto] hover:bg-right text-white text-xs uppercase tracking-wider font-bold px-5 py-2 rounded-full shadow-[0_2px_12px_rgba(2,132,199,0.35)] hover:shadow-[0_4px_18px_rgba(2,132,199,0.5)] hover:-translate-y-0.5 active:scale-95 transition-all duration-300 border border-sky-300/30 flex items-center gap-1.5 group"
                 >
-                  <Calendar size={14} className="group-hover:scale-110 transition-transform duration-300 text-[#FFE0B2]" />
+                  <Calendar size={14} className="group-hover:scale-110 transition-transform duration-300 text-sky-100" />
                   <span>Book Now</span>
                 </a>
               </div>
@@ -286,9 +286,9 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
                   href={bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-[#E65100] to-[#F57C00] text-white px-3.5 py-1.5 text-xs uppercase tracking-wider rounded-full font-bold shadow-md hover:shadow-lg transition-all border border-[#FF9800]/30 active:scale-95 flex items-center gap-1.5"
+                  className="bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] text-white px-3.5 py-1.5 text-xs uppercase tracking-wider rounded-full font-bold shadow-md hover:shadow-lg transition-all border border-sky-300/30 active:scale-95 flex items-center gap-1.5"
                 >
-                  <Calendar size={12} className="text-[#FFE0B2]" />
+                  <Calendar size={12} className="text-sky-100" />
                   <span>Book</span>
                 </a>
                 <button

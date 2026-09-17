@@ -238,7 +238,7 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
         </p>
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-light text-white mb-4 sm:mb-6 tracking-tight leading-[1.15]">
           Taste the Tropics, <br className="hidden xs:inline" />
-          <span className="italic bg-gradient-to-r from-[#F8BBD0] via-[#FFB300] to-[#E65100] bg-clip-text text-transparent">
+          <span className="italic bg-gradient-to-r from-[#F472B6] via-[#FB7185] to-[#FDA4AF] bg-clip-text text-transparent">
             Nourish the Soul.
           </span>
         </h1>
@@ -258,7 +258,7 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
               onClick={() => handleCategoryChange(cat)}
               className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 touch-manipulation active:scale-95 ${
                 activeCategory === cat
-                  ? "bg-gradient-to-r from-[#E65100] to-[#FF9800] text-white shadow-lg shadow-[#E65100]/25 scale-105"
+                  ? "bg-gradient-to-r from-[#F43F5E] to-[#EC4899] text-white shadow-lg shadow-[#F43F5E]/30 scale-105"
                   : "bg-[#132317]/80 text-gray-300 hover:text-white hover:bg-[#1E3725]/80 border border-white/10"
               }`}
             >
@@ -282,8 +282,8 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
               onClick={() => handleDietaryChange(diet.id)}
               className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-semibold transition-all duration-200 border touch-manipulation active:scale-95 ${
                 activeDietary === diet.id
-                  ? "bg-[#E65100] text-white border-[#FF9800]/40 shadow-md shadow-[#E65100]/20"
-                  : "bg-[#132317]/60 text-gray-400 hover:text-white border-white/10 hover:border-white/20"
+                  ? "bg-[#F43F5E] text-white border-[#FDA4AF]/50 shadow-md shadow-[#F43F5E]/25"
+                  : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:text-white"
               }`}
             >
               {diet.label}
@@ -394,7 +394,7 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
           {/* Info label */}
           <p className="text-xs sm:text-sm text-gray-400 font-medium order-2 sm:order-1 text-center sm:text-left">
             Showing{" "}
-            <span className="font-bold text-[#FFB74D]">
+            <span className="font-bold text-[#F472B6]">
               {(validCurrentPage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(validCurrentPage * ITEMS_PER_PAGE, totalItems)}
             </span>{" "}
             of <span className="font-bold text-white">{totalItems}</span> culinary dishes
@@ -410,7 +410,7 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
               className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
                 validCurrentPage === 1
                   ? "opacity-30 cursor-not-allowed text-gray-500 border border-transparent"
-                  : "bg-[#132317]/80 text-gray-200 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-[#FF9800]/40 shadow-sm"
+                  : "bg-[#132317]/80 text-gray-200 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-[#FDA4AF]/40 shadow-sm"
               }`}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -436,7 +436,7 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
                     aria-label={`Go to page ${pageNum}`}
                     className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer active:scale-95 ${
                       isActive
-                        ? "bg-gradient-to-r from-[#E65100] to-[#FF9800] text-white shadow-lg shadow-[#E65100]/30 scale-105"
+                        ? "bg-gradient-to-r from-[#F43F5E] to-[#EC4899] text-white shadow-lg shadow-[#F43F5E]/35 scale-105"
                         : "bg-[#132317]/70 text-gray-300 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-white/20"
                     }`}
                   >
@@ -454,7 +454,7 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
               className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
                 validCurrentPage === totalPages
                   ? "opacity-30 cursor-not-allowed text-gray-500 border border-transparent"
-                  : "bg-[#132317]/80 text-gray-200 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-[#FF9800]/40 shadow-sm"
+                  : "bg-[#132317]/80 text-gray-200 hover:text-white hover:bg-[#1E3725] border border-white/10 hover:border-[#FDA4AF]/40 shadow-sm"
               }`}
             >
               <span className="hidden xs:inline">Next</span>
@@ -473,7 +473,7 @@ export default function CafeMenu({ wpItems }: { wpItems: WPCafeMenuItem[] }) {
               handleCategoryChange("All");
               setActiveDietary(null);
             }}
-            className="px-6 py-2.5 rounded-full bg-[#E65100] hover:bg-[#FF9800] text-white font-bold transition-colors text-sm"
+            className="px-6 py-2.5 rounded-full bg-[#F43F5E] hover:bg-[#E11D48] text-white font-bold transition-colors text-sm shadow-lg shadow-[#F43F5E]/25"
           >
             Clear Filters
           </button>

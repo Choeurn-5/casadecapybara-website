@@ -28,11 +28,11 @@ export default function FinalConversionBanner({
   const whatsappLink = `https://wa.me/${cleanPhone}`;
 
   return (
-    <section className="relative w-full py-20 sm:py-28 bg-[#1B5E20] text-white overflow-hidden">
+    <section className="relative w-full py-20 sm:py-28 bg-gradient-to-br from-[#0F172A] via-[#1E1B4B] to-[#0B1528] text-white overflow-hidden">
       {/* Background Luxury Lighting & Accents */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-[#2E7D32]/50 via-transparent to-transparent blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#E65100]/20 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#FFB300]/15 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-[#0284C7]/30 via-transparent to-transparent blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#F43F5E]/20 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#38BDF8]/20 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Subtle background grid pattern */}
       <div 
@@ -44,8 +44,8 @@ export default function FinalConversionBanner({
         
         {/* Operating Hours Pill */}
         <ScrollReveal direction="up" staggerIndex={0}>
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#FFD54F] text-xs font-bold tracking-widest uppercase mb-6 shadow-md">
-            <Clock className="w-3.5 h-3.5 text-[#FFD54F]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#38BDF8] text-xs font-bold tracking-widest uppercase mb-6 shadow-md">
+            <Clock className="w-3.5 h-3.5 text-[#38BDF8]" />
             <span>Open Daily • 7:00 AM – 9:00 PM</span>
           </div>
         </ScrollReveal>
@@ -54,7 +54,7 @@ export default function FinalConversionBanner({
         <ScrollReveal direction="up" staggerIndex={1}>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15] mb-6">
             Ready for an Unforgettable <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-[#FFE082] via-[#FFCA28] to-[#FFA000] bg-clip-text text-transparent font-serif italic">
+            <span className="bg-gradient-to-r from-[#F472B6] via-[#FB7185] to-[#38BDF8] bg-clip-text text-transparent font-serif italic">
               Siem Reap Adventure?
             </span>
           </h2>
@@ -62,7 +62,7 @@ export default function FinalConversionBanner({
 
         {/* Subheadline */}
         <ScrollReveal direction="up" staggerIndex={2}>
-          <p className="text-base sm:text-xl text-emerald-100/90 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+          <p className="text-base sm:text-xl text-sky-100/90 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
             Molly & Alex cannot wait to meet you. Whether you drop in for an afternoon encounter or stay in our boutique eco-villas, unforgettable moments await.
           </p>
         </ScrollReveal>
@@ -71,16 +71,16 @@ export default function FinalConversionBanner({
         <ScrollReveal direction="up" staggerIndex={3}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 mb-12">
             
-            {/* 1. Inngenius Booking Button (Gold) */}
+            {/* 1. Inngenius Booking Button (Blue Lead) */}
             <a
               href={bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-[#FFB300] via-[#FFA000] to-[#E65100] hover:from-[#FFCA28] hover:to-[#FF8F00] text-[#131A15] text-base font-extrabold tracking-wide shadow-2xl shadow-amber-950/40 hover:shadow-amber-900/60 transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] hover:from-[#0369a1] hover:to-[#0284c7] text-white text-base font-extrabold tracking-wide shadow-2xl shadow-sky-950/40 hover:shadow-sky-900/60 transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
             >
-              <Calendar className="w-5 h-5 text-[#131A15]" />
+              <Calendar className="w-5 h-5 text-white" />
               <span>Book Your Room (From $50)</span>
-              <ArrowRight className="w-4 h-4 text-[#131A15] group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
             </a>
 
             {/* 2. WhatsApp Button */}

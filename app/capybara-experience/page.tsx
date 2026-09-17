@@ -93,7 +93,7 @@ export default async function CapybaraExperiencePage() {
           </ScrollReveal>
           
           <ScrollReveal delay={0.4} className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
-            <a href="#pricing" className="px-8 py-4 bg-gradient-to-r from-[#E65100] to-[#FF9800] hover:from-[#d84c00] hover:to-[#e68900] text-white font-bold rounded-full transition-all text-lg shadow-xl shadow-[#E65100]/20 hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center border border-white/10">
+            <a href="#pricing" className="px-8 py-4 bg-gradient-to-r from-[#F43F5E] via-[#FB7185] to-[#EC4899] hover:from-[#E11D48] hover:to-[#DB2777] text-white font-bold rounded-full transition-all text-lg shadow-xl shadow-[#F43F5E]/25 hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center border border-white/10">
               Get Your Ticket — From ${encounterData?.individualPrice ?? 10}
             </a>
             <VideoModal youtubeId="-ebdWZmMo2Q" />
@@ -107,8 +107,8 @@ export default async function CapybaraExperiencePage() {
           <ScrollReveal direction="left" duration={1}>
             <div className="space-y-8">
               <div>
-                <p className="text-[#2E7D32] font-bold tracking-widest uppercase text-sm mb-4">The Story of Molly & Alex</p>
-                <h2 className="text-4xl md:text-5xl font-bold text-[#1B5E20] leading-tight">Where Gentle Giants Find Sanctuary</h2>
+                <p className="text-[#BE123C] font-bold tracking-widest uppercase text-sm mb-4">The Story of Molly & Alex</p>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">Where Gentle Giants Find <span className="text-[#BE123C]">Sanctuary</span></h2>
               </div>
               
               <p className="text-lg text-gray-600 leading-relaxed">
@@ -262,18 +262,18 @@ export default async function CapybaraExperiencePage() {
 
             {/* Card 2: Family Package */}
             <ScrollReveal delay={0.1}>
-              <div className="bg-gradient-to-b from-[#1B5E20] to-[#2E7D32] rounded-3xl overflow-hidden shadow-2xl h-full flex flex-col relative group hover:-translate-y-1 transition-all duration-300">
+              <div className="bg-gradient-to-b from-[#9F1239] via-[#881337] to-[#4C0519] rounded-3xl overflow-hidden shadow-2xl h-full flex flex-col relative group hover:-translate-y-1 transition-all duration-300">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl" />
                 <div className="relative h-64 overflow-hidden">
                   <Image src={familyImgSrc} alt="Family Capybara Experience" fill className="object-cover group-hover:scale-105 transition-transform duration-700" unoptimized />
-                  <div className="absolute top-4 left-4 bg-[#D48806] text-white px-4 py-1.5 rounded-full font-bold shadow-lg text-sm tracking-wide uppercase">Best Value</div>
-                  <div className="absolute top-4 right-4 bg-white/95 text-[#1B5E20] px-4 py-1.5 rounded-full font-bold shadow-lg">
+                  <div className="absolute top-4 left-4 bg-amber-400 text-gray-950 px-4 py-1.5 rounded-full font-black shadow-lg text-sm tracking-wide uppercase">Best Value</div>
+                  <div className="absolute top-4 right-4 bg-white/95 text-[#BE123C] px-4 py-1.5 rounded-full font-bold shadow-lg">
                     ${encounterData?.familyPrice ?? 30} / family
                   </div>
                 </div>
                 <div className="p-8 md:p-10 flex flex-col flex-grow text-white relative z-10">
                   <h3 className="text-2xl font-bold mb-2">Family Sanctuary Package</h3>
-                  <p className="text-[#B3E5FC] mb-6 pb-4 border-b border-white/20">
+                  <p className="text-rose-200 mb-6 pb-4 border-b border-white/20">
                     {encounterData?.familyPaxNote || "Valid for up to 4 Pax"}
                   </p>
                   

@@ -45,25 +45,25 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
   };
 
   return (
-    <section className="relative w-full py-20 sm:py-28 bg-gradient-to-b from-[#F5EFE6]/70 via-[#FAF7F2] to-[#F5EFE6]/50 text-[#1A2E1C] overflow-hidden">
+    <section className="relative w-full py-20 sm:py-28 bg-gradient-to-b from-[#F0F9FF]/70 via-[#FAF7F2] to-[#E0F2FE]/40 text-[#1A2E1C] overflow-hidden">
       {/* Ambient decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#1B5E20]/20 to-transparent" />
-      <div className="absolute top-1/4 -right-48 w-96 h-96 bg-[#1B5E20]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-48 w-96 h-96 bg-[#E65100]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#0284C7]/20 to-transparent" />
+      <div className="absolute top-1/4 -right-48 w-96 h-96 bg-[#0284C7]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-48 w-96 h-96 bg-[#F43F5E]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1400px]">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 sm:mb-16">
           <div className="max-w-2xl">
             <ScrollReveal direction="up" staggerIndex={0}>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1B5E20]/10 border border-[#1B5E20]/20 text-[#1B5E20] text-xs font-bold uppercase tracking-wider mb-4">
-                <Sparkles className="w-3.5 h-3.5 text-[#E65100]" />
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E0F2FE] border border-[#38BDF8]/40 text-[#0284C7] text-xs font-bold uppercase tracking-wider mb-4 shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 text-[#0284C7]" />
                 <span>Sanctuary Stays & Eco-Villas</span>
               </div>
             </ScrollReveal>
             <ScrollReveal direction="up" staggerIndex={1}>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#1B5E20] leading-[1.1] font-serif">
-                Sleep in <span className="italic font-light text-[#E65100]">Capybara Magic</span>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 leading-[1.1] font-serif">
+                Sleep in <span className="italic font-light text-[#0284C7]">Capybara Magic</span>
               </h2>
             </ScrollReveal>
             <ScrollReveal direction="up" staggerIndex={2}>
@@ -78,7 +78,7 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
             <button
               onClick={() => scroll("left")}
               disabled={!canScrollLeft}
-              className="w-12 h-12 rounded-full border border-[#1B5E20]/20 bg-white shadow-sm flex items-center justify-center text-[#1B5E20] hover:bg-[#1B5E20] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 active:scale-95"
+              className="w-12 h-12 rounded-full border border-[#0284C7]/30 bg-white shadow-sm flex items-center justify-center text-[#0284C7] hover:bg-[#0284C7] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 active:scale-95"
               aria-label="Scroll left"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -86,7 +86,7 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
             <button
               onClick={() => scroll("right")}
               disabled={!canScrollRight}
-              className="w-12 h-12 rounded-full border border-[#1B5E20]/20 bg-white shadow-sm flex items-center justify-center text-[#1B5E20] hover:bg-[#1B5E20] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 active:scale-95"
+              className="w-12 h-12 rounded-full border border-[#0284C7]/30 bg-white shadow-sm flex items-center justify-center text-[#0284C7] hover:bg-[#0284C7] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 active:scale-95"
               aria-label="Scroll right"
             >
               <ChevronRight className="w-5 h-5" />
@@ -154,7 +154,7 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
                       )}
                       {room.bedType && (
                         <div className="flex items-center gap-1.5 bg-[#FAF7F2] border border-[#F0EBE1] px-3 py-1.5 rounded-xl text-xs font-semibold text-[#1A2E1C]">
-                          <BedDouble className="w-3.5 h-3.5 text-[#E65100]" />
+                          <BedDouble className="w-3.5 h-3.5 text-[#0284C7]" />
                           <span>{room.bedType}</span>
                         </div>
                       )}
@@ -166,13 +166,13 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
                         href={BOOKING_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center py-3 bg-[#E65100] text-white text-sm font-bold rounded-xl hover:bg-[#d84315] transition-all duration-300 shadow-md shadow-[#E65100]/20 hover:-translate-y-0.5"
+                        className="flex-1 flex items-center justify-center py-3 bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] text-white text-sm font-bold rounded-xl hover:from-[#0369a1] hover:to-[#0284c7] transition-all duration-300 shadow-md shadow-[#0284C7]/20 hover:-translate-y-0.5"
                       >
                         Book Now
                       </a>
                       <Link
                         href={`/stay/${room.slug}`}
-                        className="flex-1 flex items-center justify-center py-3 border-2 border-[#1B5E20] text-[#1B5E20] text-sm font-bold rounded-xl hover:bg-[#1B5E20] hover:text-white transition-all duration-300"
+                        className="flex-1 flex items-center justify-center py-3 border-2 border-[#0284C7] text-[#0284C7] text-sm font-bold rounded-xl hover:bg-[#0284C7] hover:text-white transition-all duration-300"
                       >
                         Room Details
                       </Link>
@@ -197,9 +197,9 @@ export default function RoomCarousel({ rooms }: { rooms: FullCapyRoom[] }) {
                 el.scrollTo({ left: i * (card.clientWidth + 24), behavior: "smooth" });
               }}
               className={`h-2.5 rounded-full transition-all duration-300 ${
-                i === activeIndex ? "w-8 bg-[#E65100]" : "w-2.5 bg-gray-300 hover:bg-gray-400"
+                i === activeIndex ? "w-8 bg-[#0284C7]" : "w-2.5 bg-gray-300 hover:bg-gray-400"
               }`}
-              aria-label={`Go to room ${i + 1}`}
+              aria-label={`Go to slide ${i + 1}`}
             />
           ))}
         </div>
