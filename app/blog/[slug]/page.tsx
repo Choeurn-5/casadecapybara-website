@@ -11,6 +11,20 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  try {
+    const posts = await getBlogPosts();
+    return posts.map((post) => ({
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.error("Error generating static params for blog:", error);
+    return [];
+  }
+}
+
 // Dynamic SEO Metadata
 export async function generateMetadata(
   { params }: PageProps,

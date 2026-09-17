@@ -1,3 +1,6 @@
+import { cache } from "react";
+import { unstable_cache } from "next/cache";
+
 const WORDPRESS_API_URL =
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL ||
     "https://cms.casadecapybara.com/graphql";
@@ -872,10 +875,10 @@ export interface BlogPost {
   };
 }
 
-export async function getBlogPosts(): Promise<BlogPost[]> {
+async function fetchBlogPostsUncached(): Promise<BlogPost[]> {
   const query = `
     query GetBlogArchive {
-      posts(first: 50, where: { status: PUBLISH, orderby: { field: DATE, order: DESC } }) {
+      posts(first: 30, where: { status: PUBLISH, orderby: { field: DATE, order: DESC } }) {
         nodes {
           id
           title
@@ -894,12 +897,6 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
               slug
             }
           }
-          tags {
-            nodes {
-              name
-              slug
-            }
-          }
           author {
             node {
               name
@@ -913,7 +910,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     }
   `;
   try {
-    const data = (await fetchGraphQL(query)) as any;
+    const data = (await fetchGraphQL<{ posts?: { nodes?: BlogPost[] } }>(query, {}, 300)) as { posts?: { nodes?: BlogPost[] } } | null;
     return data?.posts?.nodes || [];
   } catch (error) {
     console.error("Error fetching blog posts:", error);
@@ -921,7 +918,13 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   }
 }
 
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+export const getBlogPosts = unstable_cache(
+  fetchBlogPostsUncached,
+  ["wordpress-blog-posts"],
+  { revalidate: 300, tags: ["wordpress-posts"] }
+);
+
+async function fetchPostBySlugUncached(slug: string): Promise<BlogPost | null> {
   const query = `
     query GetSinglePost($slug: ID!) {
       post(id: $slug, idType: SLUG) {
@@ -955,13 +958,24 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     }
   `;
   try {
-    const data = (await fetchGraphQL(query, { slug })) as any;
+    const data = (await fetchGraphQL<{ post?: BlogPost }>(query, { slug }, 300)) as { post?: BlogPost } | null;
     return data?.post || null;
   } catch (error) {
     console.error("Error fetching single post:", error);
     return null;
   }
 }
+
+const getCachedPostBySlug = unstable_cache(
+  async (slug: string) => fetchPostBySlugUncached(slug),
+  ["wordpress-single-post"],
+  { revalidate: 300, tags: ["wordpress-posts"] }
+);
+
+export const getPostBySlug = cache(async (slug: string): Promise<BlogPost | null> => {
+  if (!slug) return null;
+  return getCachedPostBySlug(slug);
+});
 
 export interface CapyGalleryImageNode {
   id: string;
