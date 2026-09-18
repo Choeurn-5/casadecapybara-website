@@ -234,9 +234,7 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
                       className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
                     />
                   )}
-                  <span className="font-serif text-sm font-bold tracking-wider text-white uppercase hidden 2xl:inline-block drop-shadow-sm group-hover:text-[#F8BBD0] transition-colors">
-                    Casa de Capybara
-                  </span>
+
                 </Link>
               </div>
 
