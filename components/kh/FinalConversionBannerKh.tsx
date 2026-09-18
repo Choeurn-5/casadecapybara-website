@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import {
   Calendar,
   MessageCircle,
@@ -95,15 +96,20 @@ export default function FinalConversionBannerKh({
             </a>
 
             {/* 3. Telegram Button */}
-            <a
-              href={telegramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl bg-[#229ED9]/20 hover:bg-[#229ED9]/30 text-white border border-[#229ED9]/40 backdrop-blur-md text-sm sm:text-base font-bold tracking-wide shadow-lg transition-all duration-200 hover:-translate-y-0.5"
-            >
-              <Send className="w-5 h-5 text-[#229ED9]" />
-              <span>Telegram: ឆាតជាមួយយើង</span>
-            </a>
+            <div className="flex flex-col items-center gap-4 w-full sm:w-auto">
+              <a
+                href={telegramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl bg-[#229ED9]/20 hover:bg-[#229ED9]/30 text-white border border-[#229ED9]/40 backdrop-blur-md text-sm sm:text-base font-bold tracking-wide shadow-lg transition-all duration-200 hover:-translate-y-0.5"
+              >
+                <Send className="w-5 h-5 text-[#229ED9]" />
+                <span>Telegram: ឆាតជាមួយយើង</span>
+              </a>
+              <div className="hidden sm:block p-2 bg-white rounded-xl border border-white/20 shadow-lg">
+                <Image src="/qr/telegram-qr.png" alt="Telegram QR" width={90} height={90} className="rounded-lg opacity-90 hover:opacity-100 transition-opacity" />
+              </div>
+            </div>
 
           </div>
         </ScrollReveal>

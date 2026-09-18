@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Send, CheckCircle2 } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
@@ -55,6 +56,13 @@ export default function LocalDealKh({
               <Send className="w-5 h-5 text-[#B3E5FC]" />
               ទាក់ទងមកកាន់ពួកយើងតាម Telegram
             </a>
+            
+            <div className="mt-6 flex flex-col items-center justify-center">
+              <span className="text-xs text-[#1B5E20] font-bold mb-2 uppercase tracking-wide">ឬ ស្កេន QR កូដ</span>
+              <div className="bg-white p-2 rounded-xl border-2 border-[#1B5E20]/20 shadow-sm inline-block">
+                <Image src="/qr/telegram-qr.png" alt="Telegram QR" width={100} height={100} className="rounded-lg" />
+              </div>
+            </div>
           </div>
         </div>
       </ScrollReveal>

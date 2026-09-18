@@ -9,6 +9,7 @@ import LocationTransitSectionKh from "@/components/kh/LocationTransitSectionKh";
 import FamiliesAndSafetyTeaserKh from "@/components/kh/FamiliesAndSafetyTeaserKh";
 import FinalConversionBannerKh from "@/components/kh/FinalConversionBannerKh";
 import LocalDealKh from "@/components/kh/LocalDealKh";
+import ResortAmenitiesKh from "@/components/kh/ResortAmenitiesKh";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { getFeaturedRooms, getGlobalSettings } from "@/lib/wordpress";
 
@@ -117,6 +118,11 @@ export default async function KhmerPage() {
       {/* Section 4: Families & Safety */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
         <FamiliesAndSafetyTeaserKh />
+      </ScrollReveal>
+
+      {/* Section 4.5: Resort Amenities (Pool & Gym) */}
+      <ScrollReveal delay={0.1} staggerIndex={0}>
+        <ResortAmenitiesKh />
       </ScrollReveal>
 
       {/* Section 5: The Stay / Boutique Villas */}
