@@ -56,7 +56,7 @@ export default async function FamiliesPage() {
           </ScrollReveal>
           
           <ScrollReveal delay={0.4} className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
-            <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] hover:from-[#0369a1] hover:to-[#0284c7] text-white font-bold rounded-full transition-all text-lg shadow-xl shadow-[#0284C7]/30 hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center">
+            <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#468CD0] hover:bg-[#3B7ABB] text-white font-bold rounded-full transition-all text-lg shadow-xl shadow-[#468CD0]/30 hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center">
               Check Availability
             </a>
             <Link href="/book" className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold rounded-full transition-all text-lg hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center">
@@ -335,7 +335,7 @@ export default async function FamiliesPage() {
               23 capybara themed rooms from $50/night. Minutes from Angkor Wat. Book direct for best rates.
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#E65100] hover:bg-[#c94600] text-white font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg">
+              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#468CD0] hover:bg-[#3B7ABB] text-white font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg">
                 Check Availability — Book Now
               </a>
               <Link href="/book" className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg">

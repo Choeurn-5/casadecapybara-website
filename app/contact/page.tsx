@@ -418,7 +418,7 @@ export default async function ContactPage() {
               Whether you are visiting for an afternoon or staying for a week — Casa de Capybara in Siem Reap will be the highlight of your trip to Cambodia. Molly and Alex cannot wait to meet you.
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Link href="/capybara-experience" className="px-8 py-4 bg-[#E65100] hover:bg-[#c94600] text-white font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg text-center">
+              <Link href="/capybara-experience" className="px-8 py-4 bg-[#468CD0] hover:bg-[#3B7ABB] text-white font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg text-center">
                 Capybara Experience — From $10
               </Link>
               <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold rounded-full transition-transform hover:-translate-y-1 w-full sm:w-auto shadow-lg text-center">

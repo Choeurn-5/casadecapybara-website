@@ -731,13 +731,13 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
             <div className="flex flex-col sm:flex-row gap-3 shrink-0 w-full sm:w-auto">
               <Link 
                 href="/stay" 
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-[#1B5E20] rounded-2xl font-bold text-center hover:bg-[#F8BBD0] transition-colors shadow-lg text-xs sm:text-sm active:scale-95"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-[#468CD0] text-white rounded-2xl font-bold text-center hover:bg-[#3B7ABB] transition-colors shadow-lg text-xs sm:text-sm active:scale-95"
               >
                 Book a Room
               </Link>
               <Link 
                 href="/capybara-experience" 
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-[#E65100] text-white rounded-2xl font-bold text-center hover:bg-[#ff6a1a] transition-colors shadow-lg text-xs sm:text-sm active:scale-95"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-[#468CD0] text-white rounded-2xl font-bold text-center hover:bg-[#3B7ABB] transition-colors shadow-lg text-xs sm:text-sm active:scale-95"
               >
                 Meet Capybaras
               </Link>

@@ -7,6 +7,7 @@ import GlobalFooter from "@/components/layout/GlobalFooter";
 import FloatingContactBar from "@/components/layout/FloatingContactBar";
 import SmoothScrolling from "@/components/ui/SmoothScrolling";
 import JsonLd, { globalBusinessSchema } from "@/components/seo/JsonLd";
+import ThemeProvider from "@/components/ui/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -89,6 +90,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <head>
@@ -99,14 +101,22 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&display=swap" rel="stylesheet" />
         <JsonLd data={globalBusinessSchema} />
+        {/* Inline script to prevent FOUC — runs before paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(t==null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`
+          }}
+        />
       </head>
-      <body suppressHydrationWarning className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
-        <SmoothScrolling>
-          <Navbar settings={settings} />
-          <div className="flex-1 flex flex-col w-full">{children}</div>
-          <GlobalFooter settings={settings} />
-          <FloatingContactBar settings={settings} />
-        </SmoothScrolling>
+      <body suppressHydrationWarning className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
+        <ThemeProvider>
+          <SmoothScrolling>
+            <Navbar settings={settings} />
+            <div className="flex-1 flex flex-col w-full">{children}</div>
+            <GlobalFooter settings={settings} />
+            <FloatingContactBar settings={settings} />
+          </SmoothScrolling>
+        </ThemeProvider>
       </body>
     </html>
   );

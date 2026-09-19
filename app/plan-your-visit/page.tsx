@@ -325,7 +325,7 @@ export default async function PlanYourVisitPage() {
             </h2>
             
             <div className="flex flex-wrap justify-center items-center gap-4">
-              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#E65100] hover:bg-[#c94600] text-white font-bold rounded-full transition-transform hover:-translate-y-1 shadow-lg">
+              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-[#468CD0] hover:bg-[#3B7ABB] text-white font-bold rounded-full transition-transform hover:-translate-y-1 shadow-lg">
                 Book Your Room
               </a>
               <Link href="/capybara-experience" className="px-8 py-4 bg-white text-[#1B5E20] font-bold rounded-full transition-transform hover:-translate-y-1 shadow-lg">

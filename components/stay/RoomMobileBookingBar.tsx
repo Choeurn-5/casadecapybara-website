@@ -53,7 +53,7 @@ export default function RoomMobileBookingBar({
             href={bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-5 py-3 rounded-2xl bg-[#E65100] text-white font-bold text-sm tracking-wide flex items-center gap-1.5 shadow-lg shadow-[#E65100]/30 active:scale-95 transition-transform"
+            className="px-5 py-3 rounded-2xl bg-[#468CD0] text-white font-bold text-sm tracking-wide flex items-center gap-1.5 shadow-lg shadow-[#468CD0]/30 active:scale-95 transition-transform"
           >
             <span>Book Now</span>
             <ArrowRight className="w-4 h-4" />

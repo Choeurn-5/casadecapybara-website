@@ -399,7 +399,7 @@ export default function StayGallery({ rooms }: StayGalleryProps) {
                   href="https://app.inn-connect.com/book2/?p=Casa%20de%20Capybara"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E65100] hover:bg-[#d84315] text-white text-xs font-bold transition-all shadow-sm hover:shadow"
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#468CD0] hover:bg-[#3B7ABB] text-white text-xs font-bold transition-all shadow-sm hover:shadow"
                 >
                   <span>Book Now</span>
                   <ExternalLink className="w-3 h-3" />

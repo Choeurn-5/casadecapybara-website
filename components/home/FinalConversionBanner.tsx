@@ -76,7 +76,7 @@ export default function FinalConversionBanner({
               href={bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] hover:from-[#0369a1] hover:to-[#0284c7] text-white text-base font-extrabold tracking-wide shadow-2xl shadow-sky-950/40 hover:shadow-sky-900/60 transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[#468CD0] hover:bg-[#3B7ABB] text-white text-base font-extrabold tracking-wide shadow-2xl shadow-[#468CD0]/40 hover:shadow-[#3B7ABB]/60 transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
             >
               <Calendar className="w-5 h-5 text-white" />
               <span>Book Your Room (From $50)</span>

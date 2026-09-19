@@ -143,7 +143,7 @@ export default function HeroKh({
           {/* Primary CTA - Book an Encounter (Pink Lead) */}
           <Link
             href={primaryCtaLink}
-            className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white transition-all duration-300 rounded-full overflow-hidden shadow-xl shadow-[#F43F5E]/25 hover:shadow-2xl hover:shadow-[#F43F5E]/40 hover:-translate-y-1 active:translate-y-0 bg-gradient-to-r from-[#F43F5E] via-[#FB7185] to-[#EC4899] hover:from-[#E11D48] hover:to-[#DB2777]"
+            className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white transition-all duration-300 rounded-full overflow-hidden shadow-xl shadow-[#468CD0]/25 hover:shadow-2xl hover:shadow-[#468CD0]/40 hover:-translate-y-1 active:translate-y-0 bg-[#468CD0] hover:bg-[#3B7ABB]"
           >
             <span className="flex items-center gap-2">
               <span className="text-xl group-hover:scale-125 transition-transform duration-300 origin-bottom-right">🐾</span>

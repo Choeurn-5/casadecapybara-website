@@ -180,10 +180,10 @@ export default async function SingleBlogPost({ params }: PageProps) {
             Visiting Siem Reap? Casa de Capybara is located on Ring Road, minutes from Angkor Wat. Meet Molly & Alex ($10 day pass) or stay in our themed boutique rooms from $50/night.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/stay" className="px-6 py-3 bg-[#1B5E20] text-white rounded-xl font-bold text-center hover:bg-[#2E7D32] transition-colors shadow-md">
+            <Link href="/stay" className="px-6 py-3 bg-[#468CD0] text-white rounded-xl font-bold text-center hover:bg-[#3B7ABB] transition-colors shadow-md">
               Book a Room — From $50
             </Link>
-            <Link href="/capybara-experience" className="px-6 py-3 bg-[#E65100] text-white rounded-xl font-bold text-center hover:bg-[#ff6a1a] transition-colors shadow-md">
+            <Link href="/capybara-experience" className="px-6 py-3 bg-[#468CD0] text-white rounded-xl font-bold text-center hover:bg-[#3B7ABB] transition-colors shadow-md">
               Capybara Experience — $10
             </Link>
           </div>

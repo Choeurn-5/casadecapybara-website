@@ -167,7 +167,7 @@ export default function RoomTeaserKh({ rooms }: { rooms: FullCapyRoom[] }) {
                         href={BOOKING_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center py-3 bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] text-white text-sm font-bold rounded-xl hover:from-[#0369a1] hover:to-[#0284c7] transition-all duration-300 shadow-md shadow-[#0284C7]/20 hover:-translate-y-0.5"
+                        className="flex-1 flex items-center justify-center py-3 bg-[#468CD0] text-white text-sm font-bold rounded-xl hover:bg-[#3B7ABB] transition-all duration-300 shadow-md shadow-[#468CD0]/20 hover:-translate-y-0.5"
                       >
                         កក់ឥឡូវនេះ
                       </a>

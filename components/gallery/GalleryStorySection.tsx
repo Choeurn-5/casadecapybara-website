@@ -143,7 +143,7 @@ export default function GalleryStorySection() {
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
             <Link
               href="/capybara-experience"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#E65100] hover:bg-[#F57C00] text-white font-bold text-sm tracking-wide transition-all duration-300 shadow-xl hover:shadow-[#E65100]/40 hover:-translate-y-0.5"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#468CD0] hover:bg-[#3B7ABB] text-white font-bold text-sm tracking-wide transition-all duration-300 shadow-xl hover:shadow-[#468CD0]/40 hover:-translate-y-0.5"
             >
               <span>Book An Encounter</span>
               <ArrowRight className="w-4 h-4" />

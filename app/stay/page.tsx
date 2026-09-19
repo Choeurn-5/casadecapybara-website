@@ -39,7 +39,7 @@ export default async function StayPage() {
             Designed as a treasure hunt for children (capybara-themed bathroom tiles, neon lighting, custom capybara toothbrushes, slippers, cups, towels, pillows, and toys). For parents: dimmable lighting, silent AC & ceiling fan, large smart TV, spacious wardrobes, and private balconies overlooking lush botanical gardens.
           </p>
           <div>
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] hover:from-[#0369a1] hover:to-[#0284c7] text-white font-bold rounded-full transition-all shadow-md shadow-[#0284C7]/25 hover:-translate-y-1">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 bg-[#468CD0] hover:bg-[#3B7ABB] text-white font-bold rounded-full transition-all shadow-md shadow-[#468CD0]/25 hover:-translate-y-1">
               Check Availability
             </a>
           </div>
@@ -219,7 +219,7 @@ export default async function StayPage() {
                         href={BOOKING_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 py-3.5 sm:py-4 bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] text-white font-bold rounded-2xl hover:from-[#0369a1] hover:to-[#0284c7] shadow-lg shadow-[#0284C7]/25 transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
+                        className="flex-1 flex items-center justify-center gap-2 py-3.5 sm:py-4 bg-[#468CD0] text-white font-bold rounded-2xl hover:bg-[#3B7ABB] shadow-lg shadow-[#468CD0]/25 transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
                       >
                         <span>Book Now</span>
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -364,7 +364,7 @@ export default async function StayPage() {
               Booking directly through casadecapybara.com guarantees you the best available rate.
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="px-10 py-5 bg-[#E65100] hover:bg-[#F57C00] text-white font-bold rounded-full transition-all text-lg shadow-xl hover:-translate-y-1 w-full sm:w-auto">
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="px-10 py-5 bg-[#468CD0] hover:bg-[#3B7ABB] text-white font-bold rounded-full transition-all text-lg shadow-xl hover:-translate-y-1 w-full sm:w-auto">
                 Check Availability
               </a>
             </div>
