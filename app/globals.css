@@ -40,6 +40,7 @@ html.dark {
   --card-bg: #1A2E1C;
   --card-border: #2E4A30;
   --muted: #9CA3AF;
+  color-scheme: dark;
 }
 
 /* Ensure Battambang is applied to all Khmer characters across the entire site */
@@ -65,12 +66,295 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Dark mode overrides for common light backgrounds used in sections */
-html.dark .dark\:bg-dark-surface { background-color: var(--surface) !important; }
+/* ========================================
+   COMPREHENSIVE DARK MODE OVERRIDES
+   Uses a global filter + selective un-filter approach
+   combined with targeted element overrides
+   ======================================== */
 
-html.dark section,
-html.dark main {
+/* 
+  The core strategy: apply a dark overlay via CSS variables on the body,
+  then override EVERY light-colored section, card, text, border, etc.
+  We target elements by type + context rather than Tailwind class names.
+*/
+
+/* --- All sections: override light backgrounds --- */
+html.dark section {
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- GLOBAL: Override all inline bg colors via specificity --- */
+/* Body-level children get dark treatment */
+html.dark body > div {
+  color: var(--foreground);
+}
+
+/* ---- White and cream backgrounds ---- */
+/* These use !important to override Tailwind's inline styles */
+html.dark [style*="background"] {
+  transition: background-color 0.3s ease;
+}
+
+/* --- Targeted Section Overrides --- */
+
+/* Light-background sections (cream, white, light blue, light pink) → dark green */
+html.dark section[class*="bg-gradient-to-b"],
+html.dark section[class*="bg-gradient-to-br"] {
+  background: #0F1710 !important;
+}
+
+/* Re-apply the already-dark sections so they don't get overridden */
+html.dark section[class*="bg-gradient-to-br"][class*="from-\[#0F172A\]"],
+html.dark section[class*="bg-gradient-to-br"][class*="from-\[#0F172A\]"],
+html.dark section[class*="bg-\[#1B5E20\]"] {
+  /* These sections are already dark — leave them */
+}
+
+/* White bg sections */
+html.dark section[class*="bg-white"] {
+  background-color: #0F1710 !important;
+}
+
+/* Cream bg */
+html.dark section[class*="bg-\[#FAF7F2\]"] {
+  background-color: #0F1710 !important;
+}
+
+/* Any section with py-* that has direct text */
+html.dark section {
+  color: var(--foreground);
+}
+
+/* --- Cards / content blocks with white bg --- */
+html.dark div[class*="bg-white"] {
+  background-color: var(--card-bg) !important;
+  color: var(--foreground) !important;
+}
+
+html.dark div[class*="bg-white\\/80"] {
+  background-color: rgba(26, 46, 28, 0.85) !important;
+  color: var(--foreground) !important;
+}
+
+html.dark div[class*="bg-white\\/90"] {
+  background-color: rgba(26, 46, 28, 0.92) !important;
+  color: var(--foreground) !important;
+}
+
+html.dark div[class*="bg-white\\/95"] {
+  background-color: rgba(26, 46, 28, 0.97) !important;
+}
+
+/* Cream div backgrounds */
+html.dark div[class*="bg-\[#FAF7F2\]"] {
+  background-color: #162218 !important;
+}
+
+/* Light green tinted backgrounds */
+html.dark div[class*="bg-\[#E8F5E9\]"] {
+  background-color: #162218 !important;
+}
+
+/* Light pink backgrounds */
+html.dark div[class*="bg-\[#FCE7F3\]"] {
+  background-color: #2A1A24 !important;
+}
+
+html.dark div[class*="bg-\[#FDF2F8\]"] {
+  background-color: #231620 !important;
+}
+
+html.dark div[class*="bg-\[#FCE4EC\]"] {
+  background-color: #2A1A24 !important;
+}
+
+/* Light blue backgrounds */
+html.dark div[class*="bg-\[#E0F2FE\]"] {
+  background-color: #142028 !important;
+}
+
+html.dark div[class*="bg-\[#F0F9FF\]"] {
+  background-color: #111E13 !important;
+}
+
+/* Rose backgrounds */
+html.dark div[class*="bg-rose-50"] {
+  background-color: #2A1A24 !important;
+}
+
+/* Gray backgrounds */
+html.dark div[class*="bg-gray-50"],
+html.dark div[class*="bg-gray-100"] {
+  background-color: #162218 !important;
+}
+
+/* --- Text color overrides --- */
+html.dark [class*="text-\[#1A2E1C\]"] {
+  color: #E8E6E1 !important;
+}
+
+html.dark [class*="text-\[#1B5E20\]"] {
+  color: #6ABF73 !important;
+}
+
+html.dark [class*="text-\[#BE123C\]"] {
+  color: #F87171 !important;
+}
+
+html.dark [class*="text-gray-900"] {
+  color: #E8E6E1 !important;
+}
+
+html.dark [class*="text-gray-800"] {
+  color: #D5D3CE !important;
+}
+
+html.dark [class*="text-gray-700"] {
+  color: #B8B6B1 !important;
+}
+
+html.dark [class*="text-gray-600"] {
+  color: #9CA3AF !important;
+}
+
+html.dark [class*="text-gray-500"] {
+  color: #8B8E94 !important;
+}
+
+html.dark [class*="text-rose-700"] {
+  color: #FB7185 !important;
+}
+
+/* --- Border overrides --- */
+html.dark [class*="border-\[#E8F5E9\]"] {
+  border-color: #2E4A30 !important;
+}
+
+html.dark [class*="border-\[#F0EBE1\]"] {
+  border-color: #2E4A30 !important;
+}
+
+html.dark [class*="border-\[#FDA4AF\]"] {
+  border-color: #7A3040 !important;
+}
+
+html.dark [class*="border-gray-100"],
+html.dark [class*="border-gray-200"],
+html.dark [class*="border-gray-300"] {
+  border-color: #2E4A30 !important;
+}
+
+html.dark [class*="border-black\\/10"] {
+  border-color: rgba(46, 74, 48, 0.5) !important;
+}
+
+/* --- Footer (already dark, make slightly deeper) --- */
+html.dark footer[class*="bg-\[#070D18\]"] {
+  background-color: #040908 !important;
+}
+
+/* --- Mobile booking bar --- */
+html.dark aside[aria-label="Mobile booking navigation"] {
+  background-color: rgba(15, 23, 16, 0.97) !important;
+  border-color: rgba(46, 74, 48, 0.5) !important;
+  color: #E8E6E1 !important;
+}
+
+/* --- Prose / Blog content --- */
+html.dark .prose {
+  --tw-prose-body: #C0BEB9;
+  --tw-prose-headings: #E8E6E1;
+  --tw-prose-links: #6ABF73;
+  --tw-prose-bold: #E8E6E1;
+  --tw-prose-quotes: #9CA3AF;
+  --tw-prose-code: #E8E6E1;
+  color: #C0BEB9 !important;
+}
+
+html.dark .prose h1,
+html.dark .prose h2,
+html.dark .prose h3,
+html.dark .prose h4 {
+  color: #E8E6E1 !important;
+}
+
+html.dark .prose p,
+html.dark .prose li {
+  color: #C0BEB9 !important;
+}
+
+html.dark .prose a {
+  color: #6ABF73 !important;
+}
+
+html.dark .prose strong {
+  color: #E8E6E1 !important;
+}
+
+html.dark .prose blockquote {
+  color: #9CA3AF !important;
+  border-color: #2E4A30 !important;
+}
+
+html.dark .prose code {
+  background-color: #1A2E1C !important;
+  color: #E8E6E1 !important;
+}
+
+/* --- Input/form elements --- */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #1A2E1C !important;
+  color: #E8E6E1 !important;
+  border-color: #2E4A30 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #6B7B6D !important;
+}
+
+/* --- Navbar dark mode top bar deeper --- */
+html.dark [class*="bg-\[#0B2510\]"] {
+  background-color: #040908 !important;
+}
+
+/* --- Specific component overrides --- */
+
+/* Encounter ticket cards */
+html.dark div[class*="rounded-3xl"][class*="bg-white"] {
+  background-color: #1A2E1C !important;
+  color: #E8E6E1 !important;
+}
+
+/* Room cards in carousel */
+html.dark div[data-room-card] div[class*="bg-white"] {
+  background-color: #1A2E1C !important;
+  color: #E8E6E1 !important;
+}
+
+/* Spec badges in cards */
+html.dark div[class*="bg-\[#FAF7F2\]"][class*="border"] {
+  background-color: #162218 !important;
+  border-color: #2E4A30 !important;
+}
+
+/* Guarantee / trust boxes */
+html.dark div[class*="bg-\[#E8F5E9\]"][class*="border-l-4"] {
+  background-color: #162218 !important;
+}
+
+/* Testimonial cards */
+html.dark div[class*="backdrop-blur"] {
+  color: inherit;
+}
+
+/* ---- Shadows in dark mode ---- */
+html.dark [class*="shadow-md"],
+html.dark [class*="shadow-lg"],
+html.dark [class*="shadow-xl"] {
+  --tw-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Lenis smooth scrolling height integration */
