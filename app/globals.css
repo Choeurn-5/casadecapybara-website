@@ -68,69 +68,65 @@ body {
 
 /* ========================================
    COMPREHENSIVE DARK MODE OVERRIDES
-   Uses a global filter + selective un-filter approach
-   combined with targeted element overrides
    ======================================== */
 
-/* 
-  The core strategy: apply a dark overlay via CSS variables on the body,
-  then override EVERY light-colored section, card, text, border, etc.
-  We target elements by type + context rather than Tailwind class names.
-*/
-
-/* --- All sections: override light backgrounds --- */
-html.dark section {
+/* --- Smooth transitions --- */
+html.dark section,
+html.dark main,
+html.dark div {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- GLOBAL: Override all inline bg colors via specificity --- */
-/* Body-level children get dark treatment */
+/* --- Body-level dark treatment --- */
 html.dark body > div {
   color: var(--foreground);
 }
 
-/* ---- White and cream backgrounds ---- */
-/* These use !important to override Tailwind's inline styles */
-html.dark [style*="background"] {
-  transition: background-color 0.3s ease;
+/* =============================================
+   SECTION BACKGROUNDS — target only light ones
+   ============================================= */
+
+/* Cream / off-white sections */
+html.dark section[class*="bg-\[#FAF7F2\]"],
+html.dark section[class*="bg-\[#FDFBF7\]"] {
+  background-color: #0F1710 !important;
 }
 
-/* --- Targeted Section Overrides --- */
-
-/* Light-background sections (cream, white, light blue, light pink) → dark green */
-html.dark section[class*="bg-gradient-to-b"],
-html.dark section[class*="bg-gradient-to-br"] {
+/* Light gradient sections (pink-to-blue, blue-to-cream) */
+html.dark section[class*="from-\[#FFF5F7\]"],
+html.dark section[class*="from-\[#F0F9FF\]"] {
   background: #0F1710 !important;
 }
 
-/* Re-apply the already-dark sections so they don't get overridden */
-html.dark section[class*="bg-gradient-to-br"][class*="from-\[#0F172A\]"],
-html.dark section[class*="bg-gradient-to-br"][class*="from-\[#0F172A\]"],
-html.dark section[class*="bg-\[#1B5E20\]"] {
-  /* These sections are already dark — leave them */
-}
-
 /* White bg sections */
-html.dark section[class*="bg-white"] {
+html.dark section.bg-white {
   background-color: #0F1710 !important;
 }
 
-/* Cream bg */
-html.dark section[class*="bg-\[#FAF7F2\]"] {
-  background-color: #0F1710 !important;
+/* Ensure ALL light sections get dark text */
+html.dark section[class*="text-\[#1A2E1C\]"] {
+  color: #E8E6E1 !important;
 }
 
-/* Any section with py-* that has direct text */
-html.dark section {
-  color: var(--foreground);
-}
+/* DO NOT touch already-dark sections:
+   - Hero: bg-[#0F1710]
+   - Testimonials: bg-[#070D08]
+   - Final CTA: from-[#0F172A] via-[#1E1B4B]
+   These are already dark and should remain unchanged */
 
-/* --- Cards / content blocks with white bg --- */
-html.dark div[class*="bg-white"] {
+/* =============================================
+   CARDS & CONTENT BLOCKS
+   ============================================= */
+
+/* Target only SOLID white backgrounds, not translucent overlays */
+html.dark div.bg-white,
+html.dark a.bg-white,
+html.dark span.bg-white {
   background-color: var(--card-bg) !important;
   color: var(--foreground) !important;
 }
 
+/* Translucent white cards (like room cards, encounter cards) */
 html.dark div[class*="bg-white\\/80"] {
   background-color: rgba(26, 46, 28, 0.85) !important;
   color: var(--foreground) !important;
@@ -143,10 +139,15 @@ html.dark div[class*="bg-white\\/90"] {
 
 html.dark div[class*="bg-white\\/95"] {
   background-color: rgba(26, 46, 28, 0.97) !important;
+  color: var(--foreground) !important;
 }
 
-/* Cream div backgrounds */
-html.dark div[class*="bg-\[#FAF7F2\]"] {
+/* Leave bg-white/10, bg-white/5, bg-white/15, bg-white/20 alone
+   — these are used as translucent overlays in dark hero/nav areas */
+
+/* Cream backgrounds */
+html.dark div[class*="bg-\[#FAF7F2\]"],
+html.dark div[class*="bg-\[#FDFBF7\]"] {
   background-color: #162218 !important;
 }
 
@@ -159,11 +160,9 @@ html.dark div[class*="bg-\[#E8F5E9\]"] {
 html.dark div[class*="bg-\[#FCE7F3\]"] {
   background-color: #2A1A24 !important;
 }
-
 html.dark div[class*="bg-\[#FDF2F8\]"] {
   background-color: #231620 !important;
 }
-
 html.dark div[class*="bg-\[#FCE4EC\]"] {
   background-color: #2A1A24 !important;
 }
@@ -172,95 +171,91 @@ html.dark div[class*="bg-\[#FCE4EC\]"] {
 html.dark div[class*="bg-\[#E0F2FE\]"] {
   background-color: #142028 !important;
 }
-
 html.dark div[class*="bg-\[#F0F9FF\]"] {
   background-color: #111E13 !important;
 }
 
-/* Rose backgrounds */
+/* Rose & gray backgrounds */
 html.dark div[class*="bg-rose-50"] {
   background-color: #2A1A24 !important;
 }
-
-/* Gray backgrounds */
 html.dark div[class*="bg-gray-50"],
 html.dark div[class*="bg-gray-100"] {
   background-color: #162218 !important;
 }
 
-/* --- Text color overrides --- */
+/* =============================================
+   TEXT COLOR OVERRIDES
+   ============================================= */
+
 html.dark [class*="text-\[#1A2E1C\]"] {
   color: #E8E6E1 !important;
 }
-
 html.dark [class*="text-\[#1B5E20\]"] {
   color: #6ABF73 !important;
 }
-
 html.dark [class*="text-\[#BE123C\]"] {
   color: #F87171 !important;
 }
-
 html.dark [class*="text-gray-900"] {
   color: #E8E6E1 !important;
 }
-
 html.dark [class*="text-gray-800"] {
   color: #D5D3CE !important;
 }
-
 html.dark [class*="text-gray-700"] {
   color: #B8B6B1 !important;
 }
-
 html.dark [class*="text-gray-600"] {
   color: #9CA3AF !important;
 }
-
 html.dark [class*="text-gray-500"] {
   color: #8B8E94 !important;
 }
-
 html.dark [class*="text-rose-700"] {
   color: #FB7185 !important;
 }
 
-/* --- Border overrides --- */
-html.dark [class*="border-\[#E8F5E9\]"] {
+/* =============================================
+   BORDER OVERRIDES
+   ============================================= */
+
+html.dark [class*="border-\[#E8F5E9\]"],
+html.dark [class*="border-\[#F0EBE1\]"],
+html.dark [class*="border-\[#1B5E20\]"] {
   border-color: #2E4A30 !important;
 }
-
-html.dark [class*="border-\[#F0EBE1\]"] {
-  border-color: #2E4A30 !important;
-}
-
 html.dark [class*="border-\[#FDA4AF\]"] {
   border-color: #7A3040 !important;
 }
-
 html.dark [class*="border-gray-100"],
 html.dark [class*="border-gray-200"],
 html.dark [class*="border-gray-300"] {
   border-color: #2E4A30 !important;
 }
 
-html.dark [class*="border-black\\/10"] {
-  border-color: rgba(46, 74, 48, 0.5) !important;
-}
+/* =============================================
+   SPECIFIC COMPONENT OVERRIDES
+   ============================================= */
 
-/* --- Footer (already dark, make slightly deeper) --- */
-html.dark footer[class*="bg-\[#070D18\]"] {
+/* Navbar top strip */
+html.dark [class*="bg-\[#0B2510\]"] {
   background-color: #040908 !important;
 }
 
-/* --- Mobile booking bar --- */
+/* Footer (already dark, make slightly deeper) */
+html.dark footer {
+  background-color: #040908 !important;
+}
+
+/* Mobile booking bar */
 html.dark aside[aria-label="Mobile booking navigation"] {
   background-color: rgba(15, 23, 16, 0.97) !important;
   border-color: rgba(46, 74, 48, 0.5) !important;
   color: #E8E6E1 !important;
 }
 
-/* --- Prose / Blog content --- */
+/* Blog prose content */
 html.dark .prose {
   --tw-prose-body: #C0BEB9;
   --tw-prose-headings: #E8E6E1;
@@ -270,38 +265,32 @@ html.dark .prose {
   --tw-prose-code: #E8E6E1;
   color: #C0BEB9 !important;
 }
-
 html.dark .prose h1,
 html.dark .prose h2,
 html.dark .prose h3,
 html.dark .prose h4 {
   color: #E8E6E1 !important;
 }
-
 html.dark .prose p,
 html.dark .prose li {
   color: #C0BEB9 !important;
 }
-
 html.dark .prose a {
   color: #6ABF73 !important;
 }
-
 html.dark .prose strong {
   color: #E8E6E1 !important;
 }
-
 html.dark .prose blockquote {
   color: #9CA3AF !important;
   border-color: #2E4A30 !important;
 }
-
 html.dark .prose code {
   background-color: #1A2E1C !important;
   color: #E8E6E1 !important;
 }
 
-/* --- Input/form elements --- */
+/* Input/form elements */
 html.dark input,
 html.dark textarea,
 html.dark select {
@@ -309,48 +298,12 @@ html.dark select {
   color: #E8E6E1 !important;
   border-color: #2E4A30 !important;
 }
-
 html.dark input::placeholder,
 html.dark textarea::placeholder {
   color: #6B7B6D !important;
 }
 
-/* --- Navbar dark mode top bar deeper --- */
-html.dark [class*="bg-\[#0B2510\]"] {
-  background-color: #040908 !important;
-}
-
-/* --- Specific component overrides --- */
-
-/* Encounter ticket cards */
-html.dark div[class*="rounded-3xl"][class*="bg-white"] {
-  background-color: #1A2E1C !important;
-  color: #E8E6E1 !important;
-}
-
-/* Room cards in carousel */
-html.dark div[data-room-card] div[class*="bg-white"] {
-  background-color: #1A2E1C !important;
-  color: #E8E6E1 !important;
-}
-
-/* Spec badges in cards */
-html.dark div[class*="bg-\[#FAF7F2\]"][class*="border"] {
-  background-color: #162218 !important;
-  border-color: #2E4A30 !important;
-}
-
-/* Guarantee / trust boxes */
-html.dark div[class*="bg-\[#E8F5E9\]"][class*="border-l-4"] {
-  background-color: #162218 !important;
-}
-
-/* Testimonial cards */
-html.dark div[class*="backdrop-blur"] {
-  color: inherit;
-}
-
-/* ---- Shadows in dark mode ---- */
+/* Shadows in dark mode */
 html.dark [class*="shadow-md"],
 html.dark [class*="shadow-lg"],
 html.dark [class*="shadow-xl"] {
