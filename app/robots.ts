@@ -1,12 +1,20 @@
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/api/", "/_next/"],
-    },
-    sitemap: "https://casadecapybara.com/sitemap.xml",
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: [
+          "/api/",
+          "/_next/",
+          "/book/",
+        ],
+      },
+    ],
+    // Sitemap always references the preferred www host.
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonicalUrl, SITE_URL } from "@/lib/seo";
 import HeroKh from "@/components/kh/HeroKh";
 import AboutSectionKh from "@/components/kh/AboutSectionKh";
 import EncounterTicketsSummaryKh from "@/components/kh/EncounterTicketsSummaryKh";
@@ -66,14 +67,32 @@ async function getKhmerData() {
 }
 
 export const metadata: Metadata = {
-  title: "Casa de Capybara សៀមរាប | សណ្ឋាគារគ្រួសារ ហាងកាហ្វេ និងសត្វកាពីបារ៉ាដំបូងបង្អស់នៅកម្ពុជា",
-  description: "ជួបជាមួយសត្វកាពីបារ៉ាពិតៗ Molly & Alex, បន្ទប់ស្នាក់នៅបែបប៊ូទិក, អាងហែលទឹកមានរំអិល និងហាងកាហ្វេដ៏ស្រស់ស្អាតនៅជិតប្រាសាទអង្គរវត្ត។",
+  title: "Casa de Capybara កំពុជា | សណ័ថាគារគ្រួសារ ហាងកាហ័វ័ និងសត្វកាពីបារាដំបងអសតតនៅកម្ពុជា",
+  description:
+    "ជួបជាមនួយសត្វកាពីបារាពិត្ត Molly & Alex, បន្តប់ស្នាក់ន័បង័បកបូតិក, អាងហែលតឹកមានរំអិល និងហាងកាហ័វ័តេស្រស់ស័អាតនៅជិតប្រាសាតអង្គរវត្ត័តង័ប់ស័ទឹក័តង័ល័កាលទឹ 7ព្រឹកតឹងâ€9 យប់ព័លទឹក័.",
+  alternates: {
+    canonical: canonicalUrl("/kh"),
+    languages: {
+      "km": canonicalUrl("/kh"),
+      "en": canonicalUrl("/"),
+      "x-default": canonicalUrl("/"),
+    },
+  },
   openGraph: {
-    title: "Casa de Capybara សៀមរាប | សណ្ឋាគារគ្រួសារ ហាងកាហ្វេ និងសត្វកាពីបារ៉ាដំបូងបង្អស់នៅកម្ពុជា",
-    description: "ជួបជាមួយសត្វកាពីបារ៉ាពិតៗ Molly & Alex, បន្ទប់ស្នាក់នៅបែបប៊ូទិក, អាងហែលទឹកមានរំអិល និងហាងកាហ្វេដ៏ស្រស់ស្អាតនៅជិតប្រាសាទអង្គរវត្ត។",
+    title: "Casa de Capybara កំពុជា | សណ័ថាគារគ្រួសារ ហាងកាហ័វ័ និងសត្វកាពីបារាដំបងអសតតនៅកម្ពុជា",
+    description:
+      "ជួបជាមនួយសត្វកាពីបារាពិត្ត Molly & Alex, បន្តប់ស្នាក់ន័បង័បកបូតិក, អាងហែលតឹកមានរំអិល និងហាងកាហ័វ័តេស្រស់ស័អាតនៅជិតប្រាសាតអង្គរវត្ត័តង័ប់ស័ទឹក.",
+    url: canonicalUrl("/kh"),
     type: "website",
     locale: "km_KH",
-  }
+    images: [{ url: `${SITE_URL}/logo.png`, width: 800, height: 800, alt: "Casa de Capybara – Siem Reap" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Casa de Capybara កំពុជា | សណ័ថាគារគ្រួសារ និងកាពីបារា | សឹមរាប",
+    description: "ជួបជាមនួយ Molly & Alex និងសន្តាកសត្វាង័ទឹក ហាងកាហ័វ័ តម្លែខ្នឹក Angkor Wat.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 export default async function KhmerPage() {

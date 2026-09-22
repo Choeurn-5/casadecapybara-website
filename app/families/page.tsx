@@ -1,14 +1,41 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
+import { canonicalUrl, SITE_URL } from "@/lib/seo";
 import { Flame, Activity, Droplets, ChefHat, Cctv, Bug, ShieldCheck, Ban, ArrowRight, Sparkles, Dumbbell, HeartPulse } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import FamiliesGallery from "@/components/families/FamiliesGallery";
 import { getGlobalSettings } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
-  title: "Family Hotel Cambodia | Kids Activities & Safety Standards | Casa de Capybara",
-  description: "Cambodia's first and only dedicated kids' hotel. Real capybaras, themed rooms, pool with slide, 200+ costumes, full gym, sauna, steam room and the highest family safety standards in Cambodia. From $50/night.",
+  title: "Family-Friendly Resort Siem Reap | Kids Activities & Safety | Casa de Capybara",
+  description:
+    "Cambodia's most family-friendly resort. Capybara encounters, pool with water slide, 200+ costume playroom, outdoor playground, full gym, and the highest safety standards. Near Angkor Wat. From $50/night.",
+  alternates: {
+    canonical: canonicalUrl("/families"),
+  },
+  openGraph: {
+    title: "Family Resort Siem Reap | Capybaras, Pool & Kids Activities | Casa de Capybara",
+    description:
+      "Real capybaras, water slide pool, 200+ costumes, outdoor playground, and top-tier safety standards. The ideal family stay near Angkor Wat.",
+    url: canonicalUrl("/families"),
+    type: "website",
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 800,
+        height: 800,
+        alt: "Family activities and pool at Casa de Capybara, Siem Reap",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Family Resort Siem Reap | Kids Activities & Capybaras | Casa de Capybara",
+    description:
+      "Pool with slide, 200+ costume playroom, capybara encounters, and the highest safety standards near Angkor Wat.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 export default async function FamiliesPage() {

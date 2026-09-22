@@ -1,14 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
+import { canonicalUrl, SITE_URL } from "@/lib/seo";
 import { MapPin, Clock, Car, Footprints, Globe, Phone, Mail, Bed, Ticket, HelpCircle, Navigation } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import FaqAccordion from "@/components/plan/FaqAccordion";
 import { getGlobalSettings, getPlanPageContent } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
-  title: "Plan Your Visit to Casa de Capybara Siem Reap | Hours, Location & FAQ",
-  description: "Everything before visiting Casa de Capybara. Street 598 Ring Road off Highway 6, Siem Reap. Open daily 7am-9pm. Free parking, airport transfers. Walk-ins always welcome.",
+  title: "Plan Your Visit | Casa de Capybara – Siem Reap Hours, Location & FAQ",
+  description:
+    "Everything you need before visiting Casa de Capybara: Street 598 Ring Road off Highway 6, Siem Reap. Open daily 7am–9pm. Free parking, airport transfers available. Walk-ins always welcome.",
+  alternates: {
+    canonical: canonicalUrl("/plan-your-visit"),
+  },
+  openGraph: {
+    title: "Plan Your Visit | Casa de Capybara – Hours, Location & FAQ",
+    description:
+      "Opening hours, address, transport options, and visitor FAQs for Casa de Capybara in Siem Reap. Minutes from Angkor Wat, free parking, walk-ins welcome.",
+    url: canonicalUrl("/plan-your-visit"),
+    type: "website",
+    images: [{ url: `${SITE_URL}/logo.png`, width: 800, height: 800, alt: "Casa de Capybara location and visitor information, Siem Reap" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Plan Your Visit | Casa de Capybara – Siem Reap",
+    description: "Hours, address, transport, and FAQs for Casa de Capybara. Open daily 7am–9pm near Angkor Wat.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 export default async function PlanYourVisitPage() {

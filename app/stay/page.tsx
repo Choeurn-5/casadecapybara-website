@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonicalUrl, SITE_URL } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { getAllCapyRooms, getStayPageContent } from "@/lib/wordpress";
@@ -10,8 +11,34 @@ import StayGallery from "@/components/stay/StayGallery";
 const BOOKING_URL = "https://app.inn-connect.com/book2/?p=Casa%20de%20Capybara";
 
 export const metadata: Metadata = {
-  title: "Boutique Hotel Siem Reap | Capybara Themed Rooms | Near Angkor Wat",
-  description: "Stay in Cambodia's most unique boutique hotel. Capybara-themed rooms with private balconies. Pool, spa, gym & family facilities. Book direct for best rates.",
+  title: "Boutique Eco-Villas Siem Reap | Capybara-Themed Rooms | Casa de Capybara",
+  description:
+    "Stay in Casa de Capybara's capybara-themed eco-villas near Angkor Wat. Private balconies, pool with water slide, spa, gym, and free daily capybara encounters. Book direct.",
+  alternates: {
+    canonical: canonicalUrl("/stay"),
+  },
+  openGraph: {
+    title: "Boutique Eco-Villas Siem Reap | Capybara-Themed Rooms | Casa de Capybara",
+    description:
+      "Capybara-themed rooms with private balconies, pool, spa, and gym. Includes free daily capybara encounters. Near Angkor Wat. Book direct for best rates.",
+    url: canonicalUrl("/stay"),
+    type: "website",
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 800,
+        height: 800,
+        alt: "Boutique eco-villas at Casa de Capybara, Siem Reap",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Boutique Eco-Villas | Casa de Capybara – Siem Reap",
+    description:
+      "Capybara-themed rooms, private balconies, pool and spa near Angkor Wat. Free capybara encounters included with every stay.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 export default async function StayPage() {

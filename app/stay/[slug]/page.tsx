@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCapyRoomBySlug, getAllCapyRooms } from "@/lib/wordpress";
+import { canonicalUrl, SITE_URL } from "@/lib/seo";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/components/seo/JsonLd";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { 
   Check, 
@@ -31,9 +34,31 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const resolvedParams = await params;
   const room = await getCapyRoomBySlug(resolvedParams.slug);
   if (!room) return { title: "Room Not Found | Casa de Capybara" };
+
+  const canonical = canonicalUrl(`/stay/${resolvedParams.slug}`);
+  const ogImage = room.thumbnailUrl
+    ? [{ url: room.thumbnailUrl, alt: `${room.title} at Casa de Capybara, Siem Reap` }]
+    : [{ url: `${SITE_URL}/logo.png`, width: 800, height: 800, alt: room.title }];
+
   return {
-    title: `${room.title} | Luxury Stay at Casa de Capybara`,
+    title: `${room.title} | Boutique Eco-Villa at Casa de Capybara, Siem Reap`,
     description: room.description,
+    alternates: {
+      canonical: canonical,
+    },
+    openGraph: {
+      title: `${room.title} | Casa de Capybara, Siem Reap`,
+      description: room.description,
+      url: canonical,
+      type: "website",
+      images: ogImage,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${room.title} | Casa de Capybara`,
+      description: room.description,
+      images: room.thumbnailUrl ? [room.thumbnailUrl] : [`${SITE_URL}/logo.png`],
+    },
   };
 }
 
@@ -64,8 +89,39 @@ export default async function RoomDetailPage({ params }: { params: Promise<{ slu
     ? room.photoGallery 
     : [room.thumbnailUrl];
 
+  // HotelRoom structured data for accommodation rich results
+  const hotelRoomSchema = {
+    "@context": "https://schema.org",
+    "@type": "HotelRoom",
+    "@id": canonicalUrl(`/stay/${room.slug}`),
+    "name": room.title,
+    "description": room.description,
+    "url": canonicalUrl(`/stay/${room.slug}`),
+    "image": room.thumbnailUrl,
+    "containedInPlace": {
+      "@type": "Hotel",
+      "@id": `${SITE_URL}/#hotel`,
+      "name": "Casa de Capybara",
+    },
+    ...(room.occupancy && { "occupancy": { "@type": "QuantitativeValue", "value": room.occupancy } }),
+    ...(room.priceFrom && {
+      "offers": {
+        "@type": "Offer",
+        "price": room.priceFrom.replace(/[^0-9.]/g, ""),
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+      },
+    }),
+  };
+
   return (
     <main className="min-h-screen bg-[#FAF7F2] text-[#1A2E1C] pb-24 lg:pb-16">
+      <JsonLd data={hotelRoomSchema} />
+      <JsonLd data={breadcrumbSchema([
+        { name: "Home", url: SITE_URL },
+        { name: "Stay", url: canonicalUrl("/stay") },
+        { name: room.title, url: canonicalUrl(`/stay/${room.slug}`) },
+      ])} />
       
       {/* 1. Cinematic Luxury Hero (Optimized for Mobile & Desktop) */}
       <section className="relative w-full min-h-[50vh] sm:min-h-[58vh] md:h-[70vh] flex flex-col justify-between overflow-hidden">

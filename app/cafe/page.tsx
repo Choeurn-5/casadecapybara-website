@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
+import { canonicalUrl, SITE_URL } from "@/lib/seo";
 import { MapPin, Clock, Wifi, MessageCircle, Star, Utensils, CheckCircle2, Heart } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import CafeFeaturedMenu from "@/components/cafe/CafeFeaturedMenu";
@@ -8,8 +9,34 @@ import CafeHeroSlider from "@/components/cafe/CafeHeroSlider";
 import { getAllCafeMenuItems, getCafePageContent } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
-  title: "Capybara Cafe Siem Reap | Best Unique Cafe Near Angkor Wat | Open 7am-9pm",
-  description: "Visit Capybara Cafe in Siem Reap — homemade food, fresh pastries, signature drinks and Cambodia's only capybaras. Vegetarian, vegan and gluten-free options. Open daily 7am-9pm.",
+  title: "Capybara Café Siem Reap | Farm-to-Table Dining near Angkor Wat | Open 7am–9pm",
+  description:
+    "Visit Capybara Café in Siem Reap for homemade food, fresh pastries, and signature drinks. Vegetarian, vegan, and gluten-free options. Open daily 7am–9pm, minutes from Angkor Wat.",
+  alternates: {
+    canonical: canonicalUrl("/cafe"),
+  },
+  openGraph: {
+    title: "Capybara Café Siem Reap | Farm-to-Table Dining near Angkor Wat",
+    description:
+      "Homemade food, fresh pastries, and signature drinks in a unique café where you can also meet real capybaras. Open daily 7am–9pm, Siem Reap.",
+    url: canonicalUrl("/cafe"),
+    type: "website",
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 800,
+        height: 800,
+        alt: "Capybara Café farm-to-table dining in Siem Reap",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Capybara Café – Farm-to-Table Dining | Siem Reap | Open 7am–9pm",
+    description:
+      "Homemade food, pastries, and signature drinks near Angkor Wat. Cambodia's most unique café experience.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 export default async function CafePage() {

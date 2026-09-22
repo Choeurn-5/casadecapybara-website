@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonicalUrl, SITE_URL } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { getEncounterTicketsApiData, getGlobalSettings, getExperiencePageContent } from "@/lib/wordpress";
@@ -8,8 +9,34 @@ import ExperienceGallery from "@/components/capybara-experience/ExperienceGaller
 import { Check, Clock, MapPin, Users, Heart, Leaf, Stethoscope, Camera, Baby, Droplets, Wind, Phone, Send } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Capybara Experience Siem Reap | Meet Molly & Alex | From $10 | Casa de Capybara",
-  description: "Cambodia's only capybara encounter. Meet Molly & Alex privately, feed them, and take home a free souvenir. Open daily 7am-9pm. Walk-ins welcome. From $10 per person.",
+  title: "Capybara Experience Siem Reap | Meet Molly & Alex | From $10",
+  description:
+    "Cambodia's only capybara encounter. Feed Molly & Alex, get your free souvenir photo, and book a private or family session. Open daily 7am–9pm. Walk-ins welcome. From $10.",
+  alternates: {
+    canonical: canonicalUrl("/capybara-experience"),
+  },
+  openGraph: {
+    title: "Capybara Experience Siem Reap | Meet Molly & Alex | From $10",
+    description:
+      "Meet Cambodia's only capybaras at Casa de Capybara. Supervised encounters, family packages, feeding sessions, and souvenir photos near Angkor Wat. From $10 per person.",
+    url: canonicalUrl("/capybara-experience"),
+    type: "website",
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 800,
+        height: 800,
+        alt: "Capybara encounter experience at Casa de Capybara, Siem Reap",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Capybara Experience – Meet Molly & Alex | From $10 | Siem Reap",
+    description:
+      "Cambodia's only capybara encounter. Supervised sessions, family packages. Open daily near Angkor Wat. From $10.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 export default async function CapybaraExperiencePage() {

@@ -1,7 +1,8 @@
 import React from "react";
+import { SITE_URL } from "@/lib/seo";
 
 interface JsonLdProps {
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }
 
 export default function JsonLd({ data }: JsonLdProps) {
@@ -13,19 +14,38 @@ export default function JsonLd({ data }: JsonLdProps) {
   );
 }
 
+/**
+ * Global business schema — rendered in the root layout on every page.
+ * Uses the preferred www canonical host for all @id and url fields.
+ */
 export const globalBusinessSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      // WebSite enables Google Sitelinks Search Box if eligible.
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      "name": "Casa de Capybara",
+      "url": SITE_URL,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${SITE_URL}/blog?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
       "@type": ["Hotel", "Resort", "TouristAttraction"],
-      "@id": "https://casadecapybara.com/#hotel",
+      "@id": `${SITE_URL}/#hotel`,
       "name": "Casa de Capybara",
       "alternateName": "Casa de Capybara Siem Reap",
       "description":
-        "Cambodia's first and only boutique hotel, destination café, and live capybara encounter attraction in Siem Reap near Angkor Wat.",
-      "url": "https://casadecapybara.com",
+        "Cambodia's first and only boutique eco-resort, destination café, and live capybara encounter attraction in Siem Reap near Angkor Wat.",
+      "url": SITE_URL,
       "telephone": "+855968149795",
-      "priceRange": "$10 - $150",
+      "priceRange": "$10 – $150",
       "currenciesAccepted": "USD, KHR",
       "paymentAccepted": "Cash, Credit Card, ABA Pay, KHQR",
       "address": {
@@ -102,11 +122,28 @@ export const globalBusinessSchema = {
     },
     {
       "@type": "Restaurant",
-      "@id": "https://casadecapybara.com/#cafe",
+      "@id": `${SITE_URL}/#cafe`,
       "name": "Capybara Cafe Siem Reap",
       "servesCuisine": ["Khmer", "Western", "Asian", "Vegetarian", "Vegan"],
       "telephone": "+855968149795",
-      "url": "https://casadecapybara.com/cafe",
+      "url": `${SITE_URL}/cafe`,
     },
   ],
 };
+
+/**
+ * Generates a BreadcrumbList JSON-LD object for nested pages.
+ * @param items - Array of { name, url } for each crumb in order from root.
+ */
+export function breadcrumbSchema(items: { name: string; url: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.name,
+      "item": item.url,
+    })),
+  };
+}

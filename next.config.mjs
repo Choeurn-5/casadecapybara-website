@@ -14,6 +14,21 @@ const nextConfig = {
       },
     ],
   },
+
+  // Enforce preferred canonical host: non-www permanently redirects to www.
+  // This is a Next.js-level safety net. If deploying on Vercel/Netlify,
+  // also configure a platform-level redirect for the non-www domain.
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'casadecapybara.com' }],
+        destination: 'https://www.casadecapybara.com/:path*',
+        permanent: true, // HTTP 308 — preserves request method
+      },
+    ];
+  },
+
   allowedDevOrigins: ['192.168.1.41'],
 };
 

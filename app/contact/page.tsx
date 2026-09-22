@@ -16,10 +16,29 @@ import {
 import ContactForm from '@/components/contact/ContactForm';
 import { getGlobalSettings, getContactPageContent } from '@/lib/wordpress';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import { canonicalUrl, SITE_URL } from '@/lib/seo';
 
 export const metadata = {
-  title: "Contact Casa de Capybara Siem Reap | WhatsApp, Telegram & Online Booking",
-  description: "Book a room, reserve your capybara encounter or get in touch. WhatsApp +855 968 149 795 or Telegram @capybaracambodia. We reply fast — usually within the hour."
+  title: "Contact Casa de Capybara Siem Reap | WhatsApp, Telegram & Booking",
+  description:
+    "Reach us by WhatsApp (+855 968 149 795), Telegram (@capybaracambodia), or our booking engine. We reply within the hour. Street 598, Ring Road, Siem Reap.",
+  alternates: {
+    canonical: canonicalUrl("/contact"),
+  },
+  openGraph: {
+    title: "Contact Casa de Capybara | Book a Room or Capybara Encounter",
+    description:
+      "WhatsApp, Telegram, or online booking. Contact Casa de Capybara in Siem Reap for reservations, group bookings, and general enquiries.",
+    url: canonicalUrl("/contact"),
+    type: "website",
+    images: [{ url: `${SITE_URL}/logo.png`, width: 800, height: 800, alt: "Contact Casa de Capybara in Siem Reap" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Casa de Capybara – Siem Reap",
+    description: "WhatsApp, Telegram, or online booking. Fast responses, usually within the hour.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 export default async function ContactPage() {

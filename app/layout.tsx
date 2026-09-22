@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { getGlobalSettings } from "@/lib/wordpress";
+import { SITE_URL, canonicalUrl } from "@/lib/seo";
 import Navbar from "@/components/layout/Navbar";
 import GlobalFooter from "@/components/layout/GlobalFooter";
 import FloatingContactBar from "@/components/layout/FloatingContactBar";
@@ -21,13 +22,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://casadecapybara.com"),
+  // Preferred canonical host — all relative canonical paths resolve against this.
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Casa de Capybara | Luxury Wildlife Sanctuary, Boutique Hotel & Cafe Siem Reap",
+    default: "Casa de Capybara | Boutique Eco-Resort, Capybara Sanctuary & Café – Siem Reap",
     template: "%s | Casa de Capybara",
   },
   description:
-    "Cambodia's first and only boutique hotel, destination organic café, and ethical live capybara sanctuary in Siem Reap near Angkor Wat.",
+    "Cambodia's first and only boutique eco-resort, destination organic café, and ethical live capybara sanctuary in Siem Reap near Angkor Wat.",
   keywords: [
     "capybara Siem Reap",
     "boutique hotel near Angkor Wat",
@@ -35,29 +37,31 @@ export const metadata: Metadata = {
     "things to do in Siem Reap",
     "best cafe Siem Reap",
     "Casa de Capybara",
-    "Siem Reap resort",
+    "Siem Reap eco-resort",
     "capybara encounter Cambodia",
     "kids hotel Siem Reap",
   ],
   alternates: {
-    canonical: "/",
+    // Homepage self-referencing canonical — absolute URL prevents fallback issues.
+    canonical: canonicalUrl("/"),
     languages: {
-      "en-US": "/",
-      "km-KH": "/kh",
+      "en": canonicalUrl("/"),
+      "km": canonicalUrl("/kh"),
+      "x-default": canonicalUrl("/"),
     },
   },
   openGraph: {
-    title: "Casa de Capybara | Luxury Wildlife Sanctuary & Eco-Resort Siem Reap",
+    title: "Casa de Capybara | Boutique Eco-Resort & Capybara Sanctuary – Siem Reap",
     description:
-      "Cambodia's premier boutique hotel, destination café, and live capybara encounter in Siem Reap near Angkor Wat.",
-    url: "https://casadecapybara.com",
+      "Cambodia's premier boutique eco-resort, destination café, and live capybara encounter in Siem Reap near Angkor Wat.",
+    url: canonicalUrl("/"),
     siteName: "Casa de Capybara",
     images: [
       {
-        url: "/logo.png",
+        url: `${SITE_URL}/logo.png`,
         width: 800,
         height: 800,
-        alt: "Casa de Capybara Siem Reap",
+        alt: "Casa de Capybara – boutique eco-resort and capybara sanctuary in Siem Reap",
       },
     ],
     locale: "en_US",
@@ -65,10 +69,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Casa de Capybara | Luxury Wildlife Sanctuary & Eco-Resort",
+    title: "Casa de Capybara | Capybara Sanctuary & Eco-Resort – Siem Reap",
     description:
-      "Cambodia's premier capybara sanctuary, boutique eco-villas, and farm-to-table dining near Angkor Wat.",
-    images: ["/logo.png"],
+      "Cambodia's only capybara sanctuary, boutique eco-villas, and farm-to-table dining near Angkor Wat.",
+    images: [`${SITE_URL}/logo.png`],
   },
   icons: {
     icon: [

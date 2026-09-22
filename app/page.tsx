@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonicalUrl, SITE_URL } from "@/lib/seo";
 import Hero from "@/components/home/Hero";
 import AboutSection from "@/components/home/AboutSection";
 import EncounterTicketsSummary from "@/components/home/EncounterTicketsSummary";
@@ -12,9 +13,39 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 import { getFeaturedRooms, getGlobalSettings, getHomePageContent } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
-  title: "Casa de Capybara | Luxury Wildlife Sanctuary & Eco-Resort",
+  title: "Casa de Capybara | Capybara Sanctuary, Eco-Resort & Café near Angkor Wat",
   description:
-    "Experience Cambodia's premier capybara sanctuary, boutique eco-villas, tranquil botanical gardens, and farm-to-table dining at Casa de Capybara.",
+    "Experience Cambodia's only capybara sanctuary, boutique eco-villas, farm-to-table dining, and a pool with water slide at Casa de Capybara – Siem Reap.",
+  alternates: {
+    canonical: canonicalUrl("/"),
+    languages: {
+      "en": canonicalUrl("/"),
+      "km": canonicalUrl("/kh"),
+      "x-default": canonicalUrl("/"),
+    },
+  },
+  openGraph: {
+    title: "Casa de Capybara | Capybara Sanctuary & Eco-Resort near Angkor Wat",
+    description:
+      "Meet Molly & Alex – Cambodia's only capybaras. Stay in boutique eco-villas, dine at our café, and enjoy family facilities minutes from Angkor Wat.",
+    url: canonicalUrl("/"),
+    type: "website",
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 800,
+        height: 800,
+        alt: "Casa de Capybara – capybara sanctuary and eco-resort in Siem Reap, Cambodia",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Casa de Capybara | Capybara Sanctuary & Eco-Resort – Siem Reap",
+    description:
+      "Cambodia's only capybara sanctuary, boutique eco-villas, and farm-to-table dining near Angkor Wat.",
+    images: [`${SITE_URL}/logo.png`],
+  },
 };
 
 export default async function Home() {

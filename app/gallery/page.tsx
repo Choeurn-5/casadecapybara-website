@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonicalUrl } from "@/lib/seo";
 import { getCapyGallery, FlatGalleryImage } from "@/lib/wordpress";
 import GalleryHero from "@/components/gallery/GalleryHero";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
@@ -9,19 +10,30 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Photo & Video Gallery | Casa de Capybara Siem Reap",
   description:
-    "Explore the visual archive of Casa de Capybara. High-resolution photos of gentle capybara encounters with Molly & Alex, boutique themed eco-villas, pool slides, and organic café dining.",
+    "Explore the visual archive of Casa de Capybara. High-resolution photos of capybara encounters with Molly & Alex, boutique eco-villas, pool slides, and organic café dining in Siem Reap.",
+  alternates: {
+    canonical: canonicalUrl("/gallery"),
+  },
   openGraph: {
     title: "Photo & Video Gallery | Casa de Capybara Siem Reap",
     description:
-      "Explore Cambodia's premier luxury wildlife sanctuary, eco-villas, and organic café in high definition.",
+      "Browse high-resolution photos of capybara encounters, boutique eco-villas, the water slide pool, and farm-to-table café at Casa de Capybara, Siem Reap.",
+    url: canonicalUrl("/gallery"),
+    type: "website",
     images: [
       {
         url: "https://cms.casadecapybara.com/wp-content/uploads/2026/09/H2a-Meet-Molly-Alex-—-Cambodias-Most-Beloved-Capybaras.jpg",
         width: 1200,
         height: 630,
-        alt: "Casa de Capybara Gallery",
+        alt: "Molly and Alex, Cambodia's beloved capybaras at Casa de Capybara, Siem Reap",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo & Video Gallery | Casa de Capybara",
+    description: "High-resolution photos of capybara encounters, eco-villas, pool, and café dining at Casa de Capybara.",
+    images: ["https://cms.casadecapybara.com/wp-content/uploads/2026/09/H2a-Meet-Molly-Alex-—-Cambodias-Most-Beloved-Capybaras.jpg"],
   },
 };
 

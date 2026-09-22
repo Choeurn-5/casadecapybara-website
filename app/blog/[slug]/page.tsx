@@ -5,6 +5,8 @@ import { ChevronRight, Clock } from "lucide-react";
 import { getPostBySlug, getBlogPosts } from "@/lib/wordpress";
 import type { Metadata, ResolvingMetadata } from "next";
 import SocialShareButtons from "@/components/blog/SocialShareButtons";
+import { canonicalUrl, SITE_URL } from "@/lib/seo";
+import JsonLd from "@/components/seo/JsonLd";
 
 // Define the params interface
 interface PageProps {
@@ -40,21 +42,35 @@ export async function generateMetadata(
   }
 
   // Use the excerpt as description, fallback to a default
-  const description = post.excerpt ? post.excerpt.replace(/<[^>]*>?/gm, "").substring(0, 160) : "Read our latest stories and travel guides from Siem Reap.";
+  const description = post.excerpt
+    ? post.excerpt.replace(/<[^>]*>?/gm, "").substring(0, 160)
+    : "Read our latest stories and travel guides from Siem Reap.";
+
+  const canonical = canonicalUrl(`/blog/${resolvedParams.slug}`);
+  const ogImage = post.featuredImage?.node?.sourceUrl
+    ? [{ url: post.featuredImage.node.sourceUrl, alt: post.featuredImage.node.altText || post.title }]
+    : [{ url: `${SITE_URL}/logo.png`, width: 800, height: 800, alt: post.title }];
 
   return {
     title: `${post.title} | Casa de Capybara Blog`,
     description: description,
+    alternates: {
+      canonical: canonical,
+    },
     openGraph: {
       title: post.title,
       description: description,
-      images: post.featuredImage?.node?.sourceUrl ? [post.featuredImage.node.sourceUrl] : [],
+      url: canonical,
+      type: "article",
+      publishedTime: post.date,
+      authors: [post.author?.node?.name || "Manet Sisamouth"],
+      images: ogImage,
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: description,
-      images: post.featuredImage?.node?.sourceUrl ? [post.featuredImage.node.sourceUrl] : [],
+      images: post.featuredImage?.node?.sourceUrl ? [post.featuredImage.node.sourceUrl] : [`${SITE_URL}/logo.png`],
     },
   };
 }
@@ -103,8 +119,40 @@ export default async function SingleBlogPost({ params }: PageProps) {
       )
     : "";
 
+  // BlogPosting structured data for rich results
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt ? post.excerpt.replace(/<[^>]*>?/gm, "").substring(0, 160) : "",
+    "url": canonicalUrl(`/blog/${post.slug}`),
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "author": {
+      "@type": "Person",
+      "name": post.author?.node?.name || "Manet Sisamouth",
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Casa de Capybara",
+      "url": SITE_URL,
+    },
+    ...(post.featuredImage?.node?.sourceUrl && {
+      "image": {
+        "@type": "ImageObject",
+        "url": post.featuredImage.node.sourceUrl,
+        "description": post.featuredImage.node.altText || post.title,
+      },
+    }),
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl(`/blog/${post.slug}`),
+    },
+  };
+
   return (
     <main className="bg-[#FAF7F2] min-h-screen pt-24 pb-20">
+      <JsonLd data={blogPostingSchema} />
       
       {/* Breadcrumbs & Header Section */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-8">
