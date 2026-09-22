@@ -14,7 +14,7 @@ import {
   Ticket
 } from 'lucide-react';
 import ContactForm from '@/components/contact/ContactForm';
-import { getGlobalSettings } from '@/lib/wordpress';
+import { getGlobalSettings, getContactPageContent } from '@/lib/wordpress';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 
 export const metadata = {
@@ -23,7 +23,10 @@ export const metadata = {
 };
 
 export default async function ContactPage() {
-  const settings = await getGlobalSettings();
+  const [settings, contactContent] = await Promise.all([
+    getGlobalSettings(),
+    getContactPageContent(),
+  ]);
   const bookingUrl = settings.bookingEngineUrl || "https://app.inn-connect.com/book2/?p=Casa%20de%20Capybara";
   
   // Format WhatsApp link correctly (strip non-digits)
@@ -42,13 +45,17 @@ export default async function ContactPage() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <ScrollReveal direction="down">
             <span className="inline-block py-1 px-3 rounded-full bg-[#1B5E20]/10 text-[#1B5E20] font-bold text-sm tracking-widest mb-6 border border-[#1B5E20]/20 uppercase">
-              Get in Touch with our Concierge
+              {contactContent?.heroEyebrow || "Get in Touch with our Concierge"}
             </span>
             <h1 className="text-4xl md:text-6xl font-extrabold text-[#1B5E20] mb-6 leading-tight">
-              We Would Love to Hear From You
+              {contactContent?.heroHeadline ? (
+                <div dangerouslySetInnerHTML={{ __html: contactContent.heroHeadline }} />
+              ) : (
+                "We Would Love to Hear From You"
+              )}
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
-              Book a room, plan your capybara encounter, arrange a group visit or simply say hello. Our English, Khmer and Hindi speaking team responds fast — usually within the hour.
+              {contactContent?.heroSubheadline || "Book a room, plan your capybara encounter, arrange a group visit or simply say hello. Our English, Khmer and Hindi speaking team responds fast — usually within the hour."}
             </p>
             <div className="inline-flex items-center gap-2 bg-[#E8F5E9] text-[#1B5E20] px-4 py-2 rounded-full font-bold text-sm border border-[#2E7D32]/20 shadow-sm">
               <span>⚡</span> Average response time: under 60 minutes (7am–9pm daily)

@@ -20,12 +20,30 @@ interface AboutSectionProps {
   sovrinBadgeImg?: string;
   tripadvisorBadgeImg?: string;
   googleBadgeImg?: string;
+  eyebrow?: string;
+  headline?: string;
+  quote?: string;
+  body?: string;
+  calloutTitle?: string;
+  calloutText?: string;
+  statOpened?: string;
+  statDistance?: string;
+  statAvailability?: string;
 }
 
 export default function AboutSection({
   sovrinBadgeImg,
   tripadvisorBadgeImg,
   googleBadgeImg,
+  eyebrow = "Est. January 2026 • Siem Reap, Cambodia",
+  headline = "Where Every Visit Becomes a Memory",
+  quote = "A serene tropical sanctuary just minutes from Angkor Wat, where heartfelt wildlife connections and mindful luxury coexist.",
+  body = "<p>Opened in <strong>January 2026</strong>, Casa de Capybara was created as Cambodia’s premier ethical wildlife haven and boutique retreat. Nestled in a lush botanical setting near Siem Reap’s ancient wonders, our sanctuary offers a peaceful oasis dedicated to the love, care, and peaceful spirit of our resident capybaras.</p>",
+  calloutTitle = "Day Visitors Warmly Welcomed Every Day",
+  calloutText = "You do not need to be an overnight hotel guest to experience Casa de Capybara. Non-hotel guests are always welcome for artisan cafe dining, garden strolls, and pre-booked interactive capybara encounters.",
+  statOpened = "Jan 2026",
+  statDistance = "15 Mins",
+  statAvailability = "Open Daily",
 }: AboutSectionProps) {
   return (
     <section className="relative w-full py-20 sm:py-28 bg-[#FDFBF7] text-[#1A2E1C] overflow-hidden border-b border-[#1B5E20]/10">
@@ -43,16 +61,16 @@ export default function AboutSection({
             <ScrollReveal direction="up" staggerIndex={0}>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1B5E20]/10 border border-[#1B5E20]/20 text-[#1B5E20] text-xs font-bold tracking-widest uppercase mb-5">
                 <Sparkles className="w-3.5 h-3.5 text-[#1B5E20]" />
-                <span>Est. January 2026 • Siem Reap, Cambodia</span>
+                <span>{eyebrow}</span>
               </div>
             </ScrollReveal>
 
             {/* Headline */}
             <ScrollReveal direction="up" staggerIndex={1}>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold tracking-tight text-[#1A2E1C] leading-[1.18] mb-6">
-                Where Every Visit <br />
+                {headline.replace("Becomes a Memory", "")} <br />
                 <span className="font-serif italic font-normal text-[#1B5E20]">
-                  Becomes a Memory
+                  {headline.includes("Becomes a Memory") ? "Becomes a Memory" : ""}
                 </span>
               </h2>
             </ScrollReveal>
@@ -60,23 +78,21 @@ export default function AboutSection({
             {/* Sub-quote */}
             <ScrollReveal direction="up" staggerIndex={2}>
               <p className="text-lg sm:text-xl font-medium text-gray-800 leading-relaxed mb-6 border-l-2 border-[#E65100] pl-4">
-                A serene tropical sanctuary just minutes from Angkor Wat, where heartfelt wildlife connections and mindful luxury coexist.
+                {quote}
               </p>
             </ScrollReveal>
 
             {/* Body Copy */}
             <ScrollReveal direction="up" staggerIndex={3}>
               <div className="space-y-4 text-sm sm:text-base text-gray-600 leading-relaxed mb-8 max-w-2xl">
-                <p>
-                  Opened in <strong>January 2026</strong>, Casa de Capybara was created as Cambodia’s premier ethical wildlife haven and boutique retreat. Nestled in a lush botanical setting near Siem Reap’s ancient wonders, our sanctuary offers a peaceful oasis dedicated to the love, care, and peaceful spirit of our resident capybaras.
-                </p>
+                <div dangerouslySetInnerHTML={{ __html: body }} />
                 <div className="p-4 rounded-xl bg-[#1B5E20]/5 border border-[#1B5E20]/15 text-[#1A2E1C]">
                   <p className="font-semibold text-[#1B5E20] flex items-center gap-2 mb-1">
                     <CheckCircle2 className="w-4 h-4 text-[#1B5E20] shrink-0" />
-                    Day Visitors Warmly Welcomed Every Day
+                    {calloutTitle}
                   </p>
                   <p className="text-xs sm:text-sm text-gray-700">
-                    You do not need to be an overnight hotel guest to experience Casa de Capybara. Non-hotel guests are always welcome for artisan cafe dining, garden strolls, and pre-booked interactive capybara encounters.
+                    {calloutText}
                   </p>
                 </div>
               </div>
@@ -90,7 +106,7 @@ export default function AboutSection({
                     <Calendar className="w-3.5 h-3.5 text-[#E65100]" />
                     <span className="font-semibold">Opened</span>
                   </div>
-                  <div className="text-base sm:text-lg font-bold text-[#1A2E1C]">Jan 2026</div>
+                  <div className="text-base sm:text-lg font-bold text-[#1A2E1C]">{statOpened}</div>
                   <div className="text-[11px] text-gray-500">Newly Founded</div>
                 </div>
 
@@ -99,7 +115,7 @@ export default function AboutSection({
                     <MapPin className="w-3.5 h-3.5 text-[#1B5E20]" />
                     <span className="font-semibold">Location</span>
                   </div>
-                  <div className="text-base sm:text-lg font-bold text-[#1A2E1C]">15 Mins</div>
+                  <div className="text-base sm:text-lg font-bold text-[#1A2E1C]">{statDistance}</div>
                   <div className="text-[11px] text-gray-500">To Angkor Wat</div>
                 </div>
 
@@ -108,7 +124,7 @@ export default function AboutSection({
                     <Heart className="w-3.5 h-3.5 text-[#E65100]" />
                     <span className="font-semibold">Access</span>
                   </div>
-                  <div className="text-base sm:text-lg font-bold text-[#1A2E1C]">Open Daily</div>
+                  <div className="text-base sm:text-lg font-bold text-[#1A2E1C]">{statAvailability}</div>
                   <div className="text-[11px] text-gray-500">Day Passes Available</div>
                 </div>
               </div>

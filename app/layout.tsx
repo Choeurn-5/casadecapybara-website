@@ -8,6 +8,7 @@ import FloatingContactBar from "@/components/layout/FloatingContactBar";
 import SmoothScrolling from "@/components/ui/SmoothScrolling";
 import JsonLd, { globalBusinessSchema } from "@/components/seo/JsonLd";
 import ThemeProvider from "@/components/ui/ThemeProvider";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -109,6 +110,9 @@ export default async function RootLayout({
         />
       </head>
       <body suppressHydrationWarning className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
         <ThemeProvider>
           <SmoothScrolling>
             <Navbar settings={settings} />

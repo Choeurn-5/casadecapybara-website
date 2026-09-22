@@ -9,7 +9,7 @@ import LocationTransitSection from "@/components/home/LocationTransitSection";
 import FamiliesAndSafetyTeaser from "@/components/home/FamiliesAndSafetyTeaser";
 import FinalConversionBanner from "@/components/home/FinalConversionBanner";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { getFeaturedRooms, getGlobalSettings } from "@/lib/wordpress";
+import { getFeaturedRooms, getGlobalSettings, getHomePageContent } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
   title: "Casa de Capybara | Luxury Wildlife Sanctuary & Eco-Resort",
@@ -18,27 +18,38 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [rooms, globalSettings] = await Promise.all([
+  const [rooms, globalSettings, homeContent] = await Promise.all([
     getFeaturedRooms(),
     getGlobalSettings(),
+    getHomePageContent(),
   ]);
 
   return (
     <main className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
       {/* Section 1: Hero Banner (Visual Awe & Headline) */}
       <Hero
-        youtubeId="Kx3kZwcTJ3I"
-        headline="Where Nature's Gentle Soul Meets Luxury Sanctuary"
-        subheadline="Immerse yourself in tranquil eco-villas, organic garden dining, and unforgettable, heartwarming moments with our resident capybaras."
-        primaryCtaText="Book an Encounter"
+        youtubeId={globalSettings.heroVideoId || "Kx3kZwcTJ3I"}
+        headline={homeContent?.heroHeadline}
+        subheadline={homeContent?.heroSubheadline}
+        primaryCtaText={homeContent?.primaryCtaText}
         primaryCtaLink="/capybara-experience"
-        secondaryCtaText="Explore Our Stays"
+        secondaryCtaText={homeContent?.secondaryCtaText}
         secondaryCtaLink="/stay"
       />
 
       {/* Section 2: About / Editorial Welcome & Press Proof (Orientation & Credibility) */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
-        <AboutSection />
+        <AboutSection 
+          eyebrow={homeContent?.aboutEyebrow}
+          headline={homeContent?.aboutHeadline}
+          quote={homeContent?.aboutQuote}
+          body={homeContent?.aboutBody}
+          calloutTitle={homeContent?.aboutCalloutTitle}
+          calloutText={homeContent?.aboutCalloutText}
+          statOpened={homeContent?.statOpened}
+          statDistance={homeContent?.statDistance}
+          statAvailability={homeContent?.statAvailability}
+        />
       </ScrollReveal>
 
       {/* Section 3: Encounter Tickets (The Viral Draw & Core Attraction) */}

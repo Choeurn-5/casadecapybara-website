@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getAllCapyRooms } from "@/lib/wordpress";
+import { getAllCapyRooms, getStayPageContent } from "@/lib/wordpress";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { Check, Users, Maximize, BedDouble, Sparkles, Wifi, Tv, Wind, Droplets, Clock, ShieldCheck, Ban } from "lucide-react";
 import Hero from "@/components/home/Hero";
@@ -15,7 +15,10 @@ export const metadata: Metadata = {
 };
 
 export default async function StayPage() {
-  const rooms = await getAllCapyRooms();
+  const [rooms, stayContent] = await Promise.all([
+    getAllCapyRooms(),
+    getStayPageContent(),
+  ]);
 
   return (
     <main className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#1A2E1C]">
@@ -23,8 +26,8 @@ export default async function StayPage() {
       {/* SECTION 1: Hero Section */}
       <Hero
         youtubeId="3mTyoZkffn8"
-        headline="Sleep Somewhere Truly Different"
-        subheadline="It is not just a hotel room. It is a treasure hunt, a memory, and the best night your children will ever talk about."
+        headline={stayContent?.heroHeadline || "Sleep Somewhere Truly Different"}
+        subheadline={stayContent?.heroSubheadline || "It is not just a hotel room. It is a treasure hunt, a memory, and the best night your children will ever talk about."}
         primaryCtaText="Check Availability"
         primaryCtaLink="/book"
         secondaryCtaText="Explore Our Rooms"

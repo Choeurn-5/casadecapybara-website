@@ -1109,3 +1109,186 @@ export async function getCapyGallery(): Promise<CapyGalleryData> {
   }
 }
 
+// ==========================================
+// ACF DYNAMIC CONTENT FETCHERS
+// ==========================================
+
+export interface ACFHomePage {
+  heroHeadline?: string;
+  heroSubheadline?: string;
+  primaryCtaText?: string;
+  secondaryCtaText?: string;
+  aboutEyebrow?: string;
+  aboutHeadline?: string;
+  aboutQuote?: string;
+  aboutBody?: string;
+  aboutCalloutTitle?: string;
+  aboutCalloutText?: string;
+  statOpened?: string;
+  statDistance?: string;
+  statAvailability?: string;
+}
+
+export interface ACFCafePage {
+  heroEyebrow?: string;
+  heroHeadline?: string;
+  heroSubheadline?: string;
+  searchPlaceholder?: string;
+}
+
+export interface ACFStayPage {
+  heroHeadline?: string;
+  heroSubheadline?: string;
+}
+
+export interface ACFExperiencePage {
+  heroEyebrow?: string;
+  heroHeadline?: string;
+  heroSubheadline?: string;
+  packagesTitle?: string;
+  packagesDesc?: string;
+}
+
+export interface ACFPlanPage {
+  heroEyebrow?: string;
+  heroHeadline?: string;
+  heroSubheadline?: string;
+}
+
+export interface ACFContactPage {
+  heroEyebrow?: string;
+  heroHeadline?: string;
+  heroSubheadline?: string;
+  formTitle?: string;
+}
+
+export async function getHomePageContent(pageId: string = "498"): Promise<ACFHomePage | null> {
+  const query = `
+    query GetHomePageContent {
+      page(id: "${pageId}", idType: DATABASE_ID) {
+        homePageContent {
+          heroHeadline
+          heroSubheadline
+          primaryCtaText
+          secondaryCtaText
+          aboutEyebrow
+          aboutHeadline
+          aboutQuote
+          aboutBody
+          aboutCalloutTitle
+          aboutCalloutText
+          statOpened
+          statDistance
+          statAvailability
+        }
+      }
+    }
+  `;
+  try {
+    const data = await fetchGraphQL<{ page?: { homePageContent?: ACFHomePage } }>(query, {}, 60);
+    return data?.page?.homePageContent || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getCafePageContent(pageId: string = "500"): Promise<ACFCafePage | null> {
+  const query = `
+    query GetCafePageContent {
+      page(id: "${pageId}", idType: DATABASE_ID) {
+        cafePageContent {
+          heroEyebrow
+          heroHeadline
+          heroSubheadline
+          searchPlaceholder
+        }
+      }
+    }
+  `;
+  try {
+    const data = await fetchGraphQL<{ page?: { cafePageContent?: ACFCafePage } }>(query, {}, 60);
+    return data?.page?.cafePageContent || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getStayPageContent(pageId: string = "502"): Promise<ACFStayPage | null> {
+  const query = `
+    query GetStayPageContent {
+      page(id: "${pageId}", idType: DATABASE_ID) {
+        stayPageContent {
+          heroHeadline
+          heroSubheadline
+        }
+      }
+    }
+  `;
+  try {
+    const data = await fetchGraphQL<{ page?: { stayPageContent?: ACFStayPage } }>(query, {}, 60);
+    return data?.page?.stayPageContent || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getExperiencePageContent(pageId: string = "504"): Promise<ACFExperiencePage | null> {
+  const query = `
+    query GetExperiencePageContent {
+      page(id: "${pageId}", idType: DATABASE_ID) {
+        experiencePageContent {
+          heroHeadline
+          heroSubheadline
+          packagesTitle
+          packagesDesc
+        }
+      }
+    }
+  `;
+  try {
+    const data = await fetchGraphQL<{ page?: { experiencePageContent?: ACFExperiencePage } }>(query, {}, 60);
+    return data?.page?.experiencePageContent || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getPlanPageContent(pageId: string = "506"): Promise<ACFPlanPage | null> {
+  const query = `
+    query GetPlanPageContent {
+      page(id: "${pageId}", idType: DATABASE_ID) {
+        planPageContent {
+          heroHeadline
+          heroSubheadline
+        }
+      }
+    }
+  `;
+  try {
+    const data = await fetchGraphQL<{ page?: { planPageContent?: ACFPlanPage } }>(query, {}, 60);
+    return data?.page?.planPageContent || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getContactPageContent(pageId: string = "508"): Promise<ACFContactPage | null> {
+  const query = `
+    query GetContactPageContent {
+      page(id: "${pageId}", idType: DATABASE_ID) {
+        contactPageContent {
+          heroHeadline
+          heroSubheadline
+          formTitle
+        }
+      }
+    }
+  `;
+  try {
+    const data = await fetchGraphQL<{ page?: { contactPageContent?: ACFContactPage } }>(query, {}, 60);
+    return data?.page?.contactPageContent || null;
+  } catch {
+    return null;
+  }
+}
+

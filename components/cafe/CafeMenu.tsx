@@ -23,7 +23,13 @@ export interface MenuItem {
 
 const ITEMS_PER_PAGE = 12;
 
-export default function CafeMenu({ wpItems }: { wpItems?: WPCafeMenuItem[] }) {
+export default function CafeMenu({ 
+  wpItems, 
+  searchPlaceholder = "Search dishes, ingredients, or drinks..." 
+}: { 
+  wpItems?: WPCafeMenuItem[];
+  searchPlaceholder?: string;
+}) {
   const [viewMode, setViewMode] = useState<"interactive" | "booklet">("interactive");
   const [activeSection, setActiveSection] = useState<string>("All");
   const [activeCategory, setActiveCategory] = useState<string>("All");
@@ -65,7 +71,7 @@ export default function CafeMenu({ wpItems }: { wpItems?: WPCafeMenuItem[] }) {
         badge: "Specialty",
       }));
 
-    return [...baseItems, ...additional];
+    return [...additional, ...baseItems];
   }, [wpItems]);
 
   // Filter items
@@ -180,12 +186,12 @@ export default function CafeMenu({ wpItems }: { wpItems?: WPCafeMenuItem[] }) {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
+                placeholder={searchPlaceholder}
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
                   setCurrentPage(1);
                 }}
-                placeholder="Search by dish name or ingredient (e.g. burger, matcha, steak)..."
                 className="w-full pl-11 pr-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-400 text-sm focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7] transition-all shadow-inner"
               />
               {searchQuery && (

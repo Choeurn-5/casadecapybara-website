@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import { MapPin, Clock, Car, Footprints, Globe, Phone, Mail, Bed, Ticket, HelpCircle, Navigation } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import FaqAccordion from "@/components/plan/FaqAccordion";
-import { getGlobalSettings } from "@/lib/wordpress";
+import { getGlobalSettings, getPlanPageContent } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
   title: "Plan Your Visit to Casa de Capybara Siem Reap | Hours, Location & FAQ",
@@ -12,7 +12,10 @@ export const metadata: Metadata = {
 };
 
 export default async function PlanYourVisitPage() {
-  const settings = await getGlobalSettings();
+  const [settings, planContent] = await Promise.all([
+    getGlobalSettings(),
+    getPlanPageContent(),
+  ]);
   const bookingUrl = settings.bookingEngineUrl || "https://app.inn-connect.com/book2/?p=Casa%20de%20Capybara";
   const whatsappRaw = settings.whatsappNumber?.replace(/[^0-9]/g, '') || '855968149795';
 
@@ -38,20 +41,26 @@ export default async function PlanYourVisitPage() {
         <div className="relative z-20 text-center max-w-5xl mx-auto flex flex-col items-center flex-grow justify-center pb-20 px-4">
           <ScrollReveal delay={0.1}>
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-bold tracking-widest uppercase mb-6 shadow-lg">
-              VISITOR GUIDE & ESSENTIAL INFO
+              {planContent?.heroEyebrow || "VISITOR GUIDE & ESSENTIAL INFO"}
             </div>
           </ScrollReveal>
           
           <ScrollReveal delay={0.2}>
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6 text-white drop-shadow-xl">
-              Everything You Need to Know <br className="hidden md:block"/> 
-              <span className="text-[#E8F5E9]">Before You Arrive</span>
+              {planContent?.heroHeadline ? (
+                <div dangerouslySetInnerHTML={{ __html: planContent.heroHeadline }} />
+              ) : (
+                <>
+                  Everything You Need to Know <br className="hidden md:block"/> 
+                  <span className="text-[#E8F5E9]">Before You Arrive</span>
+                </>
+              )}
             </h1>
           </ScrollReveal>
           
           <ScrollReveal delay={0.3}>
             <p className="max-w-2xl text-lg md:text-2xl text-gray-100 font-medium leading-relaxed mb-10 drop-shadow-md mx-auto">
-              We are easy to find, easy to reach and impossible to forget.
+              {planContent?.heroSubheadline || "We are easy to find, easy to reach and impossible to forget."}
             </p>
           </ScrollReveal>
           

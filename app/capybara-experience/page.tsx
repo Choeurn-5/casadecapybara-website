@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getEncounterTicketsApiData, getGlobalSettings } from "@/lib/wordpress";
+import { getEncounterTicketsApiData, getGlobalSettings, getExperiencePageContent } from "@/lib/wordpress";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import VideoModal from "@/components/capybara-experience/VideoModal";
 import ExperienceGallery from "@/components/capybara-experience/ExperienceGallery";
@@ -13,9 +13,10 @@ export const metadata: Metadata = {
 };
 
 export default async function CapybaraExperiencePage() {
-  const [encounterData, globalSettings] = await Promise.all([
+  const [encounterData, globalSettings, experienceContent] = await Promise.all([
     getEncounterTicketsApiData(),
     getGlobalSettings(),
+    getExperiencePageContent(),
   ]);
 
   // Fallback data
@@ -71,24 +72,30 @@ export default async function CapybaraExperiencePage() {
           <ScrollReveal delay={0.1}>
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/40 backdrop-blur-md border border-[#F8BBD0]/30 text-[#F8BBD0] text-xs sm:text-sm font-medium tracking-wider uppercase mb-8 shadow-lg shadow-black/20 hover:border-[#F8BBD0]/60 transition-all duration-300">
               <span className="inline-block w-2 h-2 rounded-full bg-[#E65100] animate-pulse" />
-              <span>Cambodia's First & Only Capybara Oasis</span>
+              <span>{experienceContent?.heroEyebrow || "Cambodia's First & Only Capybara Oasis"}</span>
             </div>
           </ScrollReveal>
           
           <ScrollReveal delay={0.2}>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.15] mb-6 text-white drop-shadow-md">
-              Meet Molly & Alex — <br className="hidden md:block"/> 
-              <span className="bg-gradient-to-r from-[#F8BBD0] via-[#FFB300] to-[#E65100] bg-clip-text text-transparent drop-shadow-none px-2 relative inline-block">
-                Cambodia's Only
-                <span className="absolute -top-4 -right-6 text-[#FFB300] text-xl opacity-80 animate-bounce delay-100">✨</span>
-              </span> 
-              <br className="hidden md:block"/> Two Capybaras
+              {experienceContent?.heroHeadline ? (
+                <div dangerouslySetInnerHTML={{ __html: experienceContent.heroHeadline }} />
+              ) : (
+                <>
+                  Meet Molly & Alex — <br className="hidden md:block"/> 
+                  <span className="bg-gradient-to-r from-[#F8BBD0] via-[#FFB300] to-[#E65100] bg-clip-text text-transparent drop-shadow-none px-2 relative inline-block">
+                    Cambodia's Only
+                    <span className="absolute -top-4 -right-6 text-[#FFB300] text-xl opacity-80 animate-bounce delay-100">✨</span>
+                  </span> 
+                  <br className="hidden md:block"/> Two Capybaras
+                </>
+              )}
             </h1>
           </ScrollReveal>
           
           <ScrollReveal delay={0.3}>
             <p className="max-w-2xl sm:max-w-3xl text-base sm:text-lg md:text-xl text-gray-200/90 font-light leading-relaxed mb-10 drop-shadow mx-auto">
-              A private, guided encounter unlike anything else in Siem Reap. Unhurried, ethical, and completely unforgettable. Open daily 7am to 9pm — walk-ins welcome.
+              {experienceContent?.heroSubheadline || "A private, guided encounter unlike anything else in Siem Reap. Unhurried, ethical, and completely unforgettable. Open daily 7am to 9pm — walk-ins welcome."}
             </p>
           </ScrollReveal>
           

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import CafeMenu from "@/components/cafe/CafeMenu";
-import { getAllCafeMenuItems } from "@/lib/wordpress";
+import { getAllCafeMenuItems, getCafePageContent } from "@/lib/wordpress";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
@@ -11,7 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default async function FullMenuPage() {
-  const menuItems = await getAllCafeMenuItems();
+  const [menuItems, cafeContent] = await Promise.all([
+    getAllCafeMenuItems(),
+    getCafePageContent(),
+  ]);
 
   return (
     <main className="min-h-screen flex flex-col bg-[#090D16] text-[#FAF7F2] pt-32 sm:pt-40 pb-24 relative overflow-hidden">
@@ -36,7 +39,7 @@ export default async function FullMenuPage() {
 
       {/* Full Interactive Menu */}
       <section className="px-4 sm:px-6 relative z-10">
-        <CafeMenu wpItems={menuItems} />
+        <CafeMenu wpItems={menuItems} searchPlaceholder={cafeContent?.searchPlaceholder} />
       </section>
     </main>
   );

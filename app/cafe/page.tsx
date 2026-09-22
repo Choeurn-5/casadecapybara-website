@@ -5,7 +5,7 @@ import { MapPin, Clock, Wifi, MessageCircle, Star, Utensils, CheckCircle2, Heart
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import CafeFeaturedMenu from "@/components/cafe/CafeFeaturedMenu";
 import CafeHeroSlider from "@/components/cafe/CafeHeroSlider";
-import { getAllCafeMenuItems } from "@/lib/wordpress";
+import { getAllCafeMenuItems, getCafePageContent } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
   title: "Capybara Cafe Siem Reap | Best Unique Cafe Near Angkor Wat | Open 7am-9pm",
@@ -13,7 +13,10 @@ export const metadata: Metadata = {
 };
 
 export default async function CafePage() {
-  const menuItems = await getAllCafeMenuItems();
+  const [menuItems, cafeContent] = await Promise.all([
+    getAllCafeMenuItems(),
+    getCafePageContent(),
+  ]);
 
   return (
     <main className="min-h-screen flex flex-col bg-[#FBFDFB] text-[#1A1A1A]">
@@ -29,21 +32,31 @@ export default async function CafePage() {
           <ScrollReveal delay={0.1}>
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/40 backdrop-blur-md border border-[#F8BBD0]/50 text-[#F8BBD0] text-xs sm:text-sm font-medium tracking-wider uppercase mb-8 shadow-lg">
               <span className="inline-block w-2 h-2 rounded-full bg-[#E65100] animate-pulse" />
-              <span>A Destination Cafe in Siem Reap</span>
+              <span>{cafeContent?.heroEyebrow || "A Destination Cafe in Siem Reap"}</span>
             </div>
           </ScrollReveal>
           
           <ScrollReveal delay={0.2}>
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6 text-white drop-shadow-lg">
-              Siem Reap's Most <br className="hidden md:block"/> 
-              <span className="bg-gradient-to-r from-[#F8BBD0] via-[#B3E5FC] to-[#F8BBD0] bg-clip-text text-transparent drop-shadow-none">Talked-About Cafe</span>
+              {cafeContent?.heroHeadline ? (
+                <div dangerouslySetInnerHTML={{ __html: cafeContent.heroHeadline }} />
+              ) : (
+                <>
+                  Siem Reap's Most <br className="hidden md:block"/> 
+                  <span className="bg-gradient-to-r from-[#F8BBD0] via-[#B3E5FC] to-[#F8BBD0] bg-clip-text text-transparent drop-shadow-none">Talked-About Cafe</span>
+                </>
+              )}
             </h1>
           </ScrollReveal>
           
           <ScrollReveal delay={0.3}>
             <p className="max-w-2xl sm:max-w-3xl text-lg md:text-xl text-gray-200 font-light leading-relaxed mb-10 drop-shadow mx-auto">
-              Great food. Signature drinks. Dreamy pastel atmosphere. <br className="hidden sm:block"/>
-              And Molly & Alex right here.
+              {cafeContent?.heroSubheadline || (
+                <>
+                  Great food. Signature drinks. Dreamy pastel atmosphere. <br className="hidden sm:block"/>
+                  And Molly & Alex right here.
+                </>
+              )}
             </p>
           </ScrollReveal>
           
@@ -64,13 +77,13 @@ export default async function CafePage() {
           <ScrollReveal direction="left" duration={1}>
             <div className="relative h-[600px] w-full grid grid-cols-2 grid-rows-2 gap-4 rounded-3xl overflow-hidden group">
               <div className="relative row-span-2 rounded-2xl overflow-hidden">
-                <Image src="/gallery/cafe/atmosphere-1.jpg" alt="Pastel Blue Cafe Atmosphere" fill className="object-cover transition-transform duration-1000 group-hover:scale-105" unoptimized />
+                <Image src="/gallery/cafe/capybara-cafe-siem-reap-atmosphere-1.jpg" alt="capybara cafe siem reap pastel blue atmosphere" fill className="object-cover transition-transform duration-1000 group-hover:scale-105" unoptimized />
               </div>
               <div className="relative rounded-2xl overflow-hidden bg-[#F8BBD0]">
-                <Image src="/gallery/cafe/atmosphere-2.jpg" alt="Blush Watercolor Wall" fill className="object-cover transition-transform duration-1000 group-hover:scale-110" unoptimized />
+                <Image src="/gallery/cafe/capybara-cafe-siem-reap-atmosphere-2.jpg" alt="capybara cafe siem reap watercolor wall" fill className="object-cover transition-transform duration-1000 group-hover:scale-110" unoptimized />
               </div>
               <div className="relative rounded-2xl overflow-hidden bg-[#B3E5FC]">
-                <Image src="/gallery/cafe/atmosphere-3.jpg" alt="Neon Capybara Sign" fill className="object-cover transition-transform duration-1000 group-hover:scale-110 delay-100" unoptimized />
+                <Image src="/gallery/cafe/capybara-cafe-siem-reap-atmosphere-3.jpg" alt="capybara cafe siem reap neon sign" fill className="object-cover transition-transform duration-1000 group-hover:scale-110 delay-100" unoptimized />
               </div>
             </div>
           </ScrollReveal>
@@ -115,22 +128,22 @@ export default async function CafePage() {
                 {
                   title: "The Capybara Burger",
                   desc: "House-ground beef patty, melted cheddar, brioche bun, caramelized onion jam, and homemade tropical mango salsa.",
-                  img: "/gallery/cafe/special-burger.jpg"
+                  img: "/gallery/cafe/capybara-cafe-siem-reap-special-burger.jpg"
                 },
                 {
                   title: "Artisanal Breakfast",
                   desc: "From the classic Full English and fluffy homemade pancakes to the Golden Croissant Club and Monte Cristo.",
-                  img: "/gallery/cafe/special-breakfast.jpg"
+                  img: "/gallery/cafe/capybara-cafe-siem-reap-special-breakfast.jpg"
                 },
                 {
                   title: "Signature Drinks",
                   desc: "Mango Matcha, Oat Hojicha, and Mango & Peach Latte served in custom collectible capybara mugs.",
-                  img: "/gallery/cafe/special-drinks.jpg"
+                  img: "/gallery/cafe/capybara-cafe-siem-reap-special-drinks.jpg"
                 },
                 {
                   title: "Daily In-House Bakery",
                   desc: "Flaky croissants, homemade cakes, and fresh desserts baked fresh every morning by our pastry chef.",
-                  img: "/gallery/cafe/special-bakery.jpg"
+                  img: "/gallery/cafe/capybara-cafe-siem-reap-special-bakery.jpg"
                 }
               ].map((item, idx) => (
                 <div key={idx} className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col sm:flex-row h-full border border-white/50">
