@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { GlobalSettings } from "@/lib/wordpress";
 import { Mail, MapPin, Clock } from "lucide-react";
 
@@ -13,9 +14,11 @@ export default function Footer({ settings }: { settings: GlobalSettings }) {
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
               {settings.logoUrl && (
-                <img
+                <Image
                   src={settings.logoUrl}
                   alt={settings.siteTitle}
+                  width={40}
+                  height={40}
                   className="w-10 h-10 object-contain grayscale brightness-200"
                 />
               )}

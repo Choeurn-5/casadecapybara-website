@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   Search, 
+  MapPin, 
   ChevronRight, 
   ChevronLeft,
   BookOpen, 
@@ -15,7 +17,13 @@ import {
   Moon,
   X,
   Sparkles,
-  ArrowUpRight
+  ArrowUpRight,
+  Coffee, 
+  Heart, 
+  ArrowRight,
+  Home,
+  Flame,
+  Sprout
 } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
@@ -420,10 +428,12 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
                   isDarkMode ? "bg-[#17251B]" : "bg-[#E8F5E9]"
                 }`}>
                   {featuredPost.featuredImage?.node?.sourceUrl ? (
-                    <img 
+                    <Image 
                       src={featuredPost.featuredImage.node.sourceUrl} 
                       alt={featuredPost.featuredImage.node.altText || featuredPost.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 60vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                   ) : (
                     <div className={`w-full h-full flex items-center justify-center ${
@@ -532,11 +542,12 @@ export default function BlogExplorer({ initialPosts }: BlogExplorerProps) {
                   isDarkMode ? "bg-[#17251B]" : "bg-[#E8F5E9]"
                 }`}>
                   {post.featuredImage?.node?.sourceUrl ? (
-                    <img 
+                    <Image 
                       src={post.featuredImage.node.sourceUrl} 
                       alt={post.featuredImage.node.altText || post.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      loading="lazy"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                   ) : (
                     <div className={`w-full h-full flex items-center justify-center ${

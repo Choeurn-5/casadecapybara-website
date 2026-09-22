@@ -74,7 +74,7 @@ export default function SmoothScrolling({ children }: { children: React.ReactNod
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReduced(mq.matches);
+    setTimeout(() => setPrefersReduced(mq.matches), 0);
     const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);

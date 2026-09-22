@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { Menu, X, Calendar, MapPin } from "lucide-react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { GlobalSettings } from "@/lib/wordpress";
@@ -106,8 +107,15 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
   const pathname = usePathname();
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
@@ -229,9 +237,11 @@ export default function Navbar({ settings }: { settings: GlobalSettings }) {
               <div className="flex-shrink-0 flex items-center mr-4 lg:mr-6">
                 <Link href="/" className="flex items-center gap-2.5 group">
                   {settings.logoUrl && (
-                    <img
+                    <Image
                       src={settings.logoUrl}
                       alt={settings.siteTitle || "Casa de Capybara"}
+                      width={40}
+                      height={40}
                       className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
                     />
                   )}

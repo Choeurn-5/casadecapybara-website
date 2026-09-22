@@ -104,7 +104,6 @@ export default async function RootLayout({
         <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&display=swap" rel="stylesheet" />
         <JsonLd data={globalBusinessSchema} />
         {/* Inline script to prevent FOUC — runs before paint */}
         <script

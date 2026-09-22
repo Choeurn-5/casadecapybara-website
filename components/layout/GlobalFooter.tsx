@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { GlobalSettings } from "@/lib/wordpress";
 import { MapPin, Clock, Phone, Mail, Send, Map } from "lucide-react";
@@ -23,7 +24,7 @@ export default function GlobalFooter({ settings }: { settings: GlobalSettings })
             <div className="flex flex-col items-start gap-4">
               {/* If we have a logoUrl, use it. Otherwise, fallback to a placeholder circle */}
               {settings.logoUrl ? (
-                <img src={settings.logoUrl} alt="Casa de Capybara" className="w-32 h-32 object-contain rounded-full bg-white shadow-lg" />
+                <Image src={settings.logoUrl} alt="Casa de Capybara" width={128} height={128} className="w-32 h-32 object-contain rounded-full bg-white shadow-lg" />
               ) : (
                 <div className="w-32 h-32 bg-[#FFCDD2] rounded-full flex items-center justify-center text-[#E65100] font-bold text-2xl shadow-lg border-4 border-white">
                   LOGO

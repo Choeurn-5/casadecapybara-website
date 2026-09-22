@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 interface HeroKhProps {
@@ -23,6 +24,7 @@ export default function HeroKh({
   secondaryCtaText = "មើលបន្ទប់ស្នាក់នៅ",
   secondaryCtaLink = "#stay",
 }: HeroKhProps) {
+  const [playVideo, setPlayVideo] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
@@ -72,35 +74,38 @@ export default function HeroKh({
         className="absolute inset-0 z-0 overflow-hidden pointer-events-none origin-top"
         style={{ y: backgroundY }}
       >
-        {/* Fallback & Loading Poster Image */}
-        <div
-          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
-            isVideoLoaded ? "opacity-30" : "opacity-90"
-          }`}
-          style={{
-            backgroundImage: `url('https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg')`,
-            backgroundColor: "#1B5E20",
-          }}
-        />
-
-        {/* YouTube Responsive Video Container */}
-        <div className="video-background-wrapper scale-110 sm:scale-105">
-          <iframe
-            className="w-full h-full object-cover border-0"
-            src={youtubeEmbedUrl}
-            title="Casa de Capybara Sanctuary Experience"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            onLoad={() => setIsVideoLoaded(true)}
+        {/* Optimized Next.js LCP Image Component */}
+        <div className={`absolute inset-0 transition-opacity duration-1000 ${isVideoLoaded ? "opacity-30" : "opacity-90"} bg-[#1B5E20]`}>
+          <Image
+            src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+            alt="Casa de Capybara Sanctuary"
+            fill
+            priority={true}
+            sizes="100vw"
+            className="object-cover"
           />
         </div>
 
+        {/* YouTube Responsive Video Container - Lazy Loaded */}
+        {playVideo && (
+          <div className="video-background-wrapper scale-110 sm:scale-105 pointer-events-auto">
+            <iframe
+              className="w-full h-full object-cover border-0"
+              src={youtubeEmbedUrl}
+              title="Casa de Capybara Sanctuary Experience"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              onLoad={() => setIsVideoLoaded(true)}
+            />
+          </div>
+        )}
+
         {/* Rich Multi-Layer Gradient Overlays */}
         {/* 1. Deep Vignette and Dark Tint */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/70 pointer-events-none" />
 
         {/* 2. Brand Color Washes: Forest Green + Twilight Warmth */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1B5E20]/40 via-transparent to-[#E65100]/30 mix-blend-color-dodge" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#0F1710]/40 to-[#0F1710]/90" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1B5E20]/40 via-transparent to-[#E65100]/30 mix-blend-color-dodge pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#0F1710]/40 to-[#0F1710]/90 pointer-events-none" />
       </motion.div>
 
       {/* Top Spacer / Navigation buffer */}
@@ -215,28 +220,28 @@ export default function HeroKh({
         </motion.div>
       </motion.div>
 
-      {/* Hero Bottom Bar: Audio Toggle & Scroll Down Cue */}
+      {/* Hero Bottom Bar: Video Toggle & Scroll Down Cue */}
       <div className="relative z-10 w-full container mx-auto px-4 sm:px-6 lg:px-8 pb-8 flex items-center justify-between font-battambang">
-        {/* Sound toggle button */}
+        {/* Video toggle button */}
         <button
-          onClick={() => setIsMuted(!isMuted)}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 text-xs text-gray-200 transition-colors"
-          aria-label={isMuted ? "Unmute background sound" : "Mute background sound"}
+          onClick={() => setPlayVideo(!playVideo)}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 text-xs text-gray-200 transition-colors z-50"
+          aria-label={playVideo ? "បញ្ឈប់វីដេអូ" : "ចាក់វីដេអូ"}
         >
-          {isMuted ? (
+          {playVideo ? (
             <>
-              <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+              <svg className="w-4 h-4 text-[#FFB300]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span>បិទសំឡេង</span>
+              <span className="text-[#FFB300]">បញ្ឈប់វីដេអូ</span>
             </>
           ) : (
             <>
-              <svg className="w-4 h-4 text-[#FFB300]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-[#FFB300]">បើកសំឡេង</span>
+              <span>ចាក់វីដេអូ</span>
             </>
           )}
         </button>

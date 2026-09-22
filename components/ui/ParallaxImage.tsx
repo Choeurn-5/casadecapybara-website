@@ -28,7 +28,7 @@ export default function ParallaxImage({
   containerClassName = "",
   parallaxAmount = 40,
   scaleFrom = 1.06,
-  unoptimized = true,
+  unoptimized = false,
   priority = false,
 }: ParallaxImageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,7 +37,7 @@ export default function ParallaxImage({
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReduced(mq.matches);
+    setTimeout(() => setPrefersReduced(mq.matches), 0);
     const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);

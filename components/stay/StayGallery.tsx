@@ -124,7 +124,9 @@ export default function StayGallery({ rooms }: StayGalleryProps) {
 
   // Set fresh random order on client mount
   useEffect(() => {
-    setRandomSeed(Math.floor(Math.random() * 1000000) + 1);
+    setTimeout(() => {
+      setRandomSeed(Math.floor(Math.random() * 1000000) + 1);
+    }, 0);
   }, []);
 
   const handleReshuffle = () => {
