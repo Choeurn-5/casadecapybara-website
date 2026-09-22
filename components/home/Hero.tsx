@@ -185,7 +185,7 @@ export default function Hero({
             </div>
             <div>
               <p className="text-xs text-gray-300">Eco Accommodations</p>
-              <p className="text-sm font-semibold text-white">Lagoon Villas</p>
+              <p className="text-sm font-semibold text-white">Pastel Themed Rooms</p>
             </div>
           </div>
 
@@ -197,7 +197,7 @@ export default function Hero({
             </div>
             <div>
               <p className="text-xs text-gray-300">Farm & Flavors</p>
-              <p className="text-sm font-semibold text-white">Organic Dining</p>
+              <p className="text-sm font-semibold text-white">Playful & Casual Dining</p>
             </div>
           </div>
 
