@@ -3,6 +3,7 @@ import { canonicalUrl, SITE_URL } from "@/lib/seo";
 import Hero from "@/components/home/Hero";
 import AboutSection from "@/components/home/AboutSection";
 import EncounterTicketsSummary from "@/components/home/EncounterTicketsSummary";
+import BirthdayPackageSection from "@/components/home/BirthdayPackageSection";
 import RoomCarousel from "@/components/home/RoomTeaser";
 import CafeTeaser from "@/components/home/CafeTeaser";
 import TestimonialSlider from "@/components/home/TestimonialSlider";
@@ -86,6 +87,11 @@ export default async function Home() {
       {/* Section 3: Encounter Tickets (The Viral Draw & Core Attraction) */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
         <EncounterTicketsSummary />
+      </ScrollReveal>
+
+      {/* Section 3.5: Birthday & Celebration Packages */}
+      <ScrollReveal delay={0.1} staggerIndex={0}>
+        <BirthdayPackageSection globalSettings={globalSettings} />
       </ScrollReveal>
 
       {/* Section 4: Families & Safety (Reassurance & Care Immediately After Animal Encounters) */}
