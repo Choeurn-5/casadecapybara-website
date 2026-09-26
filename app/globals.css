@@ -389,6 +389,82 @@ html.lenis body {
   animation: pulseGlow 3s ease-in-out infinite;
 }
 
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(-1deg);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.8));
+  }
+  25% {
+    transform: scale(1.08) rotate(1deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(244, 63, 94, 0.9));
+  }
+  50% {
+    transform: scale(0.96) rotate(-2deg);
+    opacity: 0.85;
+    filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.7));
+  }
+  75% {
+    transform: scale(1.05) rotate(2deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.9));
+  }
+}
+
+.animate-flame {
+  animation: flameFlicker 1.8s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes floatBob {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.5deg);
+  }
+}
+
+.animate-float-bob {
+  animation: floatBob 4.5s ease-in-out infinite;
+}
+
+@keyframes celebrationDrift {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-14px) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0px) rotate(360deg);
+    opacity: 0.6;
+  }
+}
+
+.animate-celebration-drift {
+  animation: celebrationDrift 7s ease-in-out infinite;
+}
+
+@keyframes sparkleSpin {
+  0%, 100% {
+    transform: scale(0.8) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.15) rotate(90deg);
+    opacity: 1;
+  }
+}
+
+.animate-sparkle {
+  animation: sparkleSpin 3s ease-in-out infinite;
+}
+
+
 /* Reduced Motion Accessibility */
 @media (prefers-reduced-motion: reduce) {
   html {
