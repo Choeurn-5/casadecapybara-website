@@ -9,18 +9,55 @@ import {
   ArrowRight
 } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { GlobalSettings, defaultGlobalSettings } from "@/lib/wordpress";
+import { GlobalSettings, defaultGlobalSettings, ACFBirthdayPackage } from "@/lib/wordpress";
 
 interface BirthdayPackageSectionProps {
   globalSettings?: GlobalSettings;
+  content?: ACFBirthdayPackage | null;
 }
 
-export default function BirthdayPackageSection({ globalSettings = defaultGlobalSettings }: BirthdayPackageSectionProps) {
+export default function BirthdayPackageSection({ 
+  globalSettings = defaultGlobalSettings,
+  content,
+}: BirthdayPackageSectionProps) {
   const telegramBaseUrl = globalSettings.telegramUrl || "https://t.me/capybaracambodia";
   const whatsappNumber = globalSettings.whatsappNumber || "+855968149795";
   const cleanPhone = whatsappNumber.replace(/[^0-9]/g, "") || "855968149795";
 
+  // Dynamic content with rich fallbacks
+  const eyebrowBadge = content?.eyebrowBadge || "Unforgettable Celebrations • Only in Cambodia";
+  const title = content?.title || "Celebrate Your Birthday with";
+  const titleHighlight = content?.titleHighlight || "Molly & Alex";
+  const description = content?.description || "Create once-in-a-lifetime childhood memories in Siem Reap. Private capybara cuddles, resort swimming pool with a giant water slide, 200+ costumes in an air-conditioned playroom, custom artisan cakes, and zero cleanup stress for parents.";
+
+  const imageSrc =
+    (typeof content?.showcaseImage === "object" ? content?.showcaseImage?.node?.sourceUrl : content?.showcaseImage) ||
+    content?.showcaseImageUrl ||
+    "/images/celebration/capybara-birthday-party.jpg";
+
+  const badgeTop1 = content?.badgeTop1 || "#1 Unique Party Venue";
+  const badgeTop2 = content?.badgeTop2 || "100% Supervised & Safe";
+  const cardSubtitle = content?.cardSubtitle || "Private Sanctuary Cabana • Resort Pool & Slide • Costume Playroom";
+  const reviewQuote = content?.reviewQuote || "“The best birthday party our daughter ever had. Molly and Alex were so gentle, and the rangers made every kid feel like VIP!”";
+  const reviewAuthor = content?.reviewAuthor || "Sophie & David, Siem Reap";
+
+  const formulaEyebrow = content?.formulaEyebrow || "Everything Included For Your Big Day";
+  const formulaTitle = content?.formulaTitle || "The Magic Birthday Formula";
+  const formulaDescription = content?.formulaDescription || "Leave the stress at home. From custom decorations to capybara feedings, poolside games, and warm farm-to-table treats, our dedicated host coordinates every minute so parents can relax and celebrate together.";
+
+  const feat1Title = content?.feature1Title || "Private VIP Capybara Session";
+  const feat1Desc = content?.feature1Desc || "Personal feeding & gentle petting with Molly & Alex";
+  const feat2Title = content?.feature2Title || "Water Slide & Pool Access";
+  const feat2Desc = content?.feature2Desc || "Unlimited splash time in our safe resort swimming pool";
+  const feat3Title = content?.feature3Title || "Air-Conditioned Playroom";
+  const feat3Desc = content?.feature3Desc || "200+ themed costumes, toys, and shaded adventure playground";
+  const feat4Title = content?.feature4Title || "Custom Artisan Cake & Treats";
+  const feat4Desc = content?.feature4Desc || "Freshly baked capybara-themed cake by Casa Café";
+
+  const whatsappText = content?.whatsappCtaText || "Enquire Availability on WhatsApp";
+  const telegramText = content?.telegramCtaText || "Telegram";
   const customPartyMsg = encodeURIComponent(
+    content?.inquiryMessage ||
     "Hi Casa de Capybara! I'd like to check availability and details for booking a Capybara Birthday Party package."
   );
 
@@ -41,24 +78,22 @@ export default function BirthdayPackageSection({ globalSettings = defaultGlobalS
           <ScrollReveal direction="up" staggerIndex={0}>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-rose-100 to-amber-100 dark:from-rose-950/50 dark:to-amber-950/40 border border-rose-300/60 dark:border-rose-700/40 text-rose-700 dark:text-rose-300 text-xs sm:text-sm font-bold uppercase tracking-wider mb-5 shadow-xs">
               <PartyPopper className="w-4 h-4 text-rose-500" />
-              <span>Unforgettable Celebrations • Only in Cambodia</span>
+              <span>{eyebrowBadge}</span>
             </div>
           </ScrollReveal>
 
           <ScrollReveal direction="up" staggerIndex={1}>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1A2E1C] dark:text-white leading-[1.15] mb-6">
-              Celebrate Your Birthday with{" "}
+              {title}{" "}
               <span className="bg-gradient-to-r from-[#F43F5E] via-[#FB7185] to-[#F59E0B] bg-clip-text text-transparent">
-                Molly & Alex
+                {titleHighlight}
               </span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal direction="up" staggerIndex={2}>
             <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 font-normal leading-relaxed">
-              Create once-in-a-lifetime childhood memories in Siem Reap. Private capybara cuddles, 
-              resort swimming pool with a giant water slide, 200+ costumes in an air-conditioned playroom, 
-              custom artisan cakes, and <span className="font-semibold text-rose-600 dark:text-rose-400">zero cleanup stress for parents</span>.
+              {description}
             </p>
           </ScrollReveal>
         </div>
@@ -71,8 +106,8 @@ export default function BirthdayPackageSection({ globalSettings = defaultGlobalS
               {/* Image side with floating badges */}
               <div className="lg:col-span-7 relative min-h-[340px] sm:min-h-[420px] lg:min-h-[480px] w-full overflow-hidden group">
                 <Image
-                  src="/images/celebration/capybara-birthday-party.jpg"
-                  alt="Joyful children celebrating birthday party with friendly capybaras at Casa de Capybara"
+                  src={imageSrc}
+                  alt={title || "Birthday Party at Casa de Capybara"}
                   fill
                   sizes="(max-width: 1024px) 100vw, 60vw"
                   className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -84,22 +119,22 @@ export default function BirthdayPackageSection({ globalSettings = defaultGlobalS
                 <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 dark:bg-black/80 backdrop-blur-md text-[#1A2E1C] dark:text-white text-xs font-bold shadow-md">
                     <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                    #1 Unique Party Venue
+                    {badgeTop1}
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500 text-white text-xs font-bold shadow-md">
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    100% Supervised & Safe
+                    {badgeTop2}
                   </span>
                 </div>
 
                 <div className="absolute bottom-5 left-5 right-5 z-10 text-white">
                   <p className="text-xs uppercase tracking-wider text-amber-300 font-semibold mb-1">
-                    Private Sanctuary Cabana • Resort Pool & Slide • Costume Playroom
+                    {cardSubtitle}
                   </p>
                   <p className="text-sm sm:text-base font-medium text-white/95">
-                    &ldquo;The best birthday party our daughter ever had. Molly and Alex were so gentle, and the rangers made every kid feel like VIP!&rdquo;
+                    &ldquo;{reviewQuote}&rdquo;
                   </p>
-                  <span className="text-xs text-white/80 font-light mt-1 block">— Sophie & David, Siem Reap</span>
+                  <span className="text-xs text-white/80 font-light mt-1 block">— {reviewAuthor}</span>
                 </div>
               </div>
 
@@ -108,15 +143,13 @@ export default function BirthdayPackageSection({ globalSettings = defaultGlobalS
                 <div>
                   <div className="inline-flex items-center gap-2 text-rose-600 dark:text-rose-400 text-xs font-bold uppercase tracking-wider mb-3">
                     <Sparkles className="w-4 h-4" />
-                    Everything Included For Your Big Day
+                    {formulaEyebrow}
                   </div>
                   <h3 className="text-2xl sm:text-3xl font-extrabold text-[#1A2E1C] dark:text-white tracking-tight mb-4">
-                    The Magic Birthday Formula
+                    {formulaTitle}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-                    Leave the stress at home. From custom decorations to capybara feedings, poolside games, 
-                    and warm farm-to-table treats, our dedicated host coordinates every minute so parents can 
-                    relax and celebrate together.
+                    {formulaDescription}
                   </p>
 
                   <div className="space-y-3.5 mb-8">
@@ -125,7 +158,7 @@ export default function BirthdayPackageSection({ globalSettings = defaultGlobalS
                         <Check className="w-3.5 h-3.5 stroke-[3]" />
                       </div>
                       <span className="text-sm text-gray-700 dark:text-gray-200">
-                        <strong>Private VIP Capybara Session:</strong> Personal feeding & gentle petting with Molly & Alex
+                        <strong>{feat1Title}:</strong> {feat1Desc}
                       </span>
                     </div>
 
@@ -134,7 +167,7 @@ export default function BirthdayPackageSection({ globalSettings = defaultGlobalS
                         <Check className="w-3.5 h-3.5 stroke-[3]" />
                       </div>
                       <span className="text-sm text-gray-700 dark:text-gray-200">
-                        <strong>Water Slide & Pool Access:</strong> Unlimited splash time in our safe resort swimming pool
+                        <strong>{feat2Title}:</strong> {feat2Desc}
                       </span>
                     </div>
 
@@ -143,7 +176,7 @@ export default function BirthdayPackageSection({ globalSettings = defaultGlobalS
                         <Check className="w-3.5 h-3.5 stroke-[3]" />
                       </div>
                       <span className="text-sm text-gray-700 dark:text-gray-200">
-                        <strong>Air-Conditioned Playroom:</strong> 200+ themed costumes, toys, and shaded adventure playground
+                        <strong>{feat3Title}:</strong> {feat3Desc}
                       </span>
                     </div>
 
@@ -152,7 +185,7 @@ export default function BirthdayPackageSection({ globalSettings = defaultGlobalS
                         <Check className="w-3.5 h-3.5 stroke-[3]" />
                       </div>
                       <span className="text-sm text-gray-700 dark:text-gray-200">
-                        <strong>Custom Artisan Cake & Treats:</strong> Freshly baked capybara-themed cake by Casa Café
+                        <strong>{feat4Title}:</strong> {feat4Desc}
                       </span>
                     </div>
                   </div>
@@ -165,7 +198,7 @@ export default function BirthdayPackageSection({ globalSettings = defaultGlobalS
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-bold bg-[#25D366] text-white hover:bg-[#20ba59] hover:shadow-lg active:scale-95 transition-all duration-200"
                   >
-                    <span>Enquire Availability on WhatsApp</span>
+                    <span>{whatsappText}</span>
                     <ArrowRight className="w-4 h-4" />
                   </a>
                   <a
@@ -174,7 +207,7 @@ export default function BirthdayPackageSection({ globalSettings = defaultGlobalS
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-bold bg-[#2AABEE] text-white hover:bg-[#2298d5] active:scale-95 transition-all duration-200"
                   >
-                    <span>Telegram</span>
+                    <span>{telegramText}</span>
                   </a>
                 </div>
 

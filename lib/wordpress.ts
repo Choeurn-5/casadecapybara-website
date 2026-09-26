@@ -1149,6 +1149,39 @@ export interface ACFExperiencePage {
   packagesDesc?: string;
 }
 
+export interface ACFBirthdayPackage {
+  eyebrowBadge?: string;
+  title?: string;
+  titleHighlight?: string;
+  description?: string;
+  showcaseImageUrl?: string;
+  showcaseImage?: {
+    node?: {
+      sourceUrl?: string;
+      altText?: string;
+    };
+  };
+  badgeTop1?: string;
+  badgeTop2?: string;
+  cardSubtitle?: string;
+  reviewQuote?: string;
+  reviewAuthor?: string;
+  formulaEyebrow?: string;
+  formulaTitle?: string;
+  formulaDescription?: string;
+  feature1Title?: string;
+  feature1Desc?: string;
+  feature2Title?: string;
+  feature2Desc?: string;
+  feature3Title?: string;
+  feature3Desc?: string;
+  feature4Title?: string;
+  feature4Desc?: string;
+  whatsappCtaText?: string;
+  telegramCtaText?: string;
+  inquiryMessage?: string;
+}
+
 export interface ACFPlanPage {
   heroEyebrow?: string;
   heroHeadline?: string;
@@ -1287,6 +1320,47 @@ export async function getContactPageContent(pageId: string = "508"): Promise<ACF
   try {
     const data = await fetchGraphQL<{ page?: { contactPageContent?: ACFContactPage } }>(query, {}, 60);
     return data?.page?.contactPageContent || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getBirthdayPackageContent(pageId: string = "521"): Promise<ACFBirthdayPackage | null> {
+  const query = `
+    query GetBirthdayPackageContent {
+      page(id: "${pageId}", idType: DATABASE_ID) {
+        birthdayPackageContent {
+          eyebrowBadge
+          title
+          titleHighlight
+          description
+          showcaseImageUrl
+          badgeTop1
+          badgeTop2
+          cardSubtitle
+          reviewQuote
+          reviewAuthor
+          formulaEyebrow
+          formulaTitle
+          formulaDescription
+          feature1Title
+          feature1Desc
+          feature2Title
+          feature2Desc
+          feature3Title
+          feature3Desc
+          feature4Title
+          feature4Desc
+          whatsappCtaText
+          telegramCtaText
+          inquiryMessage
+        }
+      }
+    }
+  `;
+  try {
+    const data = await fetchGraphQL<{ page?: { birthdayPackageContent?: ACFBirthdayPackage } }>(query, {}, 60);
+    return data?.page?.birthdayPackageContent || null;
   } catch {
     return null;
   }

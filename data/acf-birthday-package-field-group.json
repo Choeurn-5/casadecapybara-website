@@ -1,0 +1,281 @@
+[
+  {
+    "key": "group_birthday_package_content",
+    "title": "Birthday Package Content",
+    "fields": [
+      {
+        "key": "field_bp_tab_intro",
+        "label": "Header & Introduction",
+        "name": "",
+        "type": "tab",
+        "instructions": "",
+        "required": 0,
+        "placement": "top",
+        "endpoint": 0
+      },
+      {
+        "key": "field_bp_eyebrow_badge",
+        "label": "Eyebrow Badge",
+        "name": "eyebrowBadge",
+        "type": "text",
+        "instructions": "Small pill text at the top of the section",
+        "required": 0,
+        "default_value": "Unforgettable Celebrations • Only in Cambodia"
+      },
+      {
+        "key": "field_bp_title",
+        "label": "Section Title",
+        "name": "title",
+        "type": "text",
+        "instructions": "Main title before highlight",
+        "required": 0,
+        "default_value": "Celebrate Your Birthday with"
+      },
+      {
+        "key": "field_bp_title_highlight",
+        "label": "Title Highlight",
+        "name": "titleHighlight",
+        "type": "text",
+        "instructions": "Gradient highlighted text in the title",
+        "required": 0,
+        "default_value": "Molly & Alex"
+      },
+      {
+        "key": "field_bp_description",
+        "label": "Description",
+        "name": "description",
+        "type": "textarea",
+        "instructions": "Intro paragraph under the title",
+        "required": 0,
+        "rows": 3,
+        "default_value": "Create once-in-a-lifetime childhood memories in Siem Reap. Private capybara cuddles, resort swimming pool with a giant water slide, 200+ costumes in an air-conditioned playroom, custom artisan cakes, and zero cleanup stress for parents."
+      },
+      {
+        "key": "field_bp_tab_media",
+        "label": "Showcase Card & Image",
+        "name": "",
+        "type": "tab",
+        "instructions": "",
+        "required": 0,
+        "placement": "top",
+        "endpoint": 0
+      },
+      {
+        "key": "field_bp_showcase_image",
+        "label": "Showcase Image URL",
+        "name": "showcaseImageUrl",
+        "type": "text",
+        "instructions": "Full image URL or relative path (e.g. /images/celebration/capybara-birthday-party.jpg or WordPress media link)",
+        "required": 0,
+        "default_value": "/images/celebration/capybara-birthday-party.jpg"
+      },
+      {
+        "key": "field_bp_badge_top_1",
+        "label": "Top Badge 1",
+        "name": "badgeTop1",
+        "type": "text",
+        "instructions": "Top-left floating card badge with star",
+        "required": 0,
+        "default_value": "#1 Unique Party Venue"
+      },
+      {
+        "key": "field_bp_badge_top_2",
+        "label": "Top Badge 2",
+        "name": "badgeTop2",
+        "type": "text",
+        "instructions": "Top-left floating card badge with shield",
+        "required": 0,
+        "default_value": "100% Supervised & Safe"
+      },
+      {
+        "key": "field_bp_card_subtitle",
+        "label": "Image Card Bottom Tagline",
+        "name": "cardSubtitle",
+        "type": "text",
+        "instructions": "Golden text above the guest quote",
+        "required": 0,
+        "default_value": "Private Sanctuary Cabana • Resort Pool & Slide • Costume Playroom"
+      },
+      {
+        "key": "field_bp_review_quote",
+        "label": "Review Quote",
+        "name": "reviewQuote",
+        "type": "textarea",
+        "instructions": "Featured testimonial quote on the showcase photo",
+        "required": 0,
+        "rows": 2,
+        "default_value": "“The best birthday party our daughter ever had. Molly and Alex were so gentle, and the rangers made every kid feel like VIP!”"
+      },
+      {
+        "key": "field_bp_review_author",
+        "label": "Review Author",
+        "name": "reviewAuthor",
+        "type": "text",
+        "instructions": "Author attribution for the quote",
+        "required": 0,
+        "default_value": "Sophie & David, Siem Reap"
+      },
+      {
+        "key": "field_bp_tab_formula",
+        "label": "Inclusions & Formula",
+        "name": "",
+        "type": "tab",
+        "instructions": "",
+        "required": 0,
+        "placement": "top",
+        "endpoint": 0
+      },
+      {
+        "key": "field_bp_formula_eyebrow",
+        "label": "Formula Eyebrow",
+        "name": "formulaEyebrow",
+        "type": "text",
+        "instructions": "Small tagline above the formula title",
+        "required": 0,
+        "default_value": "Everything Included For Your Big Day"
+      },
+      {
+        "key": "field_bp_formula_title",
+        "label": "Formula Title",
+        "name": "formulaTitle",
+        "type": "text",
+        "instructions": "Title on the right feature column",
+        "required": 0,
+        "default_value": "The Magic Birthday Formula"
+      },
+      {
+        "key": "field_bp_formula_desc",
+        "label": "Formula Description",
+        "name": "formulaDescription",
+        "type": "textarea",
+        "instructions": "Paragraph describing the party coordination",
+        "required": 0,
+        "rows": 3,
+        "default_value": "Leave the stress at home. From custom decorations to capybara feedings, poolside games, and warm farm-to-table treats, our dedicated host coordinates every minute so parents can relax and celebrate together."
+      },
+      {
+        "key": "field_bp_feat1_title",
+        "label": "Feature 1 Title",
+        "name": "feature1Title",
+        "type": "text",
+        "required": 0,
+        "default_value": "Private VIP Capybara Session"
+      },
+      {
+        "key": "field_bp_feat1_desc",
+        "label": "Feature 1 Details",
+        "name": "feature1Desc",
+        "type": "text",
+        "required": 0,
+        "default_value": "Personal feeding & gentle petting with Molly & Alex"
+      },
+      {
+        "key": "field_bp_feat2_title",
+        "label": "Feature 2 Title",
+        "name": "feature2Title",
+        "type": "text",
+        "required": 0,
+        "default_value": "Water Slide & Pool Access"
+      },
+      {
+        "key": "field_bp_feat2_desc",
+        "label": "Feature 2 Details",
+        "name": "feature2Desc",
+        "type": "text",
+        "required": 0,
+        "default_value": "Unlimited splash time in our safe resort swimming pool"
+      },
+      {
+        "key": "field_bp_feat3_title",
+        "label": "Feature 3 Title",
+        "name": "feature3Title",
+        "type": "text",
+        "required": 0,
+        "default_value": "Air-Conditioned Playroom"
+      },
+      {
+        "key": "field_bp_feat3_desc",
+        "label": "Feature 3 Details",
+        "name": "feature3Desc",
+        "type": "text",
+        "required": 0,
+        "default_value": "200+ themed costumes, toys, and shaded adventure playground"
+      },
+      {
+        "key": "field_bp_feat4_title",
+        "label": "Feature 4 Title",
+        "name": "feature4Title",
+        "type": "text",
+        "required": 0,
+        "default_value": "Custom Artisan Cake & Treats"
+      },
+      {
+        "key": "field_bp_feat4_desc",
+        "label": "Feature 4 Details",
+        "name": "feature4Desc",
+        "type": "text",
+        "required": 0,
+        "default_value": "Freshly baked capybara-themed cake by Casa Café"
+      },
+      {
+        "key": "field_bp_tab_cta",
+        "label": "Booking & Buttons",
+        "name": "",
+        "type": "tab",
+        "instructions": "",
+        "required": 0,
+        "placement": "top",
+        "endpoint": 0
+      },
+      {
+        "key": "field_bp_whatsapp_text",
+        "label": "WhatsApp Button Text",
+        "name": "whatsappCtaText",
+        "type": "text",
+        "required": 0,
+        "default_value": "Enquire Availability on WhatsApp"
+      },
+      {
+        "key": "field_bp_telegram_text",
+        "label": "Telegram Button Text",
+        "name": "telegramCtaText",
+        "type": "text",
+        "required": 0,
+        "default_value": "Telegram"
+      },
+      {
+        "key": "field_bp_inquiry_msg",
+        "label": "Custom Chat Message",
+        "name": "inquiryMessage",
+        "type": "textarea",
+        "instructions": "Pre-filled text sent when customer clicks WhatsApp or Telegram",
+        "required": 0,
+        "rows": 2,
+        "default_value": "Hi Casa de Capybara! I'd like to check availability and details for booking a Capybara Birthday Party package."
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page",
+          "operator": "==",
+          "value": "521"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Content for Birthday Package Section",
+    "show_in_graphql": 1,
+    "graphql_field_name": "birthdayPackageContent",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": [
+      "Page"
+    ]
+  }
+]
