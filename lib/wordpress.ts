@@ -1150,6 +1150,8 @@ export interface ACFExperiencePage {
 }
 
 export interface ACFBirthdayPackage {
+  featuredImageUrl?: string;
+  featuredImageAlt?: string;
   eyebrowBadge?: string;
   title?: string;
   titleHighlight?: string;
@@ -1329,6 +1331,12 @@ export async function getBirthdayPackageContent(pageId: string = "521"): Promise
   const query = `
     query GetBirthdayPackageContent {
       page(id: "${pageId}", idType: DATABASE_ID) {
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
         birthdayPackageContent {
           eyebrowBadge
           title
@@ -1359,8 +1367,31 @@ export async function getBirthdayPackageContent(pageId: string = "521"): Promise
     }
   `;
   try {
-    const data = await fetchGraphQL<{ page?: { birthdayPackageContent?: ACFBirthdayPackage } }>(query, {}, 60);
-    return data?.page?.birthdayPackageContent || null;
+    const data = await fetchGraphQL<{
+      page?: {
+        featuredImage?: {
+          node?: {
+            sourceUrl?: string;
+            altText?: string;
+          };
+        };
+        birthdayPackageContent?: ACFBirthdayPackage;
+      };
+    }>(query, {}, 60);
+
+    const bpContent = data?.page?.birthdayPackageContent || {};
+    const featuredImageUrl = data?.page?.featuredImage?.node?.sourceUrl;
+    const featuredImageAlt = data?.page?.featuredImage?.node?.altText;
+
+    if (!data?.page?.birthdayPackageContent && !featuredImageUrl) {
+      return null;
+    }
+
+    return {
+      ...bpContent,
+      featuredImageUrl: featuredImageUrl || bpContent.featuredImageUrl,
+      featuredImageAlt: featuredImageAlt || undefined,
+    };
   } catch {
     return null;
   }

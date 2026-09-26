@@ -31,9 +31,15 @@ export default function BirthdayPackageSection({
   const description = content?.description || "Create once-in-a-lifetime childhood memories in Siem Reap. Private capybara cuddles, resort swimming pool with a giant water slide, 200+ costumes in an air-conditioned playroom, custom artisan cakes, and zero cleanup stress for parents.";
 
   const imageSrc =
+    content?.featuredImageUrl ||
     (typeof content?.showcaseImage === "object" ? content?.showcaseImage?.node?.sourceUrl : content?.showcaseImage) ||
     content?.showcaseImageUrl ||
     "/images/celebration/capybara-birthday-party.jpg";
+
+  const imageAlt =
+    content?.featuredImageAlt ||
+    title ||
+    "Birthday Party at Casa de Capybara";
 
   const badgeTop1 = content?.badgeTop1 || "#1 Unique Party Venue";
   const badgeTop2 = content?.badgeTop2 || "100% Supervised & Safe";
@@ -107,7 +113,7 @@ export default function BirthdayPackageSection({
               <div className="lg:col-span-7 relative min-h-[340px] sm:min-h-[420px] lg:min-h-[480px] w-full overflow-hidden group">
                 <Image
                   src={imageSrc}
-                  alt={title || "Birthday Party at Casa de Capybara"}
+                  alt={imageAlt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 60vw"
                   className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
