@@ -11,7 +11,12 @@ import LocationTransitSection from "@/components/home/LocationTransitSection";
 import FamiliesAndSafetyTeaser from "@/components/home/FamiliesAndSafetyTeaser";
 import FinalConversionBanner from "@/components/home/FinalConversionBanner";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { getFeaturedRooms, getGlobalSettings, getHomePageContent } from "@/lib/wordpress";
+import { 
+  getFeaturedRooms, 
+  getGlobalSettings, 
+  getHomePageContent,
+  getBirthdayPackageContent 
+} from "@/lib/wordpress";
 
 export const metadata: Metadata = {
   title: "Casa de Capybara | Capybara Sanctuary, Eco-Resort & Café near Angkor Wat",
@@ -50,10 +55,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [rooms, globalSettings, homeContent] = await Promise.all([
+  const [rooms, globalSettings, homeContent, birthdayContent] = await Promise.all([
     getFeaturedRooms(),
     getGlobalSettings(),
     getHomePageContent(),
+    getBirthdayPackageContent(),
   ]);
 
   return (
@@ -91,7 +97,10 @@ export default async function Home() {
 
       {/* Section 3.5: Birthday & Celebration Packages */}
       <ScrollReveal delay={0.1} staggerIndex={0}>
-        <BirthdayPackageSection globalSettings={globalSettings} />
+        <BirthdayPackageSection 
+          globalSettings={globalSettings} 
+          content={birthdayContent}
+        />
       </ScrollReveal>
 
       {/* Section 4: Families & Safety (Reassurance & Care Immediately After Animal Encounters) */}
